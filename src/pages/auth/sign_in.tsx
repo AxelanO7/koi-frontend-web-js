@@ -1,6 +1,6 @@
 import { useState } from "react";
-import logo from "../../assets/logo.png";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
+import AuthLayout from "../../layouts/auth";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,10 +13,7 @@ const Signin = () => {
 
   return (
     <>
-      <div className="bg-gray-50 w-screen min-h-screen overflow-hidden">
-        <div className="p-6 border-b border-gray-200 shadow-sm">
-          <img src={logo} alt="logo" className="w-12" />
-        </div>
+      <AuthLayout>
         <form className="bg-white border border-gray-200 shadow-md w-96 p-8 rounded-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <h1 className="text-2xl font-bold text-center mb-4">Login Akun</h1>
           <div className="space-y-2 mb-4">
@@ -69,7 +66,7 @@ const Signin = () => {
             </p>
           </div>
         </form>
-      </div>
+      </AuthLayout>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
+import AuthLayout from "../../layouts/auth";
 
 const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,7 +12,7 @@ const ResetPassword = () => {
 
   return (
     <>
-      <div className="bg-gray-50 w-screen min-h-screen overflow-hidden">
+      <AuthLayout>
         <div className="p-6 border-b border-gray-200 shadow-sm">
           <img src={logo} alt="logo" className="w-12" />
         </div>
@@ -80,7 +81,7 @@ const ResetPassword = () => {
             Simpan Password Baru
           </button>
         </form>
-      </div>
+      </AuthLayout>
     </>
   );
 };
