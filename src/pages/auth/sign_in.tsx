@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
-import AuthLayout from "../../layouts/auth";
+import BaseLayout from "../../layouts/base";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +13,7 @@ const Signin = () => {
 
   return (
     <>
-      <AuthLayout>
+      <BaseLayout isAuthPage={true}>
         <form className="bg-white border border-gray-200 shadow-md w-96 p-8 rounded-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <h1 className="text-2xl font-bold text-center mb-4">Login Akun</h1>
           <div className="space-y-2 mb-4">
@@ -53,20 +53,20 @@ const Signin = () => {
               Lupa Kata Sandi?
             </p>
           </div>
-          <button className="w-full bg-[#E35050] text-white p-2 rounded-md transition-all duration-300 ease-in-out hover:bg-[#E53030] font-semibold focus:outline-none focus:ring-2 focus:ring-[#E53030] focus:ring-opacity-50 transform active:scale-95">
+          <button className="w-full bg-poppy-500 text-white p-2 rounded-md transition-all duration-300 ease-in-out hover:bg-poppy-600 font-semibold focus:outline-none focus:ring-2 focus:ring-poppy-600 focus:ring-opacity-50 transform active:scale-95">
             Masuk
           </button>
           <div className="flex justify-center items-center mt-4">
             <p className="text-sm text-[#717D96]">Belum punya akun?</p>
             <p
-              className="text-sm text-[#E35050] font-semibold ml-2 cursor-pointer"
+              className="text-sm text-poppy-500 font-semibold ml-2 cursor-pointer transition-all duration-300 ease-in-out hover:text-poppy-600"
               onClick={handleRegister}
             >
               Daftar Gratis
             </p>
           </div>
         </form>
-      </AuthLayout>
+      </BaseLayout>
     </>
   );
 };
