@@ -44,7 +44,7 @@ const Footer = () => {
     <>
       <div>
         <div className="h-0.5 bg-gray-200" />
-        <div className="flex mt-4 mx-8 justify-between space-x-8">
+        <div className="flex mt-4 mx-12 justify-between space-x-8">
           <div>
             <img src={logo} className="w-[100px]" />
             <div className="flex space-x-4 mt-4">

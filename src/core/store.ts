@@ -2,10 +2,15 @@ import { atom } from "recoil";
 
 export const isLogged = atom({
   key: "isLogged",
-  default: false,
+  default: true,
 });
 
-export const activeCategory = atom({
-  key: "activeCategory",
+export const activeSidebarHomepage = atom({
+  key: "activeSidebarHomepage",
+  default: "all",
+});
+
+export const activeSidebarOrganization = atom({
+  key: "activeSidebarOrganization",
   default: "all",
 });

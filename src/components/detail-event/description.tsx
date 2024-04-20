@@ -9,7 +9,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useState } from "react";
 
-const Description = () => {
+const DescriptionSection = () => {
   const priceEvent = 240000;
   const [infull, setInfull] = useState(false);
   const [activeTab, setActiveTab] = useState("desc");
@@ -194,4 +194,4 @@ const Description = () => {
   );
 };
 
-export default Description;
+export default DescriptionSection;

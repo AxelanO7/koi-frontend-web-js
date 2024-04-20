@@ -4,7 +4,7 @@ import EventItem from "../detail-event/event-item";
 import { EventItemProps } from "@/types/event";
 import { Button } from "@/shadcn/components/ui/button";
 
-const Recommendation = () => {
+const RecommendationSection = () => {
   const listData: EventItemProps[] = [
     {
       id: 1,
@@ -155,4 +155,4 @@ const Recommendation = () => {
   );
 };
 
-export default Recommendation;
+export default RecommendationSection;

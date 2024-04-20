@@ -1,20 +1,33 @@
 import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
-import EventSearchImage from "../../assets/images/event_search.png";
-import { EventItemProps } from "../../types/event";
-import EventItem from "./event-item";
-import clsx from "clsx";
-import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
 } from "@/shadcn/components/ui/pagination";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import clsx from "clsx";
+import EventItem from "../home-page/event-item";
+import { EventItemProps } from "@/types/event";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/shadcn/components/ui/select";
+import {
+  EnvelopeIcon,
+  MagnifyingGlassIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from "@heroicons/react/24/outline";
+import { Button } from "@/shadcn/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
+import { PencilSquareIcon } from "@heroicons/react/16/solid";
 
-const ListEventSection = () => {
+const DetailProfileSection = () => {
   const listData: EventItemProps[] = [
     {
       id: 1,
@@ -141,35 +154,94 @@ const ListEventSection = () => {
   return (
     <>
       <div className="w-full">
-        <div
-          className="rounded-lg bg-cover bg-center bg-no-repeat p-4"
-          style={{
-            backgroundImage: `url(${EventSearchImage})`,
-          }}
-        >
-          <p className="text-base font-bold md:text-2xl md:font-bold text-white">
-            Mau Ikut Event Apa Hari Ini
-          </p>
-          <div className="flex items-center p-2 mt-2 rounded-lg space-x-3 bg-white">
-            <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
+        <div className="flex justify-between items-center">
+          <div>
+            <div className="flex">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="profile"
+                className="w-24 h-24 rounded-full"
+              />
+              <div className="w-8" />
+              <div>
+                <h1 className="text-2xl font-semibold">Nama</h1>
+                <div className="flex items-center">
+                  <PhoneIcon className={clsx("w-5 h-5")} />
+                  <div className={clsx("w-2")} />
+                  <p className={clsx("font-normal text-sm")}>087123456789</p>
+                  <div className="w-8" />
+                  <EnvelopeIcon className={clsx("w-5 h-5")} />
+                  <div className={clsx("w-2")} />
+                  <p className={clsx("font-normal text-sm")}>a@gmail.com</p>
+                </div>
+                <div className="h-2" />
+                <div className="flex items-center">
+                  <MapPinIcon className={clsx("w-5 h-5")} />
+                  <div className={clsx("w-2")} />
+                  <p className={clsx("font-normal text-sm")}>Kota Denpasar</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Button className={clsx("bg-poppy-500 text-white")}>
+            Edit Profil
+            <PencilSquareIcon className={clsx("w-5 h-5 ml-2")} />
+          </Button>
+        </div>
+        <Tabs defaultValue="event" className={clsx("space-y-4 ")}>
+          <TabsList
+            className={clsx("mt-8 font-bold border-y-2 border-grey-200")}
+          >
+            <TabsTrigger
+              value="event"
+              className={clsx("text-poppy-500 border-b-2 border-b-poppy-500")}
+            >
+              <p className={clsx("py-2")}>Event yang diikuti</p>
+              <div className={clsx("border-r-2 border-gray-200 w-full")} />
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="event">
+  
+          </TabsContent>
+        </Tabs>
+
+        <div className="flex justify-between mt-8">
+          <div className="flex space-x-2 items-center bg-white border border-gray-200 rounded-md px-2 py-2">
+            <MagnifyingGlassIcon className={clsx("w-5 h-5 text-gray-800")} />
             <input
+              className={clsx(
+                "focus:outline-none font-medium text-base text-gray-900"
+              )}
               placeholder="Cari nama event disini"
-              className="focus:outline-none placeholder-gray-400 m-0 p-0 w-full text-sm font-normal"
             />
           </div>
-          <div className="flex w-full justify-end mt-4 space-x-2">
-            <div className="flex rounded-xl bg-white focus:outline-none p-2 items-center space-x-1">
-              <select className="bg-white focus:outline-none text-sm font-normal md:text-base md:font-normal">
-                <option value="Filter">Filter</option>
-              </select>
-              <ChevronDownIcon className="text-black w-4 h-4 md:w-6 md:h-6" />
-            </div>
-            <div className="flex rounded-xl bg-white focus:outline-none p-2 items-center space-x-1">
-              <select className="bg-white focus:outline-none text-sm font-normal md:text-base md:font-normal">
-                <option value="Urutkan">Urutkan</option>
-              </select>
-              <ChevronDownIcon className="text-black w-4 h-4 md:w-6 md:h-6" />
-            </div>
+          <div className="flex space-x-2 items-center">
+            <Select>
+              <SelectTrigger className="space-x-2">
+                <SelectValue placeholder="Filter" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Filter 1</SelectLabel>
+                  <SelectItem value="i1">FItem 1</SelectItem>
+                  <SelectItem value="i2">FItem 2</SelectItem>
+                  <SelectItem value="i3">FItem 3</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="space-x-2">
+                <SelectValue placeholder="Urutkan" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Sort 1</SelectLabel>
+                  <SelectItem value="s1">SItem 1</SelectItem>
+                  <SelectItem value="s2">SItem 2</SelectItem>
+                  <SelectItem value="s3">SItem 3</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -197,8 +269,8 @@ const ListEventSection = () => {
               <PaginationLink>3</PaginationLink>
             </PaginationItem>
             {/* <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem> */}
+          <PaginationEllipsis />
+        </PaginationItem> */}
             <PaginationItem>
               <ChevronRightIcon className={clsx("w-5 h-5")} />
             </PaginationItem>
@@ -209,4 +281,4 @@ const ListEventSection = () => {
   );
 };
 
-export default ListEventSection;
+export default DetailProfileSection;

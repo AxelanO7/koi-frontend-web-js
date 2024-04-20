@@ -1,54 +1,28 @@
-import {
-  AcademicCapIcon,
-  BriefcaseIcon,
-  PaperAirplaneIcon,
-  RocketLaunchIcon,
-  Squares2X2Icon,
-  TrophyIcon,
-} from "@heroicons/react/24/outline";
+import { KeyIcon, UserIcon } from "@heroicons/react/24/outline";
 
 import { useState } from "react";
 
 const SidebarSection = () => {
-  const SidebarItems = [
+  const SidebarItem = [
     {
-      id: "all",
-      text: "Semua Event",
-      icon: Squares2X2Icon,
+      id: "my_profile",
+      text: "Profile Saya",
+      icon: UserIcon,
     },
     {
-      id: "seminar",
-      text: "Seminar",
-      icon: AcademicCapIcon,
-    },
-    {
-      id: "contest",
-      text: "Lomba",
-      icon: TrophyIcon,
-    },
-    {
-      id: "entertainment",
-      text: "Hiburan",
-      icon: PaperAirplaneIcon,
-    },
-    {
-      id: "workshop",
-      text: "Workshop",
-      icon: BriefcaseIcon,
-    },
-    {
-      id: "social_activities",
-      text: "Kegiatan Sosial",
-      icon: RocketLaunchIcon,
+      id: "change_password",
+      text: "Ganti Password",
+      icon: KeyIcon,
     },
   ];
 
-  const [activeCategorySidebar, setActiveCategorySidebar] = useState("all");
+  const [activeCategorySidebar, setActiveCategorySidebar] =
+    useState("my_profile");
 
   return (
     <>
       <div className="space-y-4">
-        {SidebarItems.map((item, index) => (
+        {SidebarItem.map((item, index) => (
           <div
             key={index}
             className={`${

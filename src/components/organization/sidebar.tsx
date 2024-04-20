@@ -9,8 +9,8 @@ import {
 
 import { useState } from "react";
 
-const SidebarSection = () => {
-  const SidebarItems = [
+const Sidebar = () => {
+  const SidebarItem = [
     {
       id: "all",
       text: "Semua Event",
@@ -48,7 +48,7 @@ const SidebarSection = () => {
   return (
     <>
       <div className="space-y-4">
-        {SidebarItems.map((item, index) => (
+        {SidebarItem.map((item, index) => (
           <div
             key={index}
             className={`${
@@ -82,4 +82,4 @@ const SidebarSection = () => {
   );
 };
 
-export default SidebarSection;
+export default Sidebar;

@@ -33,6 +33,7 @@ module.exports = {
           900: "#782424",
           950: "#410e0e",
         },
+        cgrey: "#6D6D6D",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

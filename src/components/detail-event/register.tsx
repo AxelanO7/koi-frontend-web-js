@@ -1,4 +1,4 @@
-const Register = () => {
+const RegisterSection = () => {
   return (
     <>
       <div className="border border-gray-300 rounded-lg p-4 w-[320px] h-min">
@@ -27,4 +27,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterSection;

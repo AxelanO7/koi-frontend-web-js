@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import imgCalender from "../../assets/images/calender.png";
 
-const MyEvent = () => {
+const MyEventSection = () => {
   const isTrue = true;
   const isLogged = isTrue ? 0 : 1;
   return (
@@ -86,4 +86,4 @@ const MyEvent = () => {
   );
 };
 
-export default MyEvent;
+export default MyEventSection;

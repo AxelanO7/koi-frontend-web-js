@@ -10,6 +10,8 @@ import ResetPassword from "./pages/auth/reset_password";
 import HomePage from "./pages/user/home-page";
 import Organization from "./pages/user/organization";
 import DetailEvent from "./pages/user/detail-event";
+import EventPage from "./pages/user/register";
+import ProfilePage from "./pages/user/profile/profile";
 
 function App() {
   return (
@@ -30,6 +32,11 @@ function App() {
         <Route path="/home-page" element={<HomePage />} />
         <Route path="/detail-event" element={<DetailEvent />} />
         <Route path="/organization" element={<Organization />} />
+
+        {/* event */}
+        <Route path="/event/register" element={<EventPage />} />
+
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

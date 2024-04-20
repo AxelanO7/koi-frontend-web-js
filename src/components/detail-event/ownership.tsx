@@ -1,4 +1,4 @@
-const Ownership = () => {
+const OwnershipSection = () => {
   return (
     <>
       <div className="space-y-2">
@@ -23,4 +23,4 @@ const Ownership = () => {
   );
 };
 
-export default Ownership;
+export default OwnershipSection;
