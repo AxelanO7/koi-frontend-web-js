@@ -12,6 +12,7 @@ import Organization from "./pages/user/organization";
 import DetailEvent from "./pages/user/detail-event";
 import EventPage from "./pages/user/register";
 import ProfilePage from "./pages/user/profile/profile";
+import EditProfilePage from "./pages/user/profile/edit-profile";
 
 function App() {
   return (
@@ -36,7 +37,9 @@ function App() {
         {/* event */}
         <Route path="/event/register" element={<EventPage />} />
 
+        {/* profile */}
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/edit-profile" element={<EditProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -200,9 +200,7 @@ const DetailProfileSection = () => {
               <div className={clsx("border-r-2 border-gray-200 w-full")} />
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="event">
-  
-          </TabsContent>
+          <TabsContent value="event"></TabsContent>
         </Tabs>
 
         <div className="flex justify-between mt-8">
