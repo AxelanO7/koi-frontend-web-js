@@ -1,5 +1,5 @@
-import EditPhotoSection from "@/components/profile/edit-photo-section";
-import InputEditProfileSection from "@/components/profile/input-edit-profile";
+import EditPhotoSection from "@/components/user/profile/edit-photo-section";
+import InputEditProfileSection from "@/components/user/profile/input-edit-profile";
 import BaseLayout from "@/layouts/base";
 
 const EditProfile = () => {

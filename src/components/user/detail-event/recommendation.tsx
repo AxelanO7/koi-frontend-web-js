@@ -1,20 +1,10 @@
-import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
-import EventSearchImage from "../../assets/images/event_search.png";
-import { EventItemProps } from "../../types/event";
-import EventItem from "./event-item";
 import clsx from "clsx";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-} from "@/shadcn/components/ui/pagination";
+import { ScrollArea, Scrollbar } from "@radix-ui/react-scroll-area";
+import EventItem from "./event-item";
+import { EventItemProps } from "@/types/event";
+import { Button } from "@/shadcn/components/ui/button";
 
-const ListEventSection = () => {
+const RecommendationSection = () => {
   const listData: EventItemProps[] = [
     {
       id: 1,
@@ -37,7 +27,7 @@ const ListEventSection = () => {
       },
     },
     {
-      id: 2,
+      id: 1,
       ormawa_id: 1,
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
@@ -57,7 +47,7 @@ const ListEventSection = () => {
       },
     },
     {
-      id: 3,
+      id: 1,
       ormawa_id: 1,
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
@@ -77,7 +67,7 @@ const ListEventSection = () => {
       },
     },
     {
-      id: 4,
+      id: 1,
       ormawa_id: 1,
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
@@ -97,7 +87,7 @@ const ListEventSection = () => {
       },
     },
     {
-      id: 5,
+      id: 1,
       ormawa_id: 1,
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
@@ -117,7 +107,7 @@ const ListEventSection = () => {
       },
     },
     {
-      id: 6,
+      id: 1,
       ormawa_id: 1,
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
@@ -140,73 +130,29 @@ const ListEventSection = () => {
 
   return (
     <>
-      <div className="w-full">
-        <div
-          className="rounded-lg bg-cover bg-center bg-no-repeat p-4"
+      <div>
+        <div className="flex justify-between mt-8">
+          <p className={clsx("font-semibold text-lg")}>
+            Rekomendasi Event Lainnya
+          </p>
+          <Button className={clsx("bg-poppy-500 mr-4")}>Lihat Semua</Button>
+        </div>
+        <ScrollArea
+          className="rounded-md whitespace-nowrap overflow-x-auto mt-4"
           style={{
-            backgroundImage: `url(${EventSearchImage})`,
+            scrollbarWidth: "none",
           }}
         >
-          <p className="text-base font-bold md:text-2xl md:font-bold text-white">
-            Mau Ikut Event Apa Hari Ini
-          </p>
-          <div className="flex items-center p-2 mt-2 rounded-lg space-x-3 bg-white">
-            <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
-            <input
-              placeholder="Cari nama event disini"
-              className="focus:outline-none placeholder-gray-400 m-0 p-0 w-full text-sm font-normal"
-            />
+          <div className={clsx("mt-4 flex space-x-4 w-max")}>
+            {listData.map((item) => (
+              <EventItem key={item.id} item={item} />
+            ))}
           </div>
-          <div className="flex w-full justify-end mt-4 space-x-2">
-            <div className="flex rounded-xl bg-white focus:outline-none p-2 items-center space-x-1">
-              <select className="bg-white focus:outline-none text-sm font-normal md:text-base md:font-normal">
-                <option value="Filter">Filter</option>
-              </select>
-              <ChevronDownIcon className="text-black w-4 h-4 md:w-6 md:h-6" />
-            </div>
-            <div className="flex rounded-xl bg-white focus:outline-none p-2 items-center space-x-1">
-              <select className="bg-white focus:outline-none text-sm font-normal md:text-base md:font-normal">
-                <option value="Urutkan">Urutkan</option>
-              </select>
-              <ChevronDownIcon className="text-black w-4 h-4 md:w-6 md:h-6" />
-            </div>
-          </div>
-        </div>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {listData.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-lg shadow-sm overflow-clip"
-            >
-              <EventItem item={item} />
-            </div>
-          ))}
-        </div>
-        <Pagination className={clsx("mt-8")}>
-          <PaginationContent>
-            <PaginationItem>
-              <ChevronLeftIcon className={clsx("w-5 h-5")} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive>2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>3</PaginationLink>
-            </PaginationItem>
-            {/* <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem> */}
-            <PaginationItem>
-              <ChevronRightIcon className={clsx("w-5 h-5")} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+          <Scrollbar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </>
   );
 };
 
-export default ListEventSection;
+export default RecommendationSection;

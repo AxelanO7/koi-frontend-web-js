@@ -3,6 +3,7 @@ export interface BaseLayoutProps {
   isAuthPage?: boolean;
   isPaddingHeader?: boolean;
   isPaddingFooter?: boolean;
+  backgroundColor?: string;
 }
 
 export interface HeaderFooterProps {

@@ -8,15 +8,21 @@ const BaseLayout = ({
   isAuthPage = false,
   isPaddingHeader: isPaddingHeader = true,
   isPaddingFooter: isPaddingFooter = true,
+  backgroundColor: backgroundColor = "bg-gray-50",
 }: BaseLayoutProps) => {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gray-50 flex flex-col justify-between">
+    <div
+      className={clsx(
+        "min-h-screen overflow-x-hidden flex flex-col justify-between"
+      )}
+    >
       <Header isAuthPage={isAuthPage} />
       <div
         className={clsx(
           "flex-1",
           isPaddingHeader === true ? "pt-12" : "",
-          isPaddingFooter === true ? "pb-12" : ""
+          isPaddingFooter === true ? "pb-12" : "",
+          backgroundColor
         )}
       >
         {children}

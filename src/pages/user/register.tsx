@@ -1,4 +1,4 @@
-import RegisteredEventSection from "@/components/event/registered";
+import RegisteredEventSection from "@/components/user/event/registered";
 import BaseLayout from "@/layouts/base";
 
 const EventPage = () => {

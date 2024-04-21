@@ -1,5 +1,5 @@
-import DetailProfileSection from "@/components/profile/detail-profile";
-import SidebarSection from "@/components/profile/sidebar";
+import DetailProfileSection from "@/components/user/profile/detail-profile";
+import SidebarSection from "@/components/user/profile/sidebar";
 import BaseLayout from "@/layouts/base";
 
 const Profile = () => {

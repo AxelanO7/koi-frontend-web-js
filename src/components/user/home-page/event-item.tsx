@@ -1,5 +1,5 @@
 import { CalendarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
-import { EventItemProps } from "../../types/event";
+import { EventItemProps } from "../../../types/event";
 
 const EventItem = ({ item }: { item: EventItemProps }) => {
   const price = item.harga_tiket.toLocaleString("id-ID", {

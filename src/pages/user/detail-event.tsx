@@ -1,8 +1,8 @@
-import RecommendationSection from "../../components/detail-event/recommendation";
-import BreadCrumb from "../../components/detail-event/breadcrumb";
-import DescriptionSection from "../../components/detail-event/description";
-import OwnershipSection from "../../components/detail-event/ownership";
-import RegisterSection from "../../components/detail-event/register";
+import RecommendationSection from "../../components/user/detail-event/recommendation";
+import BreadCrumb from "../../components/user/detail-event/breadcrumb";
+import DescriptionSection from "../../components/user/detail-event/description";
+import OwnershipSection from "../../components/user/detail-event/ownership";
+import RegisterSection from "../../components/user/detail-event/register";
 import BaseLayout from "../../layouts/base";
 
 const DetailEvent = () => {

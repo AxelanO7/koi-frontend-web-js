@@ -1,6 +1,6 @@
-import Banner from "@/components/organization/banner";
-import EventItem from "@/components/organization/event-item";
-import SidebarSection from "@/components/organization/sidebar";
+import Banner from "@/components/user/organization/banner";
+import EventItem from "@/components/user/organization/event-item";
+import SidebarSection from "@/components/user/organization/sidebar";
 import BaseLayout from "@/layouts/base";
 import {
   Pagination,
