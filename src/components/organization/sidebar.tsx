@@ -9,7 +9,7 @@ import {
 
 import { useState } from "react";
 
-const Sidebar = () => {
+const SidebarSection = () => {
   const SidebarItem = [
     {
       id: "all",
@@ -82,4 +82,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarSection;

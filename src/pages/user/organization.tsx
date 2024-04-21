@@ -1,6 +1,6 @@
 import Banner from "@/components/organization/banner";
 import EventItem from "@/components/organization/event-item";
-import Sidebar from "@/components/organization/sidebar";
+import SidebarSection from "@/components/organization/sidebar";
 import BaseLayout from "@/layouts/base";
 import {
   Pagination,
@@ -189,7 +189,7 @@ const Organization = () => {
             </TabsList>
             <TabsContent value="event">
               <div className="flex space-x-8">
-                <Sidebar />
+                <SidebarSection />
                 <div className={clsx("w-full")}>
                   <div className="flex justify-between">
                     <div className="flex space-x-2 items-center bg-white border border-gray-200 rounded-md px-2 py-2">
