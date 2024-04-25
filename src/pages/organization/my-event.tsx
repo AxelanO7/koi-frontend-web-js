@@ -3,7 +3,7 @@ import SidebarDashboardSection from "@/components/organization/sidebar-dashboard
 import BaseLayout from "@/layouts/base";
 import clsx from "clsx";
 
-const index = () => {
+const MyEventOrganization = () => {
   return (
     <>
       <BaseLayout
@@ -20,4 +20,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default MyEventOrganization;

@@ -12,11 +12,13 @@ import HomePagePage from "./pages/user/home-page";
 import OrganizationPage from "./pages/user/organization";
 import DetailEventPage from "./pages/user/detail-event";
 import EventPage from "./pages/user/register";
+import RegisteringEvent from "./components/user/event/registering";
 import ProfilePage from "./pages/user/profile/profile";
 import EditProfilePage from "./pages/user/profile/edit-profile";
 import ResetPasswordProfilePage from "./pages/user/profile/forgot_password";
 // organization
-import OrganizationDashboardPage from "./pages/organization/index";
+import OrganizationDashboardPage from "./pages/organization/my-event";
+import OrganizationSubmissionPage from "./pages/organization/submission";
 
 function App() {
   return (
@@ -37,7 +39,8 @@ function App() {
         <Route path="/home-page" element={<HomePagePage />} />
         <Route path="/detail-event" element={<DetailEventPage />} />
         <Route path="/organization" element={<OrganizationPage />} />
-        <Route path="/event/register" element={<EventPage />} />
+        <Route path="/event/register" element={<RegisteringEvent />} />
+        <Route path="/event/register/:id" element={<EventPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route
@@ -49,6 +52,10 @@ function App() {
         <Route
           path="/organization/dashboard"
           element={<OrganizationDashboardPage />}
+        />
+        <Route
+          path="/organization/submission"
+          element={<OrganizationSubmissionPage />}
         />
       </Routes>
     </BrowserRouter>
