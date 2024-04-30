@@ -8,9 +8,10 @@ import {
 } from "@/shadcn/components/ui/popover";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
+import { Switch } from "@/shadcn/components/ui/switch";
 
 interface ContactPerson {
   name: string;
@@ -31,7 +32,7 @@ enum paymentMethodEnum {
   DANA = "DANA",
 }
 
-const SubmissionEventOrganization = () => {
+const SubmissedEventOrganization = () => {
   const [date, setDate] = useState<Date>();
   const selectedFile = (e: unknown) => {
     console.log(e.target.files[0]);
@@ -79,6 +80,14 @@ const SubmissionEventOrganization = () => {
     ]);
   };
 
+  enum listApplicationStatus {
+    REVIEW = "Review",
+    REJECTED = "Rejected",
+    APPROVED = "Approved",
+  }
+
+  const applicationStatus: listApplicationStatus = listApplicationStatus.REVIEW;
+
   return (
     <>
       <BaseLayout>
@@ -89,9 +98,62 @@ const SubmissionEventOrganization = () => {
             aturan. Pastikan informasi event yang kamu selenggarakan tidak
             melanggar aturan
           </p>
+          <div
+            className={clsx(
+              "bg-white rounded-lg px-8 py-8 shadow-lg mt-8  space-y-8"
+            )}
+          >
+            <div className="flex justify-between items-center">
+              <p className={clsx("font-semibold text-base")}>
+                Status Pengajuan
+              </p>
+              <Button
+                className={clsx(
+                  applicationStatus === listApplicationStatus.REVIEW
+                    ? "bg-blue-500"
+                    : applicationStatus === listApplicationStatus.REJECTED
+                    ? "bg-danger"
+                    : applicationStatus === listApplicationStatus.REVIEW
+                    ? "bg-success"
+                    : "bg-blue-500",
+                  "rounded-2xl"
+                )}
+              >
+                {applicationStatus === listApplicationStatus.REVIEW
+                  ? "Ditinjau"
+                  : applicationStatus === listApplicationStatus.REJECTED
+                  ? "Ditolak"
+                  : applicationStatus === listApplicationStatus.APPROVED
+                  ? "Disetujui"
+                  : "Ditinjau"}
+              </Button>
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                <p className={clsx("font-semibold text-base")}>
+                  Status Pengajuan
+                </p>
+                <p className={clsx("font-normal text-sm text-gray-400")}>
+                  Manajemen untuk buka atau tutup pendaftaran event
+                </p>
+              </div>
+              <Switch className={clsx("w-12 h-6")} />
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                <p className={clsx("font-semibold text-base")}>
+                  Status Absensi
+                </p>
+                <p className={clsx("font-normal text-sm text-gray-400")}>
+                  Manajemen untuk buka atau tutup absensi kehadiran
+                </p>
+              </div>
+              <Switch className={clsx("w-12 h-6")} />
+            </div>
+          </div>
           {/* Informasi Event */}
           <div className={clsx("bg-white rounded-lg px-8 py-8 shadow-lg mt-8")}>
-            <p className={clsx("font-medium text-lg")}>Informasi Event</p>
+            <p className={clsx("font-semibold text-lg")}>Informasi Event</p>
             <p className={clsx("font-medium text-sm mt-8")}>Nama Event</p>
             <input
               type="text"
@@ -451,4 +513,4 @@ const SubmissionEventOrganization = () => {
   );
 };
 
-export default SubmissionEventOrganization;
+export default SubmissedEventOrganization;

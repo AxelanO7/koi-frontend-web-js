@@ -19,6 +19,7 @@ import ResetPasswordProfilePage from "./pages/user/profile/forgot_password";
 // organization
 import OrganizationDashboardPage from "./pages/organization/my-event";
 import OrganizationSubmissionPage from "./pages/organization/submission";
+import OrganizationSubmissedPage from "./pages/organization/submissed";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
         <Route
           path="/organization/submission"
           element={<OrganizationSubmissionPage />}
+        />
+        <Route
+          path="/organization/submission/:id"
+          element={<OrganizationSubmissedPage />}
         />
       </Routes>
     </BrowserRouter>
