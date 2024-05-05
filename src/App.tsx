@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NotFound from "./pages/not_found";
+import NotFound from "./pages/not-found";
 
 // auth
 import SigninPage from "./pages/auth/sign-in";
@@ -15,11 +15,13 @@ import EventPage from "./pages/user/register";
 import RegisteringEvent from "./components/user/event/registering";
 import ProfilePage from "./pages/user/profile/profile";
 import EditProfilePage from "./pages/user/profile/edit-profile";
-import ResetPasswordProfilePage from "./pages/user/profile/forgot_password";
+import ResetPasswordProfilePage from "./pages/user/profile/forgot-password";
 // organization
-import OrganizationDashboardPage from "./pages/organization/my-event";
+import OrganizationDashboardPage from "./pages/organization/dashboard";
 import OrganizationSubmissionPage from "./pages/organization/submission";
 import OrganizationSubmissedPage from "./pages/organization/submissed";
+import DetailParticipantPage from "./pages/organization/detail-participant";
+import DetailAbsentPage from "./pages/organization/detail-absent";
 
 function App() {
   return (
@@ -53,6 +55,14 @@ function App() {
         <Route
           path="/organization/dashboard"
           element={<OrganizationDashboardPage />}
+        />
+        <Route
+          path="/organization/detail-participant/:id"
+          element={<DetailParticipantPage />}
+        />
+        <Route
+          path="/organization/detail-absent/:id"
+          element={<DetailAbsentPage />}
         />
         <Route
           path="/organization/submission"

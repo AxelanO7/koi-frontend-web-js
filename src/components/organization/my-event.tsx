@@ -75,13 +75,13 @@ const MyEventSection = () => {
     <>
       <div className={clsx("w-full p-4 bg-gray-50")}>
         <div className="flex justify-between items-center">
-          <p className={clsx("font-medium text-xl")}>Event Saya</p>
+          <p className={clsx("font-semibold text-xl")}>Event Saya</p>
           <Button className={clsx("bg-poppy-500")}>
             <PlusIcon className="w-6 h-6 mr-2" />
             Ajukan Event
           </Button>
         </div>
-        <div className="flex space-x-4 mt-8">
+        <div className="flex space-x-4 mt-4">
           <div className="w-full bg-white rounded-md py-4">
             <div className="flex space-x-4 justify-center">
               <img src={ImgProposedEvent} alt="Proposed Event" />

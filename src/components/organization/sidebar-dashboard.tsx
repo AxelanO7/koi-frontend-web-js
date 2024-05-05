@@ -39,7 +39,7 @@ const SidebarDashboardSection = () => {
   const [activeCategorySidebar, setActiveCategorySidebar] =
     useState("my_event");
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pl-4">
       {SidebarItem.map((item, index) => (
         <div
           key={index}
@@ -47,7 +47,7 @@ const SidebarDashboardSection = () => {
             activeCategorySidebar === item.id.toLowerCase()
               ? "bg-poppy-50"
               : null
-          } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full`}
+          } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full px-4`}
           onClick={() => setActiveCategorySidebar(item.id.toLowerCase())}
         >
           <item.icon
