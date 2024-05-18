@@ -1,10 +1,17 @@
-import { useRecoilValue } from "recoil";
 import logo from "../assets/images/logo.png";
 import { HeaderFooterProps } from "../types/layout";
-import { isLogged } from "../core/store";
 
 const Header = ({ isAuthPage: isAuthPage }: HeaderFooterProps) => {
-  const logged = useRecoilValue(isLogged);
+  const logged = localStorage.getItem("token");
+  //useRecoilValue(isLogged);
+
+  const handleLogin = () => {
+    window.location.href = "/login";
+  };
+
+  const handleRegister = () => {
+    window.location.href = "/register";
+  };
 
   return (
     <>
@@ -21,10 +28,16 @@ const Header = ({ isAuthPage: isAuthPage }: HeaderFooterProps) => {
             ) : (
               <>
                 <div className="flex space-x-4 justify-between">
-                  <button className="bg-white px-4 py-2 rounded-md border border-poppy-500 text-poppy-500 hover:bg-slate-500 hover:text-white">
+                  <button
+                    className="bg-white px-4 py-2 rounded-md border border-poppy-500 text-poppy-500 hover:bg-slate-500 hover:text-white hover:border-none"
+                    onClick={handleLogin}
+                  >
                     Login
                   </button>
-                  <button className="bg-poppy-500 text-white px-4 py-2 rounded-md hover:bg-slate-500 hover:text-white border border-poppy-500">
+                  <button
+                    className="bg-poppy-500 text-white px-4 py-2 rounded-md hover:bg-slate-500 hover:text-white border border-poppy-500 hover:border-none"
+                    onClick={handleRegister}
+                  >
                     Register
                   </button>
                 </div>
