@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 const BaseLayout = ({
   children,
-  isAuthPage = false,
+  isAuthPage = localStorage.getItem("token") ? false : true,
   isPaddingHeader: isPaddingHeader = true,
   isPaddingFooter: isPaddingFooter = true,
   backgroundColor: backgroundColor = "bg-gray-50",

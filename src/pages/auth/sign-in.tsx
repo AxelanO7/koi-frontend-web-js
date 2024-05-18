@@ -45,10 +45,12 @@ const Signin = () => {
           return;
         }
         const role = res.data.data.role;
-        localStorage.setItem("token", res.data.data.token);
+        const token = res.data.token;
+        localStorage.setItem("token", token);
         localStorage.setItem("role", role);
+        const nextUrl = role == "student" ? "/" : `/${role}/home-page`;
         swal.fire("Berhasil!", "Anda berhasil masuk", "success").then(() => {
-          window.location.href = `/${role}/home-page`;
+          window.location.href = nextUrl;
         });
       })
       .catch((err) => {

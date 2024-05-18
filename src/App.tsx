@@ -8,7 +8,7 @@ import ForgotPasswordPage from "./pages/auth/forgot-password";
 import CheckEmailPage from "./pages/auth/check-email";
 import ResetPasswordAuthPage from "./pages/auth/reset-password";
 // user
-import HomePagePage from "./pages/user/home-page";
+import HomePage from "./pages/user/home-page";
 import OrganizationPage from "./pages/user/organization";
 import DetailEventPage from "./pages/user/detail-event";
 import EventPage from "./pages/user/register";
@@ -34,7 +34,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<SigninPage />} />
+        <Route path="/" element={<HomePage />} />
         {/* <Route path="/" element={<Login />} /> */}
 
         {/* auth */}
@@ -45,15 +45,15 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordAuthPage />} />
 
         {/* student */}
-        <Route path="/student/home-page" element={<HomePagePage />} />
-        <Route path="/student/detail-event" element={<DetailEventPage />} />
-        <Route path="/student/organization" element={<OrganizationPage />} />
-        <Route path="/student/event/register" element={<RegisteringEvent />} />
-        <Route path="/student/event/register/:id" element={<EventPage />} />
-        <Route path="/student/profile" element={<ProfilePage />} />
-        <Route path="/student/edit-profile" element={<EditProfilePage />} />
+        <Route path="/home-page" element={<HomePage />} />
+        <Route path="/detail-event" element={<DetailEventPage />} />
+        <Route path="/organization" element={<OrganizationPage />} />
+        <Route path="/event/register" element={<RegisteringEvent />} />
+        <Route path="/event/register/:id" element={<EventPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route
-          path="/student/profile/reset-password"
+          path="/profile/reset-password"
           element={<ResetPasswordProfilePage />}
         />
 
