@@ -4,15 +4,18 @@ import MyEventSection from "@/components/organization/my-event";
 import MyProfileSection from "@/components/organization/my-profile/my-profile";
 import ParticipantSection from "@/components/organization/participant";
 import SidebarDashboardSection from "@/components/organization/sidebar-dashboard";
-import { activeSidebarOrganization } from "@/core/store";
+import EventOrganizationSection from "@/components/student-affair/event-organization";
+import { activeSidebarStudentAffair } from "@/core/store";
 import BaseLayout from "@/layouts/base";
 import clsx from "clsx";
 import { useRecoilValue } from "recoil";
 
-const DashboardOrganization = () => {
-  const activeCategorySidebar = useRecoilValue(activeSidebarOrganization);
+const DashboardStudentAffair = () => {
+  const activeCategorySidebar = useRecoilValue(activeSidebarStudentAffair);
   const getPageActive = () => {
     switch (activeCategorySidebar) {
+      case "event_organization":
+        return <EventOrganizationSection />;
       case "my_event":
         return <MyEventSection />;
       case "participant_event":
@@ -41,4 +44,4 @@ const DashboardOrganization = () => {
   );
 };
 
-export default DashboardOrganization;
+export default DashboardStudentAffair;

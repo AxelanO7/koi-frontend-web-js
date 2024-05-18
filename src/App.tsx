@@ -22,6 +22,12 @@ import OrganizationSubmissionPage from "./pages/organization/submission";
 import OrganizationSubmissedPage from "./pages/organization/submissed";
 import DetailParticipantPage from "./pages/organization/detail-participant";
 import DetailAbsentPage from "./pages/organization/detail-absent";
+// student affair
+import StudentAffairDashboardPage from "./pages/student-affair/dashboard";
+import StudentAffairSubmissionPage from "./pages/student-affair/submission-my-event";
+import StudentAffairSubmissedPage from "./pages/student-affair/submissed-my-event";
+import StudentAffairDetailParticipantPage from "./pages/student-affair/detail-participant";
+import StudentAffairDetailAbsentPage from "./pages/student-affair/detail-absent";
 
 function App() {
   return (
@@ -38,16 +44,16 @@ function App() {
         <Route path="/check-email" element={<CheckEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordAuthPage />} />
 
-        {/* user */}
-        <Route path="/home-page" element={<HomePagePage />} />
-        <Route path="/detail-event" element={<DetailEventPage />} />
-        <Route path="/organization" element={<OrganizationPage />} />
-        <Route path="/event/register" element={<RegisteringEvent />} />
-        <Route path="/event/register/:id" element={<EventPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/edit-profile" element={<EditProfilePage />} />
+        {/* student */}
+        <Route path="/student/home-page" element={<HomePagePage />} />
+        <Route path="/student/detail-event" element={<DetailEventPage />} />
+        <Route path="/student/organization" element={<OrganizationPage />} />
+        <Route path="/student/event/register" element={<RegisteringEvent />} />
+        <Route path="/student/event/register/:id" element={<EventPage />} />
+        <Route path="/student/profile" element={<ProfilePage />} />
+        <Route path="/student/edit-profile" element={<EditProfilePage />} />
         <Route
-          path="/profile/reset-password"
+          path="/student/profile/reset-password"
           element={<ResetPasswordProfilePage />}
         />
 
@@ -71,6 +77,28 @@ function App() {
         <Route
           path="/organization/submission/:id"
           element={<OrganizationSubmissedPage />}
+        />
+
+        {/* student affair */}
+        <Route
+          path="/student-affair/dashboard"
+          element={<StudentAffairDashboardPage />}
+        />
+        <Route
+          path="/student-affair/detail-participant/:id"
+          element={<StudentAffairDetailParticipantPage />}
+        />
+        <Route
+          path="/student-affair/detail-absent/:id"
+          element={<StudentAffairDetailAbsentPage />}
+        />
+        <Route
+          path="/student-affair/submission"
+          element={<StudentAffairSubmissionPage />}
+        />
+        <Route
+          path="/student-affair/submission/:id"
+          element={<StudentAffairSubmissedPage />}
         />
       </Routes>
     </BrowserRouter>

@@ -1,5 +1,4 @@
-import { activeSidebarStudentAffair } from "@/core/store";
-import { TicketIcon } from "@heroicons/react/16/solid";
+import { activeSidebarOrganization } from "@/core/store";
 import {
   ArrowLeftEndOnRectangleIcon,
   CalendarDaysIcon,
@@ -11,11 +10,6 @@ import { useRecoilState } from "recoil";
 
 const SidebarDashboardSection = () => {
   const SidebarItem = [
-    {
-      id: "event_organization",
-      text: "Event Ormawa",
-      icon: TicketIcon,
-    },
     {
       id: "my_event",
       text: "Event Saya",
@@ -44,7 +38,7 @@ const SidebarDashboardSection = () => {
   ];
 
   const [activeCategorySidebar, setActiveCategorySidebar] = useRecoilState(
-    activeSidebarStudentAffair
+    activeSidebarOrganization
   );
 
   return (
