@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shadcn/components/ui/select";
-import { EventItemProps } from "@/types/event";
+import { EventProps } from "@/types/event";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -29,7 +29,7 @@ import { useState } from "react";
 
 const Organization = () => {
   const [activeTab, setActiveTab] = useState("event");
-  const listData: EventItemProps[] = [
+  const listData: EventProps[] = [
     {
       id: 1,
       ormawa_id: 1,

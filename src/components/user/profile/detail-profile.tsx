@@ -7,7 +7,7 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import EventItem from "../home-page/event-item";
-import { EventItemProps } from "@/types/event";
+import { EventProps } from "@/types/event";
 import {
   Select,
   SelectContent,
@@ -26,16 +26,17 @@ import {
 import { Button } from "@/shadcn/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
+import { useEffect, useState } from "react";
 
 const DetailProfileSection = () => {
-  const listData: EventItemProps[] = [
+  const listData: EventProps[] = [
     {
       id: 1,
       ormawa_id: 1,
       nama_kegiatan:
         "SEMINAR NASIONAL HIMA-TI INSTIKI 2023 : How Social Media Shaping Society",
       harga_tiket: 240000,
-      its_open: true,
+      its_open: 1,
       tanggal_kegiatan: "2024-08-12",
       tingkat_kegiatan: "Nasional",
       detail_kegiatan: {
@@ -55,7 +56,7 @@ const DetailProfileSection = () => {
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
       harga_tiket: 240000,
-      its_open: true,
+      its_open: 1,
       tanggal_kegiatan: "2024-08-12",
       tingkat_kegiatan: "Nasional",
       detail_kegiatan: {
@@ -75,7 +76,7 @@ const DetailProfileSection = () => {
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
       harga_tiket: 240000,
-      its_open: true,
+      its_open: 1,
       tanggal_kegiatan: "2024-08-12",
       tingkat_kegiatan: "Nasional",
       detail_kegiatan: {
@@ -95,7 +96,7 @@ const DetailProfileSection = () => {
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
       harga_tiket: 240000,
-      its_open: true,
+      its_open: 1,
       tanggal_kegiatan: "2024-08-12",
       tingkat_kegiatan: "Nasional",
       detail_kegiatan: {
@@ -115,7 +116,7 @@ const DetailProfileSection = () => {
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
       harga_tiket: 240000,
-      its_open: false,
+      its_open: 2,
       tanggal_kegiatan: "2024-08-12",
       tingkat_kegiatan: "Nasional",
       detail_kegiatan: {
@@ -135,7 +136,7 @@ const DetailProfileSection = () => {
       nama_kegiatan:
         "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
       harga_tiket: 240000,
-      its_open: false,
+      its_open: 2,
       tanggal_kegiatan: "2024-08-12",
       tingkat_kegiatan: "Nasional",
       detail_kegiatan: {
@@ -150,6 +151,10 @@ const DetailProfileSection = () => {
       },
     },
   ];
+
+  const [profile, setProfile] = useState;
+
+  useEffect(() => {});
 
   return (
     <>

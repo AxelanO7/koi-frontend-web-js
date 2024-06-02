@@ -3,7 +3,6 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import BaseLayout from "../../layouts/base";
 import axios from "axios";
 import swal from "sweetalert2";
-import clsx from "clsx";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -53,7 +52,8 @@ const Signup = () => {
       .post("http://localhost:4000/user/public/register", {
         // nim: 1234567890,
         username: username,
-        role: "student",
+        // role: "mahasiswa",
+        role: "ormawa",
         // nama_ormawa: "nama_ormawa",
         // status: 0,
         password: password,

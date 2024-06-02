@@ -3,6 +3,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import BaseLayout from "../../layouts/base";
 import axios from "axios";
 import swal from "sweetalert2";
+import { getBaseUrl } from "@/helpers/api";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,10 +36,14 @@ const Signin = () => {
       return;
     }
     axios
-      .post("http://localhost:4000/user/public/login", {
-        username: username,
-        password: password,
-      })
+      .post(
+        `
+        ${getBaseUrl()}/user/public/login`,
+        {
+          username: username,
+          password: password,
+        }
+      )
       .then((res) => {
         if (res.data.status === "error") {
           swal.fire("Gagal!", res.data.message, "error");

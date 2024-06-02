@@ -1,9 +1,9 @@
-export interface EventItemProps {
+export interface EventProps {
   id: number;
   ormawa_id: number;
   nama_kegiatan: string;
   harga_tiket: number;
-  its_open: boolean;
+  its_open: number;
   tanggal_kegiatan: string;
   tingkat_kegiatan: string;
   ormawa?: null;
@@ -22,28 +22,28 @@ export interface DetailEventProps {
   deskripsi: string;
   gambar_kegiatan: string;
   file_pengajuan: string;
-  event?: Event;
+  event?: EventProps;
   metode_pembayaran?: TransactionProps;
-  narahubung?: Narahubung;
+  narahubung?: PICProps;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
 }
 
-interface TransactionProps {
+export interface TransactionProps {
   id: number;
   detail_kegiatan_id: number;
   judul: string;
   nama_bank: string;
   no_rekening: string;
-  pemilik_rekening: string;
-  detail_kegiatan: DetailEventProps;
+  pemilik: string;
+  detail_kegiatan?: DetailEventProps;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
 }
 
-interface Narahubung {
+export interface PICProps {
   id: number;
   detail_kegiatan_id: number;
   judul: string;

@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import { ScrollArea, Scrollbar } from "@radix-ui/react-scroll-area";
 import EventItem from "./event-item";
-import { EventItemProps } from "@/types/event";
+import { EventProps } from "@/types/event";
 import { Button } from "@/shadcn/components/ui/button";
 
 const RecommendationSection = () => {
-  const listData: EventItemProps[] = [
+  const listData: EventProps[] = [
     {
       id: 1,
       ormawa_id: 1,

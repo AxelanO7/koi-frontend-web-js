@@ -23,7 +23,8 @@
     /* shad cn */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@sc/*": ["./src/shadcn/*"]
     }
   },
   "include": ["src", "src/components/organization/my-profile/edit-profile.tsx"],

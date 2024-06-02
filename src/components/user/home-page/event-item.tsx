@@ -1,7 +1,7 @@
 import { CalendarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
-import { EventItemProps } from "../../../types/event";
+import { EventProps } from "../../../types/event";
 
-const EventItem = ({ item }: { item: EventItemProps }) => {
+const EventItem = ({ item }: { item: EventProps }) => {
   const price = item.harga_tiket.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -37,7 +37,7 @@ const EventItem = ({ item }: { item: EventItemProps }) => {
             <div className="flex space-x-2 text-white">
               <button
                 className={`
-                ${item.its_open ? "bg-success" : "bg-danger"}
+                ${item.its_open === 1 ? "bg-success" : "bg-danger"}
                  px-2 py-1 rounded-xl font-medium text-sm`}
               >
                 {item.its_open ? "Buka" : "Tutup"}
