@@ -1,4 +1,4 @@
-import { activeSidebarStudentAffair } from "@/core/store";
+import { activeSidebarHomepageStudentAffair } from "@/core/store";
 import { TicketIcon } from "@heroicons/react/16/solid";
 import {
   ArrowLeftEndOnRectangleIcon,
@@ -44,7 +44,7 @@ const SidebarDashboardSection = () => {
   ];
 
   const [activeCategorySidebar, setActiveCategorySidebar] = useRecoilState(
-    activeSidebarStudentAffair
+    activeSidebarHomepageStudentAffair
   );
 
   return (

@@ -5,6 +5,7 @@ import BaseLayout from "@/layouts/base";
 import { DetailEventProps, PaymentProps } from "@/types/event";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const RegisterEventPage = () => {
   const idParam = window.location.pathname.split("/")[3];
@@ -38,6 +39,15 @@ const RegisterEventPage = () => {
         eventByStudents = dataRes;
       })
       .catch((err) => {
+        if (err.response.status === 401) {
+          Swal.fire({
+            icon: "error",
+            title: "Role Unauthorized",
+            text: "Anda tidak memiliki akses ke halaman ini",
+          }).then(() => {
+            window.location.href = "/";
+          });
+        }
         console.log(err);
       });
 

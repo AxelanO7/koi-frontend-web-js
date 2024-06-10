@@ -5,21 +5,27 @@ export const isLogged = atom({
   default: true,
 });
 
-export const activeSidebarHomepage = atom({
+// student
+export const activeSidebarHomepageStudent = atom({
   key: "activeSidebarHomepage",
   default: "all",
 });
+export const activeSidebarProfileStudent = atom({
+  key: "activeSidebarHomepage",
+  default: "my_profile",
+});
 
-export const activeSidebarOrganization = atom({
+// orgnization
+export const activeSidebarHomepageOrganization = atom({
   key: "activeSidebarOrganization",
   default: "my_event",
 });
 
-export const activeSidebarStudentAffair = atom({
+// student affair
+export const activeSidebarHomepageStudentAffair = atom({
   key: "activeSidebarStudentAffair",
   default: "event_organization",
 });
-
 export const activeMyAccountStudentAffair = atom({
   key: "activeMyAccountStudentAffair",
   default: "my_profile",

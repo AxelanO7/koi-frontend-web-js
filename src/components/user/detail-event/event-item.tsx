@@ -17,9 +17,20 @@ const EventItem = ({ item }: { item: EventProps }) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
+  const handleTapRecomendationEvent = (id: string) => {
+    window.location.href = `/event/${id}`;
+  };
+
   return (
     <>
-      <div className="flex space-x-4 bg-white rounded-lg shadow-md">
+      <div
+        className="flex space-x-4 bg-white rounded-lg shadow-md p-4"
+        onClick={() =>
+          handleTapRecomendationEvent(
+            (item.detail_kegiatan?.id || "").toString()
+          )
+        }
+      >
         <img
           src={
             item?.detail_kegiatan?.gambar_kegiatan ||

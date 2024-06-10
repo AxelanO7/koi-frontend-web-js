@@ -1,6 +1,7 @@
+import { activeSidebarProfileStudent } from "@/core/store";
 import { KeyIcon, UserIcon } from "@heroicons/react/24/outline";
 
-import { useState } from "react";
+import { useRecoilState } from "recoil";
 
 const SidebarSection = () => {
   const SidebarItem = [
@@ -16,8 +17,9 @@ const SidebarSection = () => {
     },
   ];
 
-  const [activeCategorySidebar, setActiveCategorySidebar] =
-    useState("my_profile");
+  const [activeCategorySidebar, setActiveCategorySidebar] = useRecoilState(
+    activeSidebarProfileStudent
+  );
 
   return (
     <>
@@ -29,7 +31,7 @@ const SidebarSection = () => {
               activeCategorySidebar === item.id.toLowerCase()
                 ? "bg-poppy-50"
                 : null
-            } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full`}
+            } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full px-4`}
             onClick={() => setActiveCategorySidebar(item.id.toLowerCase())}
           >
             <item.icon

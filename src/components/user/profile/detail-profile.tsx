@@ -27,134 +27,58 @@ import { Button } from "@/shadcn/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
+import { User } from "@/types/user";
+import { getBaseUrl } from "@/helpers/api";
+import axios from "axios";
 
 const DetailProfileSection = () => {
-  const listData: EventProps[] = [
-    {
-      id: 1,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "SEMINAR NASIONAL HIMA-TI INSTIKI 2023 : How Social Media Shaping Society",
-      harga_tiket: 240000,
-      its_open: 1,
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-    {
-      id: 2,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-      harga_tiket: 240000,
-      its_open: 1,
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-    {
-      id: 3,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-      harga_tiket: 240000,
-      its_open: 1,
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-    {
-      id: 4,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-      harga_tiket: 240000,
-      its_open: 1,
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-    {
-      id: 5,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-      harga_tiket: 240000,
-      its_open: 2,
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-    {
-      id: 6,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-      harga_tiket: 240000,
-      its_open: 2,
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-  ];
+  const [profile, setProfile] = useState<User>();
+  const [listData, setListData] = useState<EventProps[]>([]);
 
-  const [profile, setProfile] = useState;
+  const getAllEvents = () => {
+    const baseUrl = getBaseUrl();
+    axios
+      .get(`${baseUrl}/event/public/get-all-events`)
+      .then((response) => {
+        const resData = response.data.data;
+        console.log(response.data);
+        setListData(resData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  useEffect(() => {});
+  const getProfile = () => {
+    const baseUrl = getBaseUrl();
+    axios
+      .get(`${baseUrl}/user/private/profile`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        const dataRes: User = res.data.data;
+        setProfile(dataRes);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleTapEvent = (id: string) => {
+    window.location.href = `/event/${id}`;
+  };
+
+  const handleTapEditProfile = () => {
+    window.location.href = "/edit-profile";
+  };
+
+  useEffect(() => {
+    getAllEvents();
+    getProfile();
+  }, []);
 
   return (
     <>
@@ -169,14 +93,16 @@ const DetailProfileSection = () => {
               />
               <div className="w-8" />
               <div>
-                <h1 className="text-2xl font-semibold">Nama</h1>
+                <h1 className="text-2xl font-semibold">{profile?.username}</h1>
                 <div className="flex items-center">
                   <PhoneIcon className={clsx("w-5 h-5")} />
                   <div className={clsx("w-2")} />
+                  {/* todo: phone number */}
                   <p className={clsx("font-normal text-sm")}>087123456789</p>
                   <div className="w-8" />
                   <EnvelopeIcon className={clsx("w-5 h-5")} />
                   <div className={clsx("w-2")} />
+                  {/* todo: email */}
                   <p className={clsx("font-normal text-sm")}>a@gmail.com</p>
                 </div>
                 <div className="h-2" />
@@ -188,7 +114,10 @@ const DetailProfileSection = () => {
               </div>
             </div>
           </div>
-          <Button className={clsx("bg-poppy-500 text-white")}>
+          <Button
+            className={clsx("bg-poppy-500 text-white")}
+            onClick={handleTapEditProfile}
+          >
             Edit Profil
             <PencilSquareIcon className={clsx("w-5 h-5 ml-2")} />
           </Button>
@@ -253,7 +182,10 @@ const DetailProfileSection = () => {
               key={item.id}
               className="bg-white rounded-lg shadow-sm overflow-clip"
             >
-              <EventItem item={item} />
+              <EventItem
+                item={item}
+                onClick={() => handleTapEvent(item.id.toString())}
+              />
             </div>
           ))}
         </div>

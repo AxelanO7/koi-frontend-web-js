@@ -74,10 +74,10 @@ const DetailEvent = () => {
             {eventById && <BreadCrumb event={eventById} />}
             <div className="mt-4 flex space-x-12">
               {eventById && <OwnershipSection event={eventById} />}
-              <DescriptionSection />
+              {eventById && <DescriptionSection event={eventById} />}
               <RegisterSection />
             </div>
-            <RecommendationSection />
+            {<RecommendationSection events={events} />}
           </div>
         )}
       </BaseLayout>

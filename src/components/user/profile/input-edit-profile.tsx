@@ -1,3 +1,4 @@
+import { getBaseUrl } from "@/helpers/api";
 import { Button } from "@/shadcn/components/ui/button";
 import { Calendar } from "@/shadcn/components/ui/calendar";
 import {
@@ -5,14 +6,39 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/shadcn/components/ui/popover";
+import { User } from "@/types/user";
 import CalendarDaysIcon from "@heroicons/react/24/outline/CalendarDaysIcon";
+import axios from "axios";
 import clsx from "clsx";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const InputEditProfileSection = () => {
   const [date, setDate] = useState<Date>();
   const [gender, setGender] = useState<string>("l");
+  const [profile, setProfile] = useState<User>();
+
+  const getProfile = () => {
+    const baseUrl = getBaseUrl();
+    axios
+      .get(`${baseUrl}/user/private/profile`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        const dataRes: User = res.data.data;
+        setProfile(dataRes);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <>
@@ -24,10 +50,12 @@ const InputEditProfileSection = () => {
             className={clsx(
               "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
             )}
+            defaultValue={profile?.mahasiswa?.username}
             placeholder="Ketikkan nama lengkapmu"
           />
         </div>
         <div className="h-4" />
+        {/* todo: phone number */}
         <div className={clsx("space-y-1 w-full")}>
           <p className={clsx("font-medium text-sm")}>No Telepon</p>
           <input
@@ -38,6 +66,7 @@ const InputEditProfileSection = () => {
           />
         </div>
         <div className="h-4" />
+        {/* todo:  */}
         <div className={clsx("space-y-1 w-full")}>
           <p className={clsx("font-medium text-sm")}>Email</p>
           <input
@@ -82,8 +111,9 @@ const InputEditProfileSection = () => {
             <Button
               className={clsx(
                 "border border-gray-300 rounded-2xl text-sm w-1/2 shadow-none bg-white text-gray-400",
-                gender === "l" ? "bg-black text-white" : ""
+                gender === "l" ? "bg-poppy-500 text-white" : ""
               )}
+              variant={"outline"}
               onClick={() => setGender("l")}
             >
               Laki-laki
@@ -91,8 +121,9 @@ const InputEditProfileSection = () => {
             <Button
               className={clsx(
                 "border border-gray-300 rounded-2xl text-sm w-1/2 shadow-none bg-white text-gray-400",
-                gender === "p" ? "bg-black text-white" : ""
+                gender === "p" ? "bg-poppy-500 text-white" : ""
               )}
+              variant={"outline"}
               onClick={() => setGender("p")}
             >
               Perempuan

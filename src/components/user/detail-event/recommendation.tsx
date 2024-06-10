@@ -4,30 +4,10 @@ import EventItem from "./event-item";
 import { EventProps } from "@/types/event";
 import { Button } from "@/shadcn/components/ui/button";
 
-const RecommendationSection = () => {
-  const listData: EventProps[] = [
-    {
-      id: 1,
-      ormawa_id: 1,
-      nama_kegiatan:
-        "SEMINAR NASIONAL HIMA-TI INSTIKI 2023 : How Social Media Shaping Society",
-      harga_tiket: 240000,
-      its_open: 0,
-      category: "seminar",
-      tanggal_kegiatan: "2024-08-12",
-      tingkat_kegiatan: "Nasional",
-      detail_kegiatan: {
-        id: 1,
-        event_id: 1,
-        waktu_pelaksanaan: "2023-08-12",
-        lokasi: "Gedung Serba ITS",
-        deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-        status: "Aktif",
-        gambar_kegiatan: "https://via.placeholder.com/400",
-        file_pengajuan: "https://via.placeholder.com/400",
-      },
-    },
-  ];
+const RecommendationSection = ({ events }: { events: EventProps[] }) => {
+  const hadnleTapAll = () => {
+    window.location.href = "/";
+  };
 
   return (
     <>
@@ -36,7 +16,9 @@ const RecommendationSection = () => {
           <p className={clsx("font-semibold text-lg")}>
             Rekomendasi Event Lainnya
           </p>
-          <Button className={clsx("bg-poppy-500 mr-4")}>Lihat Semua</Button>
+          <Button className={clsx("bg-poppy-500 mr-4")} onClick={hadnleTapAll}>
+            Lihat Semua
+          </Button>
         </div>
         <ScrollArea
           className="rounded-md whitespace-nowrap overflow-x-auto mt-4"
@@ -45,7 +27,7 @@ const RecommendationSection = () => {
           }}
         >
           <div className={clsx("mt-4 flex space-x-4 w-max")}>
-            {listData.map((item) => (
+            {events.map((item) => (
               <EventItem key={item.id} item={item} />
             ))}
           </div>

@@ -1,7 +1,17 @@
 const RegisterSection = () => {
+  const handleRegister = () => {
+    const id = window.location.pathname.split("/")[2];
+    window.location.href = `/event/register/${id}`;
+  };
+
+  // todo: handle
+  const handleShare = () => {
+    console.log("Share");
+  };
+
   return (
     <>
-      <div className="border border-gray-300 rounded-lg p-4 w-[320px] h-min">
+      <div className="border border-gray-300 rounded-lg p-4 w-[480px] h-min">
         <p className="font-semibold text-2xl">Pendaftaran Event</p>
         <div className="bg-gray-200 h-0.5 w-full my-2" />
         <div className="flex justify-between items-center">
@@ -16,10 +26,16 @@ const RegisterSection = () => {
             Buka
           </button>
         </div>
-        <button className="bg-poppy-500 text-white font-semibold rounded-lg w-full py-2 mt-4">
+        <button
+          className="bg-poppy-500 text-white font-semibold rounded-lg w-full py-2 mt-4"
+          onClick={handleRegister}
+        >
           Daftar Sekarang
         </button>
-        <button className="bg-white font-semibold rounded-lg w-full py-2 mt-4 border border-gray-300">
+        <button
+          className="bg-white font-semibold rounded-lg w-full py-2 mt-4 border border-gray-300"
+          onClick={handleShare}
+        >
           Bagikan Event
         </button>
       </div>
