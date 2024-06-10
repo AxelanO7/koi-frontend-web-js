@@ -14,7 +14,7 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import { getBaseUrl } from "@/helpers/api";
 import { CreateEventProps } from "@/types/create";
-import { User } from "@/types/user";
+import { UserProps } from "@/types/user";
 import Swal from "sweetalert2";
 
 interface ContactPersonCard {
@@ -185,7 +185,7 @@ const SubmissionEventOrganization = () => {
       );
   };
 
-  const [profile, setProfile] = useState<User>();
+  const [profile, setProfile] = useState<UserProps>();
 
   const getProfile = () => {
     axios
@@ -196,7 +196,7 @@ const SubmissionEventOrganization = () => {
       })
       .then((res) => {
         console.log(res);
-        const dataRes: User = res.data.data;
+        const dataRes: UserProps = res.data.data;
         setProfile(dataRes);
       })
       .catch((err) => {

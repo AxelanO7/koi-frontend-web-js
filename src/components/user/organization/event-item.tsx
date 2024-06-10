@@ -17,9 +17,18 @@ const EventItem = ({ item }: { item: EventProps }) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
+  const handleTapEvent = (id: string) => {
+    window.location.href = `/event/${id}`;
+  };
+
   return (
     <>
-      <div className="card">
+      <div
+        className="card"
+        onClick={() =>
+          handleTapEvent((item.detail_kegiatan?.id || "").toString())
+        }
+      >
         <div className="flex space-x-4">
           <img
             src={
@@ -42,6 +51,7 @@ const EventItem = ({ item }: { item: EventProps }) => {
               >
                 {item.its_open ? "Buka" : "Tutup"}
               </button>
+              {/* todo: dynamic */}
               <button className="bg-blue-500 px-2 py-1 rounded-xl font-medium text-sm">
                 Offline
               </button>

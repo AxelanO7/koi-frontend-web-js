@@ -27,8 +27,8 @@ const DetailEvent = () => {
     }
   };
 
-  const getDetailEventById = async () => {
-    await axios
+  const getDetailEventById = () => {
+    axios
       .get(`${getBaseUrl()}/detail-kegiatan/public/get-by-id/${idParam}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/shadcn/components/ui/popover";
-import { User } from "@/types/user";
+import { UserProps } from "@/types/user";
 import CalendarDaysIcon from "@heroicons/react/24/outline/CalendarDaysIcon";
 import axios from "axios";
 import clsx from "clsx";
@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 const InputEditProfileSection = () => {
   const [date, setDate] = useState<Date>();
   const [gender, setGender] = useState<string>("l");
-  const [profile, setProfile] = useState<User>();
+  const [profile, setProfile] = useState<UserProps>();
 
   const getProfile = () => {
     const baseUrl = getBaseUrl();
@@ -28,7 +28,7 @@ const InputEditProfileSection = () => {
       })
       .then((res) => {
         console.log(res.data);
-        const dataRes: User = res.data.data;
+        const dataRes: UserProps = res.data.data;
         setProfile(dataRes);
       })
       .catch((err) => {

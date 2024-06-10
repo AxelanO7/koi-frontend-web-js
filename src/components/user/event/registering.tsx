@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import ShortDescriptionEvent from "./short-description-event";
 import { DetailEventProps, PaymentProps } from "@/types/event";
-import { User } from "@/types/user";
+import { UserProps } from "@/types/user";
 
 const RegisteringEvent = ({
   eventProps = {} as DetailEventProps,
   paymentProps = {} as PaymentProps,
 }) => {
-  const [profile, setProfile] = useState<User>({} as User);
+  const [profile, setProfile] = useState<UserProps>({} as UserProps);
 
   // form
   const selectedFile = (e) => {
@@ -78,7 +78,7 @@ const RegisteringEvent = ({
       })
       .then((res) => {
         console.log(res);
-        const dataRes: User = res.data.data;
+        const dataRes: UserProps = res.data.data;
         setProfile(dataRes);
       })
       .catch((err) => {

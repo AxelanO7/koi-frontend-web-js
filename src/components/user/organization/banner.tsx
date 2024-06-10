@@ -1,7 +1,12 @@
 import { Button } from "@/shadcn/components/ui/button";
+import { ResponseEventByOrmawa } from "@/types/user";
 import clsx from "clsx";
 
-const Banner = () => {
+const Banner = ({
+  eventByOrmawa,
+}: {
+  eventByOrmawa: ResponseEventByOrmawa;
+}) => {
   return (
     <>
       <img
@@ -16,7 +21,9 @@ const Banner = () => {
           alt="Organization Logo"
         />
         <div className={clsx("ml-56")}>
-          <p className={clsx("font-semibold text-2xl")}>HIMA-TI INSTIKI</p>
+          <p className={clsx("font-semibold text-2xl")}>
+            {eventByOrmawa.ormawa.nama_ormawa}
+          </p>
           <div
             className={clsx(
               "font-normal text-base flex space-x-2 items-center"
@@ -24,7 +31,7 @@ const Banner = () => {
           >
             <p>Organisasi Kemahasiswaan</p>
             <div className="bg-gray-300 rounded-full h-4 w-4" />
-            <p>50 Event</p>
+            <p>{eventByOrmawa.event.length} Event</p>
           </div>
         </div>
         <Button className={clsx("bg-poppy-500")}>Bagikan</Button>

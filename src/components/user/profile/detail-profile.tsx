@@ -27,12 +27,12 @@ import { Button } from "@/shadcn/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
-import { User } from "@/types/user";
+import { UserProps } from "@/types/user";
 import { getBaseUrl } from "@/helpers/api";
 import axios from "axios";
 
 const DetailProfileSection = () => {
-  const [profile, setProfile] = useState<User>();
+  const [profile, setProfile] = useState<UserProps>();
   const [listData, setListData] = useState<EventProps[]>([]);
 
   const getAllEvents = () => {
@@ -59,7 +59,7 @@ const DetailProfileSection = () => {
       })
       .then((res) => {
         console.log(res.data);
-        const dataRes: User = res.data.data;
+        const dataRes: UserProps = res.data.data;
         setProfile(dataRes);
       })
       .catch((err) => {

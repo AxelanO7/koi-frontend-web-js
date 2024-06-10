@@ -11,7 +11,7 @@ export const activeSidebarHomepageStudent = atom({
   default: "all",
 });
 export const activeSidebarProfileStudent = atom({
-  key: "activeSidebarHomepage",
+  key: "activeSidebarProfileStudent",
   default: "my_profile",
 });
 

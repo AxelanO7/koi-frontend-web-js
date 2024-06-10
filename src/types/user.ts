@@ -1,3 +1,5 @@
+import { EventProps } from "./event";
+
 export interface Login {
   username: string;
   password: string;
@@ -14,31 +16,31 @@ export interface Register {
   confirm_password: string;
 }
 
-export interface Mahasiswa {
+export interface MahasiswaProps {
   nim: number;
   username: string;
   password: string;
-  userId: number;
-  user?: User;
+  user_id: number;
+  user?: UserProps;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
 }
 
-export interface Ormawa {
+export interface OrmawaProps {
   id: number;
-  namaOrmawa: string;
+  nama_ormawa: string;
   status: number;
   password: string;
-  userId: number;
-  user?: User;
+  user_id: number;
+  user?: UserProps;
   event?: Event;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
 }
 
-export interface User {
+export interface UserProps {
   id: number;
   username?: string;
   role: string;
@@ -46,6 +48,11 @@ export interface User {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
-  ormawa?: Ormawa;
-  mahasiswa?: Mahasiswa;
+  ormawa?: OrmawaProps;
+  mahasiswa?: MahasiswaProps;
+}
+
+export interface ResponseEventByOrmawa {
+  ormawa: OrmawaProps;
+  event: EventProps[];
 }

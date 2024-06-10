@@ -1,6 +1,10 @@
 import { DetailEventProps } from "@/types/event";
 
 const OwnershipSection = ({ event }: { event: DetailEventProps }) => {
+  const handleOrganization = () => {
+    
+  };
+
   return (
     <>
       <div className="space-y-2">
@@ -12,7 +16,10 @@ const OwnershipSection = ({ event }: { event: DetailEventProps }) => {
         <div className="flex items-center space-x-4">
           <img src="https://via.placeholder.com/50" />
           <div>
-            <p className="font-semibold text-base cursor-pointer">
+            <p
+              className="font-semibold text-base cursor-pointer"
+              onClick={handleOrganization}
+            >
               {event.event?.ormawa?.nama_ormawa || "HIMA-TI INSTIKI"}
             </p>
             <p className="font-medium text-sm text-gray-400 cursor-pointer">
