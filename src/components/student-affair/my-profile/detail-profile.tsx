@@ -1,8 +1,13 @@
+import { activeMyAccountStudentAffair } from "@/core/store";
 import { Button } from "@/shadcn/components/ui/button";
 import { EnvelopeIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
+import { useRecoilState } from "recoil";
 
 const DetailProfileSection = () => {
+  const [activeCategorySidebar, setActiveMyAccountStudentAffair] =
+    useRecoilState(activeMyAccountStudentAffair);
+
   return (
     <>
       <div className={clsx("bg-white rounded-lg p-4 h-min border")}>
@@ -39,6 +44,7 @@ const DetailProfileSection = () => {
             className={clsx(
               "flex items-center justify-center bg-poppy-500 text-white"
             )}
+            onClick={() => setActiveMyAccountStudentAffair("edit_profile")}
           >
             Edit Profil
             <PencilSquareIcon className={clsx("w-4 h-4 ml-2")} />

@@ -4,9 +4,10 @@ export interface EventProps {
   nama_kegiatan: string;
   harga_tiket: number;
   its_open: number;
+  category: string;
   tanggal_kegiatan: string;
   tingkat_kegiatan: string;
-  ormawa?: null;
+  ormawa?: OrmawaProps;
   detail_kegiatan?: DetailEventProps;
   created_at?: Date;
   updated_at?: Date;
@@ -25,6 +26,22 @@ export interface DetailEventProps {
   event?: EventProps;
   metode_pembayaran?: TransactionProps;
   narahubung?: PICProps;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+}
+
+export interface PaymentProps {
+  id: number;
+  nama_peserta: string;
+  mahasiswa_id: number;
+  event_id: number;
+  no_telepon: string;
+  institusi: string;
+  bukti_pembayaran: string;
+  status: number;
+  event?: EventProps;
+  mahasiswa?: null;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
@@ -49,6 +66,19 @@ export interface PICProps {
   judul: string;
   nama_narahubung: string;
   no_telepon: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+}
+
+export interface OrmawaProps {
+  id: number;
+  nama_ormawa: string;
+  status: number;
+  password: string;
+  user_id: number;
+  user?: null;
+  event?: null;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;

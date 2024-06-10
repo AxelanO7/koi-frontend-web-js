@@ -53,18 +53,31 @@ const Signin = () => {
         const token = res.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
-        const nextUrl = role == "student" ? "/" : `/${role}/home-page`;
+        const nextUrl = getNextUrl(role);
         swal.fire("Berhasil!", "Anda berhasil masuk", "success").then(() => {
           window.location.href = nextUrl;
         });
       })
-      .catch((err) => {
+      .catch(() => {
         swal.fire(
           "Gagal!",
           "Kredensial yang Anda masukkan salah. Silakan coba lagi.",
           "error"
         );
       });
+  };
+
+  const getNextUrl = (role: string) => {
+    switch (role) {
+      case "mahasiswa":
+        return "/";
+      case "ormawa":
+        return "/organization/dashboard";
+      case "kemahasiswaan":
+        return "/student-affair/dashboard";
+      default:
+        return "/";
+    }
   };
 
   return (

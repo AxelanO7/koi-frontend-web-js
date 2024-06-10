@@ -50,16 +50,30 @@ const Signup = () => {
     }
     axios
       .post("http://localhost:4000/user/public/register", {
-        // nim: 1234567890,
+        // universal
+        // username: username,
+        // password: password,
+        // confirm_password: confirmPassword,
+        // mahasiswa
+        nim: 1234567890,
         username: username,
-        // role: "mahasiswa",
-        role: "ormawa",
-        // nama_ormawa: "nama_ormawa",
-        // status: 0,
+        role: "mahasiswa",
         password: password,
         confirm_password: confirmPassword,
+        // ormawa
+        // role: "ormawa",
+        // nama_ormawa: username,
+        // status: 1,
+        // password: password,
+        // confirm_password: confirmPassword,
+        // kemahasiswaan
+        // username: username,
+        // role: "kemahasiswaan",
+        // password: password,
+        // confirm_password: confirmPassword,
+        // status: 1,
       })
-      .then(async (res) => {
+      .then(async () => {
         await swal.fire("Berhasil!", "Akun berhasil dibuat", "success");
         window.location.href = "/login";
       })

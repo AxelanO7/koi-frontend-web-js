@@ -1,7 +1,13 @@
 import { CalendarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { EventProps } from "../../../types/event";
 
-const EventItem = ({ item }: { item: EventProps }) => {
+const EventItem = ({
+  item,
+  onClick,
+}: {
+  item: EventProps;
+  onClick: () => void;
+}) => {
   const price = item.harga_tiket.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -19,7 +25,7 @@ const EventItem = ({ item }: { item: EventProps }) => {
 
   return (
     <>
-      <div className="card">
+      <div className="card" onClick={onClick} style={{ cursor: "pointer" }}>
         <div className="flex space-x-4">
           <img
             src={

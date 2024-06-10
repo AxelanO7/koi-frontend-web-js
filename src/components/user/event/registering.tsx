@@ -1,150 +1,247 @@
+import { getBaseUrl } from "@/helpers/api";
+import axios from "axios";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import ShortDescriptionEvent from "./short-description-event";
-import BaseLayout from "@/layouts/base";
+import { DetailEventProps, PaymentProps } from "@/types/event";
+import { User } from "@/types/user";
 
-const RegisteringEvent = () => {
+const RegisteringEvent = ({
+  eventProps = {} as DetailEventProps,
+  paymentProps = {} as PaymentProps,
+}) => {
+  const [profile, setProfile] = useState<User>({} as User);
+
+  // form
   const selectedFile = (e) => {
-    console.log(e.target.files[0]);
+    setPaymentProof(e.target.files[0].name);
+  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [nim, setNim] = useState<number>(1234);
+  const [phone, setPhone] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentProof, setPaymentProof] = useState("");
+
+  const submit = () => {
+    const payload = {
+      nama_peserta: name,
+      mahasiswa_id: nim,
+      // email,
+      event_id: eventProps.event_id,
+      no_telepon: phone,
+      institusi: institution,
+      // paymentMethod,
+      bukti_pembayaran: paymentProof,
+    };
+    console.log(payload);
+    axios
+      .post(`${getBaseUrl()}/pembayaran/private/create`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then(
+        (res) => {
+          console.log(res);
+          Swal.fire({
+            title: "Berhasil",
+            text: "Pendaftaran event berhasil disimpan",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            // window.location.href = "/";
+          });
+        },
+        (err) => {
+          console.log(err);
+          Swal.fire({
+            title: "Gagal",
+            text: "Pendaftaran event gagal disimpan",
+            icon: "error",
+            confirmButtonText: "OK",
+          }).then(() => {
+            // window.location.href = "/";
+          });
+        }
+      );
   };
 
+  const getProfile = () => {
+    axios
+      .get(`${getBaseUrl()}/user/private/profile`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        const dataRes: User = res.data.data;
+        setProfile(dataRes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
-    <BaseLayout>
-      <>
-        <div className={clsx("px-28")}>
-          <p className={clsx("font-semibold text-xl")}>Pendaftaran Event</p>
-          <div className={clsx("flex mt-4 space-x-16")}>
-            <ShortDescriptionEvent />
-            <div className={clsx("w-full")}>
-              <div className={clsx("flex w-full")}>
-                <div className={clsx("flex-grow space-y-1")}>
-                  <p className={clsx("font-medium text-sm")}>Nama</p>
-                  <input
-                    className={clsx(
-                      "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                    )}
-                    placeholder="Ketikkan nama lengkapmu"
-                  />
-                </div>
-                <div className="w-12" />
-                <div className={clsx("flex-grow space-y-1")}>
-                  <p className={clsx("font-medium text-sm")}>No Telepon</p>
-                  <input
-                    className={clsx(
-                      "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                    )}
-                    placeholder="Ketikkan no teleponmu"
-                  />
-                </div>
-              </div>
-              <div className="h-4" />
-              <div className={clsx("flex w-full")}>
-                <div className={clsx("flex-grow space-y-1")}>
-                  <p className={clsx("font-medium text-sm")}>Email</p>
-                  <input
-                    className={clsx(
-                      "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                    )}
-                    placeholder="Ketikkan emailmu"
-                  />
-                  <p className={clsx("text-xs text-gray-400 font-medium")}>
-                    Tuliskan penjelasan disini
-                  </p>
-                </div>
-                <div className="w-12" />
-                <div className={clsx("flex-grow space-y-1")}>
-                  <p className={clsx("font-medium text-sm")}>Institusi</p>
-                  <input
-                    className={clsx(
-                      "border bordery-300 rounded-md px-2 py-1 text-sm w-full"
-                    )}
-                    placeholder="Masukkan asal sekolah, kampus, komunitas"
-                  />
-                  <p className={clsx("text-xs text-gray-400 font-medium")}>
-                    Ketik umum jika kamu bukan mahaasiswa
-                  </p>
-                </div>
-              </div>
-              <div className="h-4" />
-              <div className={clsx("flex w-full")}>
-                <div className={clsx("w-full space-y-1")}>
-                  <p className={clsx("font-medium text-sm")}>NIM</p>
-                  <input
-                    className={clsx(
-                      "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
-                    )}
-                    placeholder="Masukkan NIM kamu"
-                  />
-                  <p className={clsx("text-xs text-gray-400 font-medium")}>
-                    Masukan NIM jika mahasiswa INSTIKI, selain itu tulis 1234
-                  </p>
-                </div>
-                <div className="w-24" />
-                <div className={clsx("w-full space-y-1")}>
-                  <p className={clsx("font-medium text-sm")}>
-                    Metode Pembayaran
-                  </p>
-                  <div className="flex space-x-2">
-                    <button
-                      className={clsx(
-                        "border rounded-xl px-3 py-1 font-normal text-sm border-gray-300"
-                      )}
-                    >
-                      COD
-                    </button>
-                    <button
-                      className={clsx(
-                        "border rounded-xl px-3 py-1 font-normal text-sm border-gray-300"
-                      )}
-                    >
-                      Transfer Bank
-                    </button>
-                    <button
-                      className={clsx(
-                        "border rounded-xl px-3 py-1 font-normal text-sm border-gray-300"
-                      )}
-                    >
-                      Transfer E-Wallet
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="h-4" />
-              <div className="space-y-2">
-                <p className={clsx("font-medium text-sm")}>Bukti Pembayaran</p>
-                <div
+    <>
+      <div className={clsx("px-28")}>
+        <p className={clsx("font-semibold text-xl")}>Pendaftaran Event</p>
+        <div className={clsx("flex mt-4 space-x-16")}>
+          <ShortDescriptionEvent
+            eventProps={eventProps}
+            paymentProps={paymentProps}
+          />
+          <div className={clsx("w-full")}>
+            <div className={clsx("flex w-full")}>
+              <div className={clsx("flex-grow space-y-1")}>
+                <p className={clsx("font-medium text-sm")}>Nama</p>
+                <input
                   className={clsx(
-                    "flex items-center justify-center w-96 h-40 border border-gray-300 rounded-md relative bg-gray-100 cursor-pointer"
+                    "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
                   )}
-                >
-                  <input type="file" onChange={selectedFile} />
-                </div>
+                  placeholder="Ketikkan nama lengkapmu"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="w-12" />
+              <div className={clsx("flex-grow space-y-1")}>
+                <p className={clsx("font-medium text-sm")}>No Telepon</p>
+                <input
+                  className={clsx(
+                    "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+                  )}
+                  placeholder="Ketikkan no teleponmu"
+                  type="number"
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="h-4" />
+            <div className={clsx("flex w-full")}>
+              <div className={clsx("flex-grow space-y-1")}>
+                <p className={clsx("font-medium text-sm")}>Email</p>
+                <input
+                  className={clsx(
+                    "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+                  )}
+                  placeholder="Ketikkan emailmu"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
                 <p className={clsx("text-xs text-gray-400 font-medium")}>
-                  Bukti pembayaran digunakan untuk verifikasi identitas
-                  pendaftar
+                  Tuliskan penjelasan disini
                 </p>
               </div>
-              <div className="h-4" />
-              <div className="flex space-x-4 font-medium text-sm">
-                <button
+              <div className="w-12" />
+              <div className={clsx("flex-grow space-y-1")}>
+                <p className={clsx("font-medium text-sm")}>Institusi</p>
+                <input
                   className={clsx(
-                    "rounded-md px-12 py-1 border border-gray-300"
+                    "border bordery-300 rounded-md px-2 py-1 text-sm w-full"
                   )}
-                >
-                  Batalkan
-                </button>
-                <button
-                  className={clsx(
-                    "rounded-md px-12 py-1 bg-poppy-500 text-white"
-                  )}
-                >
-                  Simpan
-                </button>
+                  placeholder="Masukkan asal sekolah, kampus, komunitas"
+                  onChange={(e) => setInstitution(e.target.value)}
+                />
+                <p className={clsx("text-xs text-gray-400 font-medium")}>
+                  Ketik umum jika kamu bukan mahaasiswa
+                </p>
               </div>
+            </div>
+            <div className="h-4" />
+            <div className={clsx("flex w-full")}>
+              <div className={clsx("w-full space-y-1")}>
+                <p className={clsx("font-medium text-sm")}>NIM</p>
+                <input
+                  className={clsx(
+                    "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+                  )}
+                  placeholder="Masukkan NIM kamu"
+                  type="number"
+                  onChange={(e) => setNim(parseInt(e.target.value))}
+                />
+                <p className={clsx("text-xs text-gray-400 font-medium")}>
+                  Masukan NIM jika mahasiswa INSTIKI, selain itu tulis 1234
+                </p>
+              </div>
+              <div className="w-24" />
+              <div className={clsx("w-full space-y-1")}>
+                <p className={clsx("font-medium text-sm")}>Metode Pembayaran</p>
+                <div className="flex space-x-2">
+                  <button
+                    className={clsx(
+                      "border rounded-xl px-3 py-1 font-normal text-sm border-gray-300",
+                      paymentMethod === "cod" ? "bg-poppy-500 text-white" : ""
+                    )}
+                    onClick={() => setPaymentMethod("cod")}
+                  >
+                    COD
+                  </button>
+                  <button
+                    className={clsx(
+                      "border rounded-xl px-3 py-1 font-normal text-sm border-gray-300",
+                      paymentMethod === "transfer"
+                        ? "bg-poppy-500 text-white"
+                        : ""
+                    )}
+                    onClick={() => setPaymentMethod("transfer")}
+                  >
+                    Transfer Bank
+                  </button>
+                  <button
+                    className={clsx(
+                      "border rounded-xl px-3 py-1 font-normal text-sm border-gray-300",
+                      paymentMethod === "ewallet"
+                        ? "bg-poppy-500 text-white"
+                        : ""
+                    )}
+                    onClick={() => setPaymentMethod("ewallet")}
+                  >
+                    Transfer E-Wallet
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="h-4" />
+            <div className="space-y-2">
+              <p className={clsx("font-medium text-sm")}>Bukti Pembayaran</p>
+              <div
+                className={clsx(
+                  "flex items-center justify-center w-96 h-40 border border-gray-300 rounded-md relative bg-gray-100 cursor-pointer"
+                )}
+              >
+                <input type="file" onChange={selectedFile} />
+              </div>
+              <p className={clsx("text-xs text-gray-400 font-medium")}>
+                Bukti pembayaran digunakan untuk verifikasi identitas pendaftar
+              </p>
+            </div>
+            <div className="h-4" />
+            <div className="flex space-x-4 font-medium text-sm">
+              <button
+                className={clsx("rounded-md px-12 py-1 border border-gray-300")}
+              >
+                Batalkan
+              </button>
+              <button
+                className={clsx(
+                  "rounded-md px-12 py-1 bg-poppy-500 text-white"
+                )}
+                onClick={submit}
+              >
+                Simpan
+              </button>
             </div>
           </div>
         </div>
-      </>
-    </BaseLayout>
+      </div>
+    </>
   );
 };
 

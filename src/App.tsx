@@ -11,8 +11,7 @@ import ResetPasswordAuthPage from "./pages/auth/reset-password";
 import HomePage from "./pages/user/home-page";
 import OrganizationPage from "./pages/user/organization";
 import DetailEventPage from "./pages/user/detail-event";
-import EventPage from "./pages/user/register";
-import RegisteringEvent from "./components/user/event/registering";
+import RegisterEventPage from "./pages/user/register";
 import ProfilePage from "./pages/user/profile/profile";
 import EditProfilePage from "./pages/user/profile/edit-profile";
 import ResetPasswordProfilePage from "./pages/user/profile/forgot-password";
@@ -46,10 +45,12 @@ function App() {
 
         {/* student */}
         <Route path="/home-page" element={<HomePage />} />
-        <Route path="/detail-event" element={<DetailEventPage />} />
+
+        <Route path="/event/:id" element={<DetailEventPage />} />
+        <Route path="/event/register/:id" element={<RegisterEventPage />} />
+
         <Route path="/organization" element={<OrganizationPage />} />
-        <Route path="/event/register" element={<RegisteringEvent />} />
-        <Route path="/event/register/:id" element={<EventPage />} />
+
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route

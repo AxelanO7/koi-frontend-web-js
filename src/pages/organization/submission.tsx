@@ -129,6 +129,7 @@ const SubmissionEventOrganization = () => {
         // id: 0,
         // event_id: 0,
         waktu_pelaksanaan: timeEvent ?? "",
+        category: categoryEvent ?? "",
         lokasi: placeEvent ?? "",
         status: "pending",
         deskripsi: descEvent ?? "",
@@ -167,7 +168,7 @@ const SubmissionEventOrganization = () => {
             icon: "success",
             confirmButtonText: "OK",
           }).then(() => {
-            // window.location.href = "/organization/event";
+            window.location.href = "/organization/dashboard";
           });
         },
         (err) => {
@@ -266,11 +267,11 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      categoryEvent === "Seminar"
+                      categoryEvent === "seminar"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setCategoryEvent("Seminar")}
+                    onClick={() => setCategoryEvent("seminar")}
                   >
                     Seminar
                   </Button>
@@ -278,11 +279,11 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      categoryEvent === "Lomba"
+                      categoryEvent === "lomba"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setCategoryEvent("Lomba")}
+                    onClick={() => setCategoryEvent("lomba")}
                   >
                     Lomba
                   </Button>
@@ -290,11 +291,11 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      categoryEvent === "Workshop"
+                      categoryEvent === "workshop"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setCategoryEvent("Workshop")}
+                    onClick={() => setCategoryEvent("workshop")}
                   >
                     Workshop
                   </Button>
@@ -302,11 +303,11 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      categoryEvent === "Hiburan"
+                      categoryEvent === "hiburan"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setCategoryEvent("Hiburan")}
+                    onClick={() => setCategoryEvent("hiburan")}
                   >
                     Hiburan
                   </Button>
@@ -314,11 +315,11 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      categoryEvent === "Kegiatan Sosial"
+                      categoryEvent === "kegiatan_sosial"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setCategoryEvent("Kegiatan Sosial")}
+                    onClick={() => setCategoryEvent("kegiatan_sosial")}
                   >
                     Kegiatan Sosial
                   </Button>

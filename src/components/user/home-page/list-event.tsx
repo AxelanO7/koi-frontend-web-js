@@ -18,129 +18,6 @@ import { getBaseUrl } from "@/helpers/api";
 import { useEffect, useState } from "react";
 
 const ListEventSection = () => {
-  // const listData: EventItemProps[] = [
-  //   {
-  //     id: 1,
-  //     ormawa_id: 1,
-  //     nama_kegiatan:
-  //       "SEMINAR NASIONAL HIMA-TI INSTIKI 2023 : How Social Media Shaping Society",
-  //     harga_tiket: 240000,
-  //     its_open: true,
-  //     tanggal_kegiatan: "2024-08-12",
-  //     tingkat_kegiatan: "Nasional",
-  //     detail_kegiatan: {
-  //       id: 1,
-  //       event_id: 1,
-  //       waktu_pelaksanaan: "2023-08-12",
-  //       lokasi: "Gedung Serba ITS",
-  //       deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-  //       status: "Aktif",
-  //       gambar_kegiatan: "https://via.placeholder.com/400",
-  //       file_pengajuan: "https://via.placeholder.com/400",
-  //     },
-  //   },
-  //   {
-  //     id: 2,
-  //     ormawa_id: 1,
-  //     nama_kegiatan:
-  //       "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-  //     harga_tiket: 240000,
-  //     its_open: true,
-  //     tanggal_kegiatan: "2024-08-12",
-  //     tingkat_kegiatan: "Nasional",
-  //     detail_kegiatan: {
-  //       id: 1,
-  //       event_id: 1,
-  //       waktu_pelaksanaan: "2023-08-12",
-  //       lokasi: "Gedung Serba ITS",
-  //       deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-  //       status: "Aktif",
-  //       gambar_kegiatan: "https://via.placeholder.com/400",
-  //       file_pengajuan: "https://via.placeholder.com/400",
-  //     },
-  //   },
-  //   {
-  //     id: 3,
-  //     ormawa_id: 1,
-  //     nama_kegiatan:
-  //       "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-  //     harga_tiket: 240000,
-  //     its_open: true,
-  //     tanggal_kegiatan: "2024-08-12",
-  //     tingkat_kegiatan: "Nasional",
-  //     detail_kegiatan: {
-  //       id: 1,
-  //       event_id: 1,
-  //       waktu_pelaksanaan: "2023-08-12",
-  //       lokasi: "Gedung Serba ITS",
-  //       deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-  //       status: "Aktif",
-  //       gambar_kegiatan: "https://via.placeholder.com/400",
-  //       file_pengajuan: "https://via.placeholder.com/400",
-  //     },
-  //   },
-  //   {
-  //     id: 4,
-  //     ormawa_id: 1,
-  //     nama_kegiatan:
-  //       "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-  //     harga_tiket: 240000,
-  //     its_open: true,
-  //     tanggal_kegiatan: "2024-08-12",
-  //     tingkat_kegiatan: "Nasional",
-  //     detail_kegiatan: {
-  //       id: 1,
-  //       event_id: 1,
-  //       waktu_pelaksanaan: "2023-08-12",
-  //       lokasi: "Gedung Serba ITS",
-  //       deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-  //       status: "Aktif",
-  //       gambar_kegiatan: "https://via.placeholder.com/400",
-  //       file_pengajuan: "https://via.placeholder.com/400",
-  //     },
-  //   },
-  //   {
-  //     id: 5,
-  //     ormawa_id: 1,
-  //     nama_kegiatan:
-  //       "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-  //     harga_tiket: 240000,
-  //     its_open: false,
-  //     tanggal_kegiatan: "2024-08-12",
-  //     tingkat_kegiatan: "Nasional",
-  //     detail_kegiatan: {
-  //       id: 1,
-  //       event_id: 1,
-  //       waktu_pelaksanaan: "2023-08-12",
-  //       lokasi: "Gedung Serba ITS",
-  //       deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-  //       status: "Aktif",
-  //       gambar_kegiatan: "https://via.placeholder.com/400",
-  //       file_pengajuan: "https://via.placeholder.com/400",
-  //     },
-  //   },
-  //   {
-  //     id: 6,
-  //     ormawa_id: 1,
-  //     nama_kegiatan:
-  //       "Pemecahan Masalah Aljabar: Strategi dan Teknik Makan Bersama",
-  //     harga_tiket: 240000,
-  //     its_open: false,
-  //     tanggal_kegiatan: "2024-08-12",
-  //     tingkat_kegiatan: "Nasional",
-  //     detail_kegiatan: {
-  //       id: 1,
-  //       event_id: 1,
-  //       waktu_pelaksanaan: "2023-08-12",
-  //       lokasi: "Gedung Serba ITS",
-  //       deskripsi: "Seminar Nasional HIMA-TI INSTIKI 2023",
-  //       status: "Aktif",
-  //       gambar_kegiatan: "https://via.placeholder.com/400",
-  //       file_pengajuan: "https://via.placeholder.com/400",
-  //     },
-  //   },
-  // ];
-
   const [listData, setListData] = useState<EventProps[]>([]);
 
   const getAllEvents = () => {
@@ -155,6 +32,10 @@ const ListEventSection = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const handleTapEvent = (id: string) => {
+    window.location.href = `/event/${id}`;
   };
 
   useEffect(() => {
@@ -201,7 +82,12 @@ const ListEventSection = () => {
               key={item.id}
               className="bg-white rounded-lg shadow-sm overflow-clip"
             >
-              <EventItem item={item} />
+              <EventItem
+                item={item}
+                onClick={() =>
+                  handleTapEvent((item.detail_kegiatan?.id || "").toString())
+                }
+              />
             </div>
           ))}
         </div>

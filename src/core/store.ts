@@ -19,3 +19,8 @@ export const activeSidebarStudentAffair = atom({
   key: "activeSidebarStudentAffair",
   default: "event_organization",
 });
+
+export const activeMyAccountStudentAffair = atom({
+  key: "activeMyAccountStudentAffair",
+  default: "my_profile",
+});

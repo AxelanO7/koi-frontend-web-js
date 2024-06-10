@@ -5,6 +5,7 @@ export interface CreateDetailEventProps {
   lokasi: string;
   status: string;
   deskripsi: string;
+  category: string;
   gambar_kegiatan: string;
   file_pengajuan: string;
   event?: CreateEventProps;

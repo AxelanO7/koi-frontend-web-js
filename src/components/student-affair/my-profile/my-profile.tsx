@@ -1,6 +1,4 @@
 import ChangePasswordSection from "./change-password";
-import DetailProfileSection from "./detail-profile";
-import EditProfileSection from "./edit-profile";
 import MenuProfileSection from "./menu-profile";
 
 const MyProfileSection = () => {

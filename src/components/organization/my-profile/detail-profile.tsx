@@ -2,7 +2,11 @@ import { Button } from "@/shadcn/components/ui/button";
 import { EnvelopeIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
 
-const DetailProfileSection = () => {
+interface Props {
+  setActive: () => void;
+}
+
+const DetailProfileSection = ({ setActive }: Props) => {
   return (
     <>
       <div className={clsx("bg-white rounded-lg p-4 h-min border")}>
@@ -39,6 +43,7 @@ const DetailProfileSection = () => {
             className={clsx(
               "flex items-center justify-center bg-poppy-500 text-white"
             )}
+            onClick={setActive}
           >
             Edit Profil
             <PencilSquareIcon className={clsx("w-4 h-4 ml-2")} />
