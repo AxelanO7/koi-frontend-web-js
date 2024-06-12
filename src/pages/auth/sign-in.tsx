@@ -53,9 +53,9 @@ const Signin = () => {
         const token = res.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
-        const nextUrl = getNextUrl(role);
+        // const nextUrl = getNextUrl(role);
         swal.fire("Berhasil!", "Anda berhasil masuk", "success").then(() => {
-          window.location.href = nextUrl;
+          window.location.href = "/";
         });
       })
       .catch(() => {
@@ -67,18 +67,18 @@ const Signin = () => {
       });
   };
 
-  const getNextUrl = (role: string) => {
-    switch (role) {
-      case "mahasiswa":
-        return "/";
-      case "ormawa":
-        return "/organization/dashboard";
-      case "kemahasiswaan":
-        return "/student-affair/dashboard";
-      default:
-        return "/";
-    }
-  };
+  // const getNextUrl = (role: string) => {
+  //   switch (role) {
+  //     case "mahasiswa":
+  //       return "/";
+  //     case "ormawa":
+  //       return "/organization/dashboard";
+  //     case "kemahasiswaan":
+  //       return "/student-affair/dashboard";
+  //     default:
+  //       return "/";
+  //   }
+  // };
 
   return (
     <>

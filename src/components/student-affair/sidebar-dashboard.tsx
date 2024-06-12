@@ -1,4 +1,4 @@
-import { activeSidebarHomepageOrganization } from "@/core/store";
+import { activeSidebarHomepageStudentAffair } from "@/core/store";
 import {
   ArrowLeftEndOnRectangleIcon,
   CalendarDaysIcon,
@@ -38,7 +38,7 @@ const SidebarDashboardSection = () => {
   ];
 
   const [activeCategorySidebar, setActiveCategorySidebar] = useRecoilState(
-    activeSidebarHomepageOrganization
+    activeSidebarHomepageStudentAffair
   );
 
   return (

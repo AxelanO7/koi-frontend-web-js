@@ -5,7 +5,7 @@ import {
   ClockIcon,
   MapPinIcon,
 } from "@heroicons/react/24/outline";
-import imgCalender from "../../../assets/images/calender.png";
+import imgCalender from "@/assets/images/calender.png";
 
 const MyEventSection = () => {
   const isTrue = true;

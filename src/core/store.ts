@@ -20,6 +20,10 @@ export const activeSidebarHomepageOrganization = atom({
   key: "activeSidebarOrganization",
   default: "my_event",
 });
+export const activeMyAccountOrganization = atom({
+  key: "activeMyAccountOrganization",
+  default: "my_profile",
+});
 
 // student affair
 export const activeSidebarHomepageStudentAffair = atom({

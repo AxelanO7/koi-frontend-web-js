@@ -15,15 +15,15 @@ import RegisterEventPage from "./pages/user/register";
 import AbsentPage from "./pages/user/absent";
 import ProfilePage from "./pages/user/profile/profile";
 import EditProfilePage from "./pages/user/profile/edit-profile";
-import ResetPasswordProfilePage from "./pages/user/profile/forgot-password";
+import ResetPasswordProfilePage from "./pages/user/profile/change-password";
 // organization
-import OrganizationDashboardPage from "./pages/organization/dashboard";
+// import OrganizationDashboardPage from "./pages/organization/dashboard";
 import OrganizationSubmissionPage from "./pages/organization/submission";
 import OrganizationSubmissedPage from "./pages/organization/submissed";
 import DetailParticipantPage from "./pages/organization/detail-participant";
 import DetailAbsentPage from "./pages/organization/detail-absent";
 // student affair
-import StudentAffairDashboardPage from "./pages/student-affair/dashboard";
+// import StudentAffairDashboardPage from "./pages/student-affair/dashboard";
 import StudentAffairSubmissionPage from "./pages/student-affair/submission-my-event";
 import StudentAffairSubmissedPage from "./pages/student-affair/submissed-my-event";
 import StudentAffairDetailParticipantPage from "./pages/student-affair/detail-participant";
@@ -58,10 +58,10 @@ function App() {
         />
 
         {/* organization */}
-        <Route
+        {/* <Route
           path="/organization/dashboard"
           element={<OrganizationDashboardPage />}
-        />
+        /> */}
         <Route
           path="/organization/detail-participant/:id"
           element={<DetailParticipantPage />}
@@ -80,10 +80,10 @@ function App() {
         />
 
         {/* student affair */}
-        <Route
+        {/* <Route
           path="/student-affair/dashboard"
           element={<StudentAffairDashboardPage />}
-        />
+        /> */}
         <Route
           path="/student-affair/detail-participant/:id"
           element={<StudentAffairDetailParticipantPage />}

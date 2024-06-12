@@ -3,7 +3,7 @@ import SidebarSection from "@/components/user/profile/sidebar";
 import { activeSidebarProfileStudent } from "@/core/store";
 import BaseLayout from "@/layouts/base";
 import { useRecoilValue } from "recoil";
-import ChangePasswordUser from "./forgot-password";
+import ChangePasswordUser from "./change-password";
 
 const Profile = () => {
   const activeCategorySidebar = useRecoilValue(activeSidebarProfileStudent);

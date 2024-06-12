@@ -13,7 +13,7 @@ import {
 
 const Header = ({ isAuthPage: isAuthPage }: HeaderFooterProps) => {
   const logged = localStorage.getItem("token");
-  //useRecoilValue(isLogged);
+  const role = localStorage.getItem("role");
 
   const handleLogin = () => {
     window.location.href = "/login";
@@ -28,8 +28,7 @@ const Header = ({ isAuthPage: isAuthPage }: HeaderFooterProps) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    localStorage.clear();
     window.location.href = "/login";
   };
 
@@ -49,16 +48,20 @@ const Header = ({ isAuthPage: isAuthPage }: HeaderFooterProps) => {
                   />
                 </PopoverTrigger>
                 <PopoverContent>
+                  {role === "mahasiswa" || role === "" ? (
+                    <div>
+                      <div
+                        className="flex items-center  px-4 hover:bg-gray-200  py-2"
+                        onClick={handleProfile}
+                      >
+                        <UserGroupIcon className="w-6 h-6" />
+                        <span className="ml-2">Profile</span>
+                      </div>
+                      <hr className="my-2" />
+                    </div>
+                  ) : null}
                   <div
-                    className="flex items-center  px-4 hover:bg-gray-200 mt-2 py-2"
-                    onClick={handleProfile}
-                  >
-                    <UserGroupIcon className="w-6 h-6" />
-                    <span className="ml-2">Profile</span>
-                  </div>
-                  <hr className="my-2" />
-                  <div
-                    className="flex items-center px-4 hover:bg-gray-200 mb-2 py-2"
+                    className="flex items-center px-4 hover:bg-gray-200  py-2"
                     onClick={handleLogout}
                   >
                     <ArrowRightStartOnRectangleIcon className="w-6 h-6" />

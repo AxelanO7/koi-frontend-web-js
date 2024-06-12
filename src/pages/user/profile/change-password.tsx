@@ -1,15 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
 import { Button } from "@/shadcn/components/ui/button";
+import { getBaseUrl } from "@/helpers/api";
+import { UserProps } from "@/types/user";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const ChangePasswordUser = () => {
+  // form state
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [profile, setProfile] = useState<UserProps>();
+
   const handleResetPassword = () => {
-    console.log("Reset password");
+    const payload = {
+      user_id: profile?.id.toString(),
+      password: newPassword,
+      password_confirmation: confirmPassword,
+    };
+
+    axios
+      .post(`${getBaseUrl()}/user/private/reset-password`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Password berhasil diubah",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Password gagal diubah",
+        });
+      });
   };
+
+  const getProfile = () => {
+    const baseUrl = getBaseUrl();
+    axios
+      .get(`${baseUrl}/user/private/profile`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        const dataRes: UserProps = res.data.data;
+        setProfile(dataRes);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <>
@@ -22,6 +83,7 @@ const ChangePasswordUser = () => {
               type={showOldPassword ? "text" : "password"}
               placeholder="Masukkan password sebelumnya"
               className="focus:outline-none"
+              onChange={(e) => setOldPassword(e.target.value)}
             />
             {showOldPassword ? (
               <EyeSlashIcon
@@ -43,6 +105,7 @@ const ChangePasswordUser = () => {
               type={showNewPassword ? "text" : "password"}
               placeholder="Masukkan password baru"
               className="focus:outline-none"
+              onChange={(e) => setNewPassword(e.target.value)}
             />
             {showNewPassword ? (
               <EyeSlashIcon
@@ -69,6 +132,7 @@ const ChangePasswordUser = () => {
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Masukkan password baru"
               className="focus:outline-none"
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
             {showConfirmPassword ? (
               <EyeSlashIcon

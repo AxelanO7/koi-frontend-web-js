@@ -2,13 +2,55 @@ import { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
 import { Button } from "@/shadcn/components/ui/button";
+import { UserProps } from "@/types/user";
+import { getBaseUrl } from "@/helpers/api";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-const ChangePasswordSection = () => {
+interface Props {
+  profileProps?: UserProps;
+}
+
+const ChangePasswordSection = ({ profileProps }: Props) => {
+  const [formState, setFormState] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const handleResetPassword = () => {
-    console.log("Reset password");
+    const payload = {
+      user_id: profileProps?.id.toString(),
+      password: formState.newPassword,
+      password_confirmation: formState.confirmPassword,
+    };
+
+    axios
+      .post(`${getBaseUrl()}/user/private/reset-password`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Password berhasil diubah",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Password gagal diubah",
+        });
+      });
   };
 
   return (
@@ -22,6 +64,9 @@ const ChangePasswordSection = () => {
               type={showOldPassword ? "text" : "password"}
               placeholder="Masukkan password sebelumnya"
               className="focus:outline-none"
+              onChange={(e) =>
+                setFormState({ ...formState, oldPassword: e.target.value })
+              }
             />
             {showOldPassword ? (
               <EyeSlashIcon
@@ -43,6 +88,9 @@ const ChangePasswordSection = () => {
               type={showNewPassword ? "text" : "password"}
               placeholder="Masukkan password baru"
               className="focus:outline-none"
+              onChange={(e) =>
+                setFormState({ ...formState, newPassword: e.target.value })
+              }
             />
             {showNewPassword ? (
               <EyeSlashIcon
@@ -69,6 +117,9 @@ const ChangePasswordSection = () => {
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Masukkan password baru"
               className="focus:outline-none"
+              onChange={(e) =>
+                setFormState({ ...formState, confirmPassword: e.target.value })
+              }
             />
             {showConfirmPassword ? (
               <EyeSlashIcon

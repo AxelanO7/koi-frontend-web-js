@@ -1,8 +1,66 @@
+import { getBaseUrl } from "@/helpers/api";
 import { Button } from "@/shadcn/components/ui/button";
+import { UserProps } from "@/types/user";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/16/solid";
+import axios from "axios";
 import clsx from "clsx";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
-const EditProfileSection = () => {
+interface Props {
+  profileProps?: UserProps;
+}
+
+const EditProfileSection = ({ profileProps }: Props) => {
+  const [form, setForm] = useState({
+    nama_ormawa: profileProps?.ormawa?.nama_ormawa,
+    email: profileProps?.ormawa?.email,
+    deskripsi: profileProps?.ormawa?.deskripsi,
+  });
+
+  const handleSubmit = () => {
+    // todo: logo and cover
+    const payload = {
+      id: profileProps?.id,
+      nama_ormawa: form.nama_ormawa || profileProps?.ormawa?.nama_ormawa,
+      email: form.email || profileProps?.ormawa?.email,
+      deskripsi: form.deskripsi || profileProps?.ormawa?.deskripsi,
+      jenis_ormawa: profileProps?.ormawa?.jenis_ormawa,
+      status: profileProps?.ormawa?.status,
+      // logo: "",
+      // cover: "",
+    };
+
+    axios
+      .put(
+        `${getBaseUrl()}/user/private/edit-profile/${profileProps?.role}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Profile berhasil diubah",
+        }).then(async () => {
+          window.location.reload();
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Profile gagal diubah",
+        });
+      });
+  };
+
   return (
     <>
       <div className={clsx("bg-white rounded-lg p-8 border")}>
@@ -16,6 +74,10 @@ const EditProfileSection = () => {
                 "border border-gray-300 rounded-lg w-full p-2 mt-2"
               )}
               placeholder="Nama Ormawa"
+              defaultValue={profileProps?.ormawa?.nama_ormawa}
+              onChange={(e) =>
+                setForm({ ...form, nama_ormawa: e.target.value })
+              }
             />
             <div className="h-4" />
             <label className={clsx("font-semibold text-sm")}>Email</label>
@@ -25,6 +87,8 @@ const EditProfileSection = () => {
                 "border border-gray-300 rounded-lg w-full p-2 mt-2"
               )}
               placeholder="Email"
+              defaultValue={profileProps?.ormawa?.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
             <div className="h-4" />
             <label className={clsx("font-semibold text-sm")}>
@@ -35,6 +99,8 @@ const EditProfileSection = () => {
                 "border border-gray-300 rounded-lg w-full p-2 mt-2 h-60"
               )}
               placeholder="Deskripsi Ormawa"
+              defaultValue={profileProps?.ormawa?.deskripsi}
+              onChange={(e) => setForm({ ...form, deskripsi: e.target.value })}
             />
           </div>
           <div className={clsx("w-full")}>
@@ -69,6 +135,7 @@ const EditProfileSection = () => {
           <Button
             variant={"destructive"}
             className={clsx("bg-poppy-500 text-white")}
+            onClick={handleSubmit}
           >
             Simpan
           </Button>

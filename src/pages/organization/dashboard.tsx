@@ -6,10 +6,15 @@ import ParticipantSection from "@/components/organization/participant";
 import SidebarDashboardSection from "@/components/organization/sidebar-dashboard";
 import { activeSidebarHomepageOrganization } from "@/core/store";
 import BaseLayout from "@/layouts/base";
+import { UserProps } from "@/types/user";
 import clsx from "clsx";
 import { useRecoilValue } from "recoil";
 
-const DashboardOrganization = () => {
+const DashboardOrganization = ({
+  profileProps,
+}: {
+  profileProps?: UserProps;
+}) => {
   const activeCategorySidebar = useRecoilValue(
     activeSidebarHomepageOrganization
   );
@@ -22,7 +27,7 @@ const DashboardOrganization = () => {
       case "absent_participant":
         return <AbsentSection />;
       case "my_account":
-        return <MyProfileSection />;
+        return <MyProfileSection profileProps={profileProps} />;
       default:
         return <MyEventSection />;
     }

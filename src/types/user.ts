@@ -22,6 +22,13 @@ export interface MahasiswaProps {
   password: string;
   user_id: number;
   user?: UserProps;
+  nama_mahasiswa: string;
+  no_telepon: string;
+  email: string;
+  tanggal_lahir: string;
+  jenis_kelamin: number;
+  tempat_lahir: string;
+  alamat_tinggal: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
@@ -30,6 +37,11 @@ export interface MahasiswaProps {
 export interface OrmawaProps {
   id: number;
   nama_ormawa: string;
+  email: string;
+  deskripsi: string;
+  jenis_ormawa: string;
+  logo: string;
+  cover: string;
   status: number;
   password: string;
   user_id: number;

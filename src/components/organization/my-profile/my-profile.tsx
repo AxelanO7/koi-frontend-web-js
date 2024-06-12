@@ -2,13 +2,18 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import ChangePasswordSection from "./change-password";
 import DetailProfileSection from "./detail-profile";
 import MenuProfileSection from "./menu-profile";
-import { activeMyAccountStudentAffair } from "@/core/store";
 import EditProfileSection from "./edit-profile";
+import { UserProps } from "@/types/user";
+import { activeMyAccountOrganization } from "@/core/store";
 
-const MyProfileSection = () => {
-  const activeCategorySidebar = useRecoilValue(activeMyAccountStudentAffair);
+interface Props {
+  profileProps?: UserProps;
+}
+
+const MyProfileSection = ({ profileProps }: Props) => {
+  const activeCategorySidebar = useRecoilValue(activeMyAccountOrganization);
   const [activeSidebar, setActiveSidebar] = useRecoilState(
-    activeMyAccountStudentAffair
+    activeMyAccountOrganization
   );
 
   return (
@@ -18,11 +23,12 @@ const MyProfileSection = () => {
       {activeCategorySidebar === "my_profile" ? (
         <DetailProfileSection
           setActive={() => setActiveSidebar("edit_profile")}
+          profileProps={profileProps}
         />
       ) : activeCategorySidebar === "change_password" ? (
-        <ChangePasswordSection />
+        <ChangePasswordSection profileProps={profileProps} />
       ) : activeCategorySidebar === "edit_profile" ? (
-        <EditProfileSection />
+        <EditProfileSection profileProps={profileProps} />
       ) : null}
     </div>
   );

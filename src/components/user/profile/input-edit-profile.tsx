@@ -12,11 +12,19 @@ import axios from "axios";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const InputEditProfileSection = () => {
-  const [date, setDate] = useState<Date>();
-  const [gender, setGender] = useState<string>("l");
   const [profile, setProfile] = useState<UserProps>();
+
+  // form
+  const [name, setName] = useState<string>();
+  const [phoneNumber, setPhoneNumber] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [date, setDate] = useState<Date>();
+  const [gender, setGender] = useState<number>();
+  const [placeOfBirth, setPlaceOfBirth] = useState<string>();
+  const [address, setAddress] = useState<string>();
 
   const getProfile = () => {
     const baseUrl = getBaseUrl();
@@ -36,6 +44,53 @@ const InputEditProfileSection = () => {
       });
   };
 
+  const updateProfile = () => {
+    const parsedDate = date
+      ? format(date, "yyyy-MM-dd")
+      : profile?.mahasiswa?.tanggal_lahir;
+    const payload = {
+      id: profile?.id,
+      nim: profile?.mahasiswa?.nim,
+      nama_mahasiswa: name || profile?.mahasiswa?.nama_mahasiswa,
+      role: profile?.role,
+      no_telepon: phoneNumber || profile?.mahasiswa?.no_telepon,
+      email: email || profile?.mahasiswa?.email,
+      tanggal_lahir: parsedDate,
+      jenis_kelamin: gender || profile?.mahasiswa?.jenis_kelamin,
+      tempat_lahir: placeOfBirth || profile?.mahasiswa?.tempat_lahir,
+      alamat_tinggal: address || profile?.mahasiswa?.alamat_tinggal,
+    };
+    axios
+      .put(
+        `${getBaseUrl()}/user/private/edit-profile/${profile?.role}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Profile berhasil diubah",
+        }).then(() => {
+          getProfile();
+          // window.location.href = "/profile";
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Profile gagal diubah",
+        });
+      });
+  };
+
   useEffect(() => {
     getProfile();
   }, []);
@@ -50,30 +105,33 @@ const InputEditProfileSection = () => {
             className={clsx(
               "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
             )}
-            defaultValue={profile?.mahasiswa?.username}
+            defaultValue={profile?.mahasiswa?.nama_mahasiswa}
             placeholder="Ketikkan nama lengkapmu"
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="h-4" />
-        {/* todo: phone number */}
         <div className={clsx("space-y-1 w-full")}>
           <p className={clsx("font-medium text-sm")}>No Telepon</p>
           <input
             className={clsx(
               "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
             )}
+            defaultValue={profile?.mahasiswa?.no_telepon}
             placeholder="Ketikkan no teleponmu"
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </div>
         <div className="h-4" />
-        {/* todo:  */}
         <div className={clsx("space-y-1 w-full")}>
           <p className={clsx("font-medium text-sm")}>Email</p>
           <input
             className={clsx(
               "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
             )}
+            defaultValue={profile?.mahasiswa?.email}
             placeholder="Masukkan emailmu"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="h-4" />
@@ -85,9 +143,12 @@ const InputEditProfileSection = () => {
                 className={clsx(
                   "border border-gray-300 rounded-md text-sm w-full shadow-none text-gray-400 bg-white px-2 py-1"
                 )}
+                variant={"secondary"}
               >
                 {date ? (
                   format(date, "PPP")
+                ) : profile?.mahasiswa?.tanggal_lahir || false ? (
+                  format(new Date(profile?.mahasiswa?.tanggal_lahir), "PPP")
                 ) : (
                   <span>Masukkan Tanggil Lahir Kamu</span>
                 )}
@@ -111,20 +172,26 @@ const InputEditProfileSection = () => {
             <Button
               className={clsx(
                 "border border-gray-300 rounded-2xl text-sm w-1/2 shadow-none bg-white text-gray-400",
-                gender === "l" ? "bg-poppy-500 text-white" : ""
+                gender === 1 ? "bg-poppy-500 text-white" : "",
+                gender === undefined && profile?.mahasiswa?.jenis_kelamin === 1
+                  ? "bg-poppy-500 text-white"
+                  : ""
               )}
               variant={"outline"}
-              onClick={() => setGender("l")}
+              onClick={() => setGender(1)}
             >
               Laki-laki
             </Button>
             <Button
               className={clsx(
                 "border border-gray-300 rounded-2xl text-sm w-1/2 shadow-none bg-white text-gray-400",
-                gender === "p" ? "bg-poppy-500 text-white" : ""
+                gender === 0 ? "bg-poppy-500 text-white" : "",
+                gender === undefined && profile?.mahasiswa?.jenis_kelamin === 0
+                  ? "bg-poppy-500 text-white"
+                  : ""
               )}
               variant={"outline"}
-              onClick={() => setGender("p")}
+              onClick={() => setGender(0)}
             >
               Perempuan
             </Button>
@@ -137,7 +204,9 @@ const InputEditProfileSection = () => {
             className={clsx(
               "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
             )}
+            defaultValue={profile?.mahasiswa?.tempat_lahir}
             placeholder="Masukkan Kota / Kabupaten Lahir Kamu"
+            onChange={(e) => setPlaceOfBirth(e.target.value)}
           />
         </div>
         <div className="h-4" />
@@ -147,7 +216,9 @@ const InputEditProfileSection = () => {
             className={clsx(
               "border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
             )}
+            defaultValue={profile?.mahasiswa?.alamat_tinggal}
             placeholder="Masukkan Alamat Tinggal Kamu"
+            onChange={(e) => setAddress(e.target.value)}
           />
         </div>
         <div className="h-8" />
@@ -159,7 +230,10 @@ const InputEditProfileSection = () => {
           >
             Batal
           </Button>
-          <Button className={clsx("bg-poppy-500 text-white w-full")}>
+          <Button
+            className={clsx("bg-poppy-500 text-white w-full")}
+            onClick={updateProfile}
+          >
             Simpan
           </Button>
         </div>

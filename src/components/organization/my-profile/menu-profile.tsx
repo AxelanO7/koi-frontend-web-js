@@ -1,4 +1,4 @@
-import { activeMyAccountStudentAffair } from "@/core/store";
+import { activeMyAccountOrganization } from "@/core/store";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
@@ -18,7 +18,7 @@ const MenuProfileSection = () => {
   ];
 
   const [activeCategorySidebar, setActiveCategorySidebar] = useRecoilState(
-    activeMyAccountStudentAffair
+    activeMyAccountOrganization
   );
 
   return (

@@ -1,12 +1,14 @@
 import { Button } from "@/shadcn/components/ui/button";
+import { UserProps } from "@/types/user";
 import { EnvelopeIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
 
 interface Props {
   setActive: () => void;
+  profileProps?: UserProps;
 }
 
-const DetailProfileSection = ({ setActive }: Props) => {
+const DetailProfileSection = ({ setActive, profileProps }: Props) => {
   return (
     <>
       <div className={clsx("bg-white rounded-lg p-4 h-min border")}>
@@ -23,21 +25,24 @@ const DetailProfileSection = ({ setActive }: Props) => {
             className={clsx("w-24 h-24 rounded-full")}
           />
           <div>
-            <p className={clsx("font-semibold text-lg")}>Ormawa</p>
+            <p className={clsx("font-semibold text-lg")}>
+              {profileProps?.ormawa?.nama_ormawa}
+            </p>
             <div className="flex mt-2 items-center space-x-2">
               <EnvelopeIcon className={clsx("w-6 h-6")} />
-              <p className={clsx("font-normal text-sm")}>email123@gmail.com</p>
+              <p className={clsx("font-normal text-sm")}>
+                {profileProps?.ormawa?.email || "Email Ormawa belum diatur"}
+              </p>
             </div>
             <p className={clsx("font-semibold text-base mt-4")}>
               Deskripsi Ormawa
             </p>
             <p className={clsx("font-normal text-sm mt-2 text-gray-600")}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-              ipsum optio laboriosam reprehenderit saepe autem libero sint aut
-              similique placeat. Dolores, magni unde voluptates rem error
-              dolorem facilis odit? Molestias.
+              {profileProps?.ormawa?.deskripsi ||
+                "Deskripsi Ormawa belum diatur"}
             </p>
           </div>
+          <div className={clsx("flex grow")} />
           <Button
             variant={"destructive"}
             className={clsx(
