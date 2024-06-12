@@ -7,7 +7,7 @@ import ShortDescriptionEvent from "./short-description-event";
 import { DetailEventProps, PaymentProps } from "@/types/event";
 import { UserProps } from "@/types/user";
 
-const RegisteringEvent = ({
+const RegisteringEventSection = ({
   eventProps = {} as DetailEventProps,
   paymentProps = {} as PaymentProps,
 }) => {
@@ -245,4 +245,4 @@ const RegisteringEvent = ({
   );
 };
 
-export default RegisteringEvent;
+export default RegisteringEventSection;

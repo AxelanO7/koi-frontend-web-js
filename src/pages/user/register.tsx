@@ -1,32 +1,58 @@
 import RegisteredEventSection from "@/components/user/event/registered";
-import RegisteringEvent from "@/components/user/event/registering";
+import RegisteringEventSection from "@/components/user/event/registering";
 import { getBaseUrl } from "@/helpers/api";
 import BaseLayout from "@/layouts/base";
-import { DetailEventProps, PaymentProps } from "@/types/event";
+import { AbsentProps, DetailEventProps, PaymentProps } from "@/types/event";
+import { UserProps } from "@/types/user";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const RegisterEventPage = () => {
   const idParam = window.location.pathname.split("/")[3];
-  const [isRegistered, setIsRegistered] = useState(false);
   const [event, setEvent] = useState<DetailEventProps>({} as DetailEventProps);
+  const [absent, setAbsent] = useState<AbsentProps>({} as AbsentProps);
   const [payment, setPayment] = useState<PaymentProps>({} as PaymentProps);
+
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [isAbsent, setIsAbsent] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getDetailEventById();
-  }, []);
+    if (idParam) {
+      fetchData();
+    }
+  }, [idParam]);
 
-  const getDetailEventById = async () => {
+  const fetchData = async () => {
     let eventByStudents: PaymentProps[] = [];
+    let absents: AbsentProps[] = [];
 
     let eventById: DetailEventProps = {} as DetailEventProps;
     let selectedEvent: PaymentProps = {} as PaymentProps;
+    let userAbsent = {} as AbsentProps;
+    let user = {} as UserProps;
 
+    let isAlreadyAbsent = false;
     let isExistEvent = false;
 
     setIsLoading(true);
+
+    await axios
+      .get(`${getBaseUrl()}/user/private/profile`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        const dataRes: UserProps = res.data.data;
+        user = dataRes;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     await axios
       .get(`${getBaseUrl()}/pembayaran/private/get-event-by-mahasiswa`, {
         headers: {
@@ -66,44 +92,41 @@ const RegisterEventPage = () => {
         console.log(err);
       });
 
+    await axios
+      .get(`${getBaseUrl()}/absensi/public/get-absent/${eventById.event_id}`)
+      .then((res) => {
+        console.log(res.data);
+        const dataRes: AbsentProps[] = res.data.data;
+        absents = dataRes;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // check if student already absent
+    absents.forEach((absent) => {
+      if (absent.user_id === user.id) {
+        isAlreadyAbsent = true;
+        userAbsent = absent;
+      }
+    });
+
+    // check if student already registered
     eventByStudents.forEach((event) => {
       if (event.event_id === eventById.event_id) {
         isExistEvent = true;
         selectedEvent = event;
       }
     });
-    // eventByStudents.forEach((event) => {
-    //   if (event.event_id === eventById.event_id) {
-    //     isExistEvent = true;
-    //   }
-    // });
 
-    if (isExistEvent) {
-      setIsRegistered(true);
-    }
+    if (isExistEvent) setIsRegistered(true);
+    if (isAlreadyAbsent) setIsAbsent(true);
+
     setEvent(eventById);
     setPayment(selectedEvent);
+    setAbsent(userAbsent);
     setIsLoading(false);
   };
-
-  // const getEventByStudent = async () => {
-  //   setIsLoading(true);
-  //   axios
-  //     .get(`${getBaseUrl()}/pembayaran/private/get-event-by-mahasiswa`, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setEvent(res.data.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setIsLoading(false);
-  //     });
-  // };
 
   return (
     <>
@@ -111,9 +134,14 @@ const RegisterEventPage = () => {
         {isLoading ? (
           <p className="text-center text-lg font-semibold">Loading...</p>
         ) : !isRegistered ? (
-          <RegisteringEvent eventProps={event} paymentProps={payment} />
+          <RegisteringEventSection eventProps={event} paymentProps={payment} />
         ) : (
-          <RegisteredEventSection eventProps={event} paymentProps={payment} />
+          <RegisteredEventSection
+            eventProps={event}
+            paymentProps={payment}
+            absentProps={absent}
+            isAbsentProps={isAbsent}
+          />
         )}
       </BaseLayout>
     </>

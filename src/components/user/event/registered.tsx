@@ -8,12 +8,20 @@ import {
 } from "@/shadcn/components/ui/tabs";
 import clsx from "clsx";
 import { useState } from "react";
-import { DetailEventProps, PaymentProps } from "@/types/event";
+import { AbsentProps, DetailEventProps, PaymentProps } from "@/types/event";
 import ShortDescriptionEvent from "./short-description-event";
+import Swal from "sweetalert2";
 
 const RegisteredEventSection = ({
-  eventProps = {} as DetailEventProps,
-  paymentProps = {} as PaymentProps,
+  eventProps,
+  paymentProps,
+  isAbsentProps,
+  absentProps,
+}: {
+  eventProps: DetailEventProps;
+  paymentProps: PaymentProps;
+  isAbsentProps: boolean;
+  absentProps: AbsentProps;
 }) => {
   enum listActiveTab {
     information = "information",
@@ -39,7 +47,7 @@ const RegisteredEventSection = ({
     minute: "2-digit",
   });
 
-  const getStatusButtonColor = () => {
+  const getStatusButtonPaymentColor = () => {
     if (paymentProps.status === 0) {
       return "bg-blue-500";
     } else if (paymentProps.status === 1) {
@@ -51,7 +59,20 @@ const RegisteredEventSection = ({
     }
   };
 
-  const getTextStatus = () => {
+  const handleTapAbsent = () => {
+    if (isAbsentProps) {
+      Swal.fire({
+        icon: "error",
+        title: "Anda sudah absen",
+        text: "Anda tidak bisa absen lebih dari satu kali",
+      });
+      return;
+    }
+    const idParams = window.location.pathname.split("/")[3];
+    window.location.href = `/event/absent/${idParams}`;
+  };
+
+  const getTextStatusPayment = () => {
     if (paymentProps.status === 0) {
       return "Ditinjau";
     } else if (paymentProps.status === 1) {
@@ -62,6 +83,46 @@ const RegisteredEventSection = ({
       return "Ditolak";
     }
   };
+
+  const getStatusButtonAbsentColor = (status: string) => {
+    if (status === "pending") {
+      return "bg-yellow-500";
+    } else if (status === "rejected") {
+      return "bg-danger";
+    } else if (status === "accepted") {
+      return "bg-success";
+    } else {
+      return "bg-yellow-500";
+    }
+  };
+
+  const getTextStatusAbsent = (status: string) => {
+    switch (status) {
+      case "pending":
+        return "Ditinjau";
+      case "rejected":
+        return "Ditolak";
+      case "accepted":
+        return "Diterima";
+      default:
+        return "Ditolak";
+    }
+  };
+
+  const dateAbsent = new Date(
+    absentProps.created_at || new Date()
+  ).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  const timeAbsent = new Date(
+    absentProps.created_at || new Date()
+  ).toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <>
@@ -115,10 +176,10 @@ const RegisteredEventSection = ({
                     <button
                       className={clsx(
                         "rounded-2xl text-white px-3 py-1 text-sm font-normal",
-                        getStatusButtonColor()
+                        getStatusButtonPaymentColor()
                       )}
                     >
-                      {getTextStatus()}
+                      {getTextStatusPayment()}
                     </button>
                   </div>
                   <div className={clsx("text-sm space-y-6")}>
@@ -182,68 +243,85 @@ const RegisteredEventSection = ({
                 </div>
               </TabsContent>
               <TabsContent value={listActiveTab.absent}>
-                <Button className={clsx("bg-poppy-500")}>
+                <Button
+                  className={clsx("bg-poppy-500")}
+                  onClick={handleTapAbsent}
+                >
                   Absen Kehadiran
                   <PencilSquareIcon className={clsx("h-5 w-5 ml-2")} />
                 </Button>
-                <div className="h-4" />
-                <div className={clsx("flex space-x-12")}>
-                  <div className={clsx("text-sm space-y-6")}>
-                    <p className={clsx("font-semibold")}>Id Pendaftaran</p>
-                    <p className={clsx("font-medium")}>{eventProps.event_id}</p>
-                  </div>
-                  <div className={clsx("text-sm space-y-6")}>
-                    <p className={clsx("font-semibold")}>Status Peserta</p>
-                    <button
+                {isAbsentProps && (
+                  <div>
+                    <div className="h-4" />
+                    <div className={clsx("flex space-x-12")}>
+                      <div className={clsx("text-sm space-y-6")}>
+                        <p className={clsx("font-semibold")}>Id Pendaftaran</p>
+                        <p className={clsx("font-medium")}>{absentProps.id}</p>
+                      </div>
+                      <div className={clsx("text-sm space-y-6")}>
+                        <p className={clsx("font-semibold")}>Status Peserta</p>
+                        <button
+                          className={clsx(
+                            "rounded-2xl text-white px-3 py-1 text-sm font-normal",
+                            getStatusButtonAbsentColor(absentProps.status)
+                          )}
+                        >
+                          {getTextStatusAbsent(
+                            absentProps.status || "rejected"
+                          )}
+                        </button>
+                      </div>
+                      <div className={clsx("text-sm space-y-6")}>
+                        <p className={clsx("font-semibold")}>
+                          Waktu Pendaftaran
+                        </p>
+                        <p className={clsx("font-medium")}>
+                          {dateAbsent}
+                          {` (${timeAbsent})`}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      className={clsx("h-0.5 bg-gray-300 w-full mt-8 mb-4")}
+                    />
+                    <div className={clsx("space-y-4")}>
+                      <div className="flex justify-between font-medium items-center">
+                        <p className={clsx("text-base text-gray-400")}>Nama</p>
+                        <p className={clsx("text-lg ")}>{absentProps.name}</p>
+                      </div>
+                      <div className="flex justify-between font-medium items-center">
+                        <p className={clsx("text-base text-gray-400")}>
+                          No Telepon
+                        </p>
+                        <p className={clsx("text-lg ")}>
+                          {absentProps.no_telepon}
+                        </p>
+                      </div>
+                      <div className="flex justify-between font-medium items-center">
+                        <p className={clsx("text-base text-gray-400")}>
+                          Institusi
+                        </p>
+                        <p className={clsx("text-lg ")}>
+                          {absentProps.institusi}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={clsx("h-0.5 bg-gray-300 w-full my-4")} />
+                    <p className={clsx("font-medium text-lg")}>
+                      Bukti Pembayaran
+                    </p>
+                    <div
                       className={clsx(
-                        "rounded-2xl text-white px-3 py-1 text-sm font-normal",
-                        getStatusButtonColor()
+                        "w-full flex flex-col justify-center items-center space-y-2 border border-gray-300 p-8 rounded-xl mt-4"
                       )}
                     >
-                      {getTextStatus()}
-                    </button>
+                      <img src="https://via.placeholder.com/150" />
+                      <p className={clsx("text-lg font-medium")}>
+                        {absentProps.bukti_pembayaran}
+                      </p>
+                    </div>
                   </div>
-                  <div className={clsx("text-sm space-y-6")}>
-                    <p className={clsx("font-semibold")}>Waktu Pendaftaran</p>
-                    <p className={clsx("font-medium")}>
-                      {datePayment}
-                      {` (${timePayment})`}
-                    </p>
-                  </div>
-                </div>
-                <div className={clsx("h-0.5 bg-gray-300 w-full mt-8 mb-4")} />
-                <div className={clsx("space-y-4")}>
-                  <div className="flex justify-between font-medium items-center">
-                    <p className={clsx("text-base text-gray-400")}>Nama</p>
-                    <p className={clsx("text-lg ")}>
-                      {paymentProps.nama_peserta}
-                    </p>
-                  </div>
-                  <div className="flex justify-between font-medium items-center">
-                    <p className={clsx("text-base text-gray-400")}>
-                      No Telepon
-                    </p>
-                    <p className={clsx("text-lg ")}>
-                      {paymentProps.no_telepon}
-                    </p>
-                  </div>
-                  <div className="flex justify-between font-medium items-center">
-                    <p className={clsx("text-base text-gray-400")}>Institusi</p>
-                    <p className={clsx("text-lg ")}>{paymentProps.institusi}</p>
-                  </div>
-                </div>
-                <div className={clsx("h-0.5 bg-gray-300 w-full my-4")} />
-                <p className={clsx("font-medium text-lg")}>Bukti Pembayaran</p>
-                <div
-                  className={clsx(
-                    "w-full flex flex-col justify-center items-center space-y-2 border border-gray-300 p-8 rounded-xl mt-4"
-                  )}
-                >
-                  <img src="https://via.placeholder.com/150" />
-                  <p className={clsx("text-lg font-medium")}>
-                    {paymentProps.bukti_pembayaran}
-                  </p>
-                </div>
+                )}
               </TabsContent>
             </Tabs>
           </div>

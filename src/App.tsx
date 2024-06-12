@@ -12,6 +12,7 @@ import HomePage from "./pages/user/home-page";
 import OrganizationPage from "./pages/user/organization";
 import DetailEventPage from "./pages/user/detail-event";
 import RegisterEventPage from "./pages/user/register";
+import AbsentPage from "./pages/user/absent";
 import ProfilePage from "./pages/user/profile/profile";
 import EditProfilePage from "./pages/user/profile/edit-profile";
 import ResetPasswordProfilePage from "./pages/user/profile/forgot-password";
@@ -45,12 +46,10 @@ function App() {
 
         {/* student */}
         <Route path="/home-page" element={<HomePage />} />
-
         <Route path="/event/:id" element={<DetailEventPage />} />
         <Route path="/event/register/:id" element={<RegisterEventPage />} />
-
+        <Route path="/event/absent/:id" element={<AbsentPage />} />
         <Route path="/organization/:id" element={<OrganizationPage />} />
-
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route

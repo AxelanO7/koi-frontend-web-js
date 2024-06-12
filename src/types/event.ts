@@ -1,3 +1,5 @@
+import { UserProps } from "./user";
+
 export interface EventProps {
   id: number;
   ormawa_id: number;
@@ -79,6 +81,26 @@ export interface OrmawaProps {
   user_id: number;
   user?: null;
   event?: null;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+}
+
+export interface AbsentProps {
+  id: number;
+  event_id: number;
+  user_id: number;
+  name: string;
+  no_telepon: string;
+  institusi: number;
+  status: string;
+  bukti_pembayaran: string;
+  its_close: number;
+  category: string;
+  tanggal_kegiatan: string;
+  tingkat_kegiatan: string;
+  event?: EventProps;
+  user?: UserProps;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
