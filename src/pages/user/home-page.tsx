@@ -1,7 +1,7 @@
-import SidebarSection from "../../components/user/home-page/sidebar";
-import BaseLayout from "../../layouts/base";
-import MyEventSection from "../../components/user/home-page/my-event";
-import ListEventSection from "../../components/user/home-page/list-event";
+import SidebarSection from "@/components/user/home-page/sidebar";
+import BaseLayout from "@/layouts/base";
+import MyEventSection from "@/components/user/home-page/my-event";
+import ListEventSection from "@/components/user/home-page/list-event";
 
 const HomePage = () => {
   return (
