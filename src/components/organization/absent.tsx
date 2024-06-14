@@ -22,69 +22,108 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/shadcn/components/ui/pagination";
-
-enum EventStatus {
-  Reviewed = "Ditinjau",
-  Approved = "Disetujui",
-  Rejected = "Ditolak",
-}
+import axios from "axios";
+import { getBaseUrl } from "@/helpers/api";
+import { useEffect, useState } from "react";
+import { AbsentProps } from "@/types/event";
+import { getStatusButtonColor, getStatusText } from "@/helpers/status";
+import Swal from "sweetalert2";
 
 const AbsentSection = () => {
-  const data = {
-    event: {
-      proposed: 10,
-      accomplished: 5,
-    },
-    type: {
-      seminar: 5,
-      contest: 3,
-      entertainment: 2,
-      workshop: 1,
-      social: 4,
-    },
-    events: [
-      {
-        name_participant: "Nama 1",
-        name_event: "Seminar",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Reviewed,
-      },
-      {
-        name_participant: "Nama 2",
-        name_event: "Contest",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Approved,
-      },
-      {
-        name_participant: "Nama 3",
-        name_event: "Entertainment",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Rejected,
-      },
-      {
-        name_participant: "Nama 4",
-        name_event: "Workshop",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Reviewed,
-      },
-      {
-        name_participant: "Nama 5",
-        name_event: "Social",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Approved,
-      },
-    ],
+  const [absents, setAbsents] = useState<AbsentProps[]>();
+  const getAbsents = () => {
+    axios
+      .get(`${getBaseUrl()}/absensi/public/get-all`)
+      .then((res) => {
+        console.log(res.data);
+        setAbsents(res.data.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
+
+  const handleTapAccRegistration = (val: AbsentProps) => {
+    if (val.status === "approved") {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Pendaftaran sudah di acc",
+      });
+      return;
+    }
+    axios
+      .put(
+        `${getBaseUrl()}/absensi/public/update/status/${val.event_id}`,
+        {
+          status: "approved",
+          user_id: val.user_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Pendaftaran berhasil di acc",
+        });
+        getAbsents();
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Pendaftaran gagal di acc",
+        });
+      });
+  };
+
+  const handleTapDetailAbsent = (val: AbsentProps) => {
+    Swal.fire({
+      icon: "info",
+      title: "Detail Peserta",
+      html: `
+      <div class="flex flex-col space-y-2">
+        <div class="flex space-x-2 items-center">
+          <p class="font-medium">Nama Peserta : ${val.name_mahasiswa} </p>
+        </div>
+        <div class="flex space x-2 items-center">
+          <p class="font-medium">Nama Event : ${val.event?.nama_kegiatan}</p>
+        </div>
+        <div class="flex space x-2 items-center">
+          <p class="font-medium">Waktu Absen : ${new Date(
+            val.created_at || Date.now()
+          ).toLocaleDateString("id-ID", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}</p>
+        </div>
+        <div class="flex space x-2 items-center">
+          <p class="font-medium">No Telepon : ${val.no_telepon}</p>
+        </div>
+        <div class="flex space x-2 items-center">
+          <p class="font-medium">Metode Pembayaran : ${
+            val.event?.pembayaran?.tipe_pembayaran
+          }</p>
+        </div>
+        <div class="flex space x-2 items-center">
+          <p class="font-medium">Status Peserta : ${val.status}</p>
+        </div>
+      </div>
+      `,
+    });
+  };
+
+  useEffect(() => {
+    getAbsents();
+  }, []);
 
   return (
     <>
@@ -143,29 +182,37 @@ const AbsentSection = () => {
               </tr>
             </thead>
             <tbody>
-              {data.events.map((event, index) => (
+              {absents?.map((absent, index) => (
                 <tr
                   key={index}
                   className={clsx("text-center border-b border-gray-200")}
                 >
-                  <td className={clsx("py-4")}>{event.name_participant}</td>
-                  <td className={clsx("py-4")}>{event.name_event}</td>
-                  <td className={clsx("py-4")}>{event.time_register}</td>
-                  <td className={clsx("py-4")}>{event.no_telephone}</td>
-                  <td className={clsx("py-4")}>{event.payment_method}</td>
+                  <td className={clsx("py-4")}>{absent.name_mahasiswa}</td>
+                  <td className={clsx("py-4")}>
+                    {absent.event?.nama_kegiatan}
+                  </td>
+                  <td className={clsx("py-4")}>
+                    {new Date(
+                      absent?.created_at || Date.now()
+                    ).toLocaleDateString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </td>
+                  <td className={clsx("py-4")}>{absent.no_telepon}</td>
+                  <td className={clsx("py-4")}>
+                    {absent.event?.pembayaran?.tipe_pembayaran}
+                  </td>
                   <td className={clsx("py-4")}>
                     <Button
                       size={"sm"}
                       className={clsx(
                         "text-white rounded-2xl w-20 h-8 font-semibold",
-                        event.status_participant === EventStatus.Reviewed
-                          ? "bg-yellow-500"
-                          : event.status_participant === EventStatus.Approved
-                          ? "bg-success"
-                          : "bg-danger"
+                        getStatusButtonColor(absent.status)
                       )}
                     >
-                      {event.status_participant}
+                      {getStatusText(absent.status)}
                     </Button>
                   </td>
                   <td className={clsx("py-4 px-4")}>
@@ -173,6 +220,7 @@ const AbsentSection = () => {
                       <Button
                         variant={"outline"}
                         className={clsx("text-white bg-success")}
+                        onClick={() => handleTapAccRegistration(absent)}
                       >
                         <CheckIcon className={clsx("w-5 h-5 mr-2")} />
                         Acc Pendaftaran
@@ -180,6 +228,7 @@ const AbsentSection = () => {
                       <Button
                         variant={"outline"}
                         className={clsx("text-black")}
+                        onClick={() => handleTapDetailAbsent(absent)}
                       >
                         <CreditCardIcon className={clsx("w-5 h-5 mr-2")} />
                         Detail Peserta

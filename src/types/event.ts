@@ -9,6 +9,7 @@ export interface EventProps {
   category: string;
   tanggal_kegiatan: string;
   tingkat_kegiatan: string;
+  pembayaran?: PaymentProps;
   ormawa?: OrmawaProps;
   detail_kegiatan?: DetailEventProps;
   created_at?: Date;
@@ -92,7 +93,7 @@ export interface AbsentProps {
   id: number;
   event_id: number;
   user_id: number;
-  name: string;
+  name_mahasiswa: string;
   no_telepon: string;
   institusi: number;
   status: string;
@@ -106,4 +107,9 @@ export interface AbsentProps {
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
+}
+
+export interface EventByOrmawaResponse {
+  event: EventProps[];
+  ormawa: OrmawaProps;
 }

@@ -1,5 +1,6 @@
 import { activeSidebarHomepageStudentAffair } from "@/core/store";
 import {
+  AcademicCapIcon,
   ArrowLeftEndOnRectangleIcon,
   CalendarDaysIcon,
   PencilSquareIcon,
@@ -11,9 +12,14 @@ import { useRecoilState } from "recoil";
 const SidebarDashboardSection = () => {
   const SidebarItem = [
     {
+      id: "event_organization",
+      text: "Event Ormawa",
+      icon: CalendarDaysIcon,
+    },
+    {
       id: "my_event",
       text: "Event Saya",
-      icon: CalendarDaysIcon,
+      icon: AcademicCapIcon,
     },
     {
       id: "participant_event",
@@ -51,7 +57,13 @@ const SidebarDashboardSection = () => {
               ? "bg-poppy-50"
               : null
           } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full px-4`}
-          onClick={() => setActiveCategorySidebar(item.id.toLowerCase())}
+          onClick={() => {
+            if (item.id === "logout") {
+              localStorage.clear();
+              window.location.href = "/login";
+            }
+            setActiveCategorySidebar(item.id.toLowerCase());
+          }}
         >
           <item.icon
             className={`${

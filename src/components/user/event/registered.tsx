@@ -287,7 +287,9 @@ const RegisteredEventSection = ({
                     <div className={clsx("space-y-4")}>
                       <div className="flex justify-between font-medium items-center">
                         <p className={clsx("text-base text-gray-400")}>Nama</p>
-                        <p className={clsx("text-lg ")}>{absentProps.name}</p>
+                        <p className={clsx("text-lg ")}>
+                          {absentProps.name_mahasiswa}
+                        </p>
                       </div>
                       <div className="flex justify-between font-medium items-center">
                         <p className={clsx("text-base text-gray-400")}>

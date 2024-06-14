@@ -31,20 +31,21 @@ import Swal from "sweetalert2";
 
 const ParticipantSection = () => {
   const [participants, setParticipants] = useState<PaymentProps[]>();
-  const [eventCategoryLength, setEventCategoryLength] = useState({
-    seminar: 0,
-    contest: 0,
-    workshop: 0,
-    entertainment: 0,
-    activity_social: 0,
-  });
+  // const [eventCategoryLength, setEventCategoryLength] = useState({
+  //   seminar: 0,
+  //   contest: 0,
+  //   workshop: 0,
+  //   entertainment: 0,
+  //   activity_social: 0,
+  // });
+
   const getParticipants = () => {
     axios
       .get(`${getBaseUrl()}/pembayaran/public/get-event`)
       .then((res) => {
         console.log(res.data);
         const resData: PaymentProps[] = res.data.data;
-        setEventLength(resData);
+        // setEventLength(resData);
         setParticipants(resData);
       })
       .catch((err) => {
@@ -52,37 +53,37 @@ const ParticipantSection = () => {
       });
   };
 
-  const setEventLength = (listData: PaymentProps[]) => {
-    const categoryLength = {
-      seminar: 0,
-      contest: 0,
-      workshop: 0,
-      entertainment: 0,
-      activity_social: 0,
-    };
-    listData.forEach((data) => {
-      switch (data.event?.category) {
-        case "seminar":
-          categoryLength.seminar++;
-          break;
-        case "lomba":
-          categoryLength.contest++;
-          break;
-        case "workshop":
-          categoryLength.workshop++;
-          break;
-        case "hiburan":
-          categoryLength.entertainment++;
-          break;
-        case "kegiatan_sosial":
-          categoryLength.activity_social++;
-          break;
-        default:
-          break;
-      }
-    });
-    setEventCategoryLength(categoryLength);
-  };
+  // const setEventLength = (listData: PaymentProps[]) => {
+  //   const categoryLength = {
+  //     seminar: 0,
+  //     contest: 0,
+  //     workshop: 0,
+  //     entertainment: 0,
+  //     activity_social: 0,
+  //   };
+  //   listData.forEach((data) => {
+  //     switch (data.event?.category) {
+  //       case "seminar":
+  //         categoryLength.seminar++;
+  //         break;
+  //       case "lomba":
+  //         categoryLength.contest++;
+  //         break;
+  //       case "workshop":
+  //         categoryLength.workshop++;
+  //         break;
+  //       case "hiburan":
+  //         categoryLength.entertainment++;
+  //         break;
+  //       case "kegiatan_sosial":
+  //         categoryLength.activity_social++;
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   });
+  //   setEventCategoryLength(categoryLength);
+  // };
 
   const handleTapAccRegistration = (val: PaymentProps) => {
     if (val.status === "approved") {
@@ -122,6 +123,31 @@ const ParticipantSection = () => {
           text: "Pendaftaran gagal di acc",
         });
       });
+  };
+
+  const handleTapDetailParticipant = (val: PaymentProps) => {
+    Swal.fire({
+      icon: "info",
+      title: "Detail Peserta",
+      html: `
+        <div class="flex flex-col space-y-2">
+          <p class="font-medium">Nama Peserta : ${val.nama_peserta}</p>
+          <p class="font-medium">Nama Event : ${val.event?.nama_kegiatan}</p>
+          <p class="font-medium">Waktu Pendaftaran : ${new Date(
+            val?.created_at || Date.now()
+          ).toLocaleDateString("id-ID", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}</p>
+          <p class="font-medium">No Telepon : ${val.no_telepon}</p>
+          <p class="font-medium">Metode Pembayaran : ${val.tipe_pembayaran}</p>
+          <p class="font-medium">Status Peserta : ${getStatusText(
+            val.status
+          )}</p>
+        </div>
+      `,
+    });
   };
 
   useEffect(() => {
@@ -231,6 +257,7 @@ const ParticipantSection = () => {
                       <Button
                         variant={"outline"}
                         className={clsx("text-black")}
+                        onClick={() => handleTapDetailParticipant(participant)}
                       >
                         <CreditCardIcon className={clsx("w-5 h-5 mr-2")} />
                         Detail Peserta
