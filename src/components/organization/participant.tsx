@@ -22,69 +22,102 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/shadcn/components/ui/pagination";
-
-enum EventStatus {
-  Reviewed = "Ditinjau",
-  Approved = "Disetujui",
-  Rejected = "Ditolak",
-}
+import axios from "axios";
+import { getBaseUrl } from "@/helpers/api";
+import { useEffect, useState } from "react";
+import { PaymentProps } from "@/types/event";
+import { getStatusButtonColor, getStatusText } from "@/helpers/status";
+import Swal from "sweetalert2";
 
 const ParticipantSection = () => {
-  const data = {
-    event: {
-      proposed: 10,
-      accomplished: 5,
-    },
-    type: {
-      seminar: 5,
-      contest: 3,
-      entertainment: 2,
-      workshop: 1,
-      social: 4,
-    },
-    events: [
-      {
-        name_participant: "Nama 1",
-        name_event: "Seminar",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Reviewed,
-      },
-      {
-        name_participant: "Nama 2",
-        name_event: "Contest",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Approved,
-      },
-      {
-        name_participant: "Nama 3",
-        name_event: "Entertainment",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Rejected,
-      },
-      {
-        name_participant: "Nama 4",
-        name_event: "Workshop",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Reviewed,
-      },
-      {
-        name_participant: "Nama 5",
-        name_event: "Social",
-        time_register: "Nasional",
-        no_telephone: "12-12-2021",
-        payment_method: "Transfer",
-        status_participant: EventStatus.Approved,
-      },
-    ],
+  const [participants, setParticipants] = useState<PaymentProps[]>();
+  const [eventCategoryLength, setEventCategoryLength] = useState({
+    seminar: 0,
+    contest: 0,
+    workshop: 0,
+    entertainment: 0,
+    activity_social: 0,
+  });
+  const getParticipants = () => {
+    axios
+      .get(`${getBaseUrl()}/pembayaran/public/get-event`)
+      .then((res) => {
+        console.log(res.data);
+        const resData: PaymentProps[] = res.data.data;
+        setEventLength(resData);
+        setParticipants(resData);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
+
+  const setEventLength = (listData: PaymentProps[]) => {
+    const categoryLength = {
+      seminar: 0,
+      contest: 0,
+      workshop: 0,
+      entertainment: 0,
+      activity_social: 0,
+    };
+    listData.forEach((data) => {
+      switch (data.event?.category) {
+        case "seminar":
+          categoryLength.seminar++;
+          break;
+        case "lomba":
+          categoryLength.contest++;
+          break;
+        case "workshop":
+          categoryLength.workshop++;
+          break;
+        case "hiburan":
+          categoryLength.entertainment++;
+          break;
+        case "kegiatan_sosial":
+          categoryLength.activity_social++;
+          break;
+        default:
+          break;
+      }
+    });
+    setEventCategoryLength(categoryLength);
+  };
+
+  const handleTapAccRegistration = (val: PaymentProps) => {
+    axios
+      .put(
+        `${getBaseUrl()}/pembayaran/private/update-status/${val.id}`,
+        {
+          status: "approved",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Pendaftaran berhasil di acc",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Pendaftaran gagal di acc",
+        });
+      });
+  };
+
+  useEffect(() => {
+    getParticipants();
+  }, []);
 
   return (
     <>
@@ -143,29 +176,37 @@ const ParticipantSection = () => {
               </tr>
             </thead>
             <tbody>
-              {data.events.map((event, index) => (
+              {participants?.map((participant, index) => (
                 <tr
                   key={index}
                   className={clsx("text-center border-b border-gray-200")}
                 >
-                  <td className={clsx("py-4")}>{event.name_participant}</td>
-                  <td className={clsx("py-4")}>{event.name_event}</td>
-                  <td className={clsx("py-4")}>{event.time_register}</td>
-                  <td className={clsx("py-4")}>{event.no_telephone}</td>
-                  <td className={clsx("py-4")}>{event.payment_method}</td>
+                  <td className={clsx("py-4")}>{participant.nama_peserta}</td>
+                  <td className={clsx("py-4")}>
+                    {participant.event?.nama_kegiatan}
+                  </td>
+                  <td className={clsx("py-4")}>
+                    {new Date(
+                      participant?.created_at || Date.now()
+                    ).toLocaleDateString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </td>
+                  <td className={clsx("py-4")}>{participant.no_telepon}</td>
+                  <td className={clsx("py-4")}>
+                    {participant.tipe_pembayaran}
+                  </td>
                   <td className={clsx("py-4")}>
                     <Button
                       size={"sm"}
                       className={clsx(
                         "text-white rounded-2xl w-20 h-8 font-semibold",
-                        event.status_participant === EventStatus.Reviewed
-                          ? "bg-yellow-500"
-                          : event.status_participant === EventStatus.Approved
-                          ? "bg-success"
-                          : "bg-danger"
+                        getStatusButtonColor(participant.status)
                       )}
                     >
-                      {event.status_participant}
+                      {getStatusText(participant.status)}
                     </Button>
                   </td>
                   <td className={clsx("py-4 px-4")}>
@@ -173,6 +214,7 @@ const ParticipantSection = () => {
                       <Button
                         variant={"outline"}
                         className={clsx("text-white bg-success")}
+                        onClick={() => handleTapAccRegistration(participant)}
                       >
                         <CheckIcon className={clsx("w-5 h-5 mr-2")} />
                         Acc Pendaftaran

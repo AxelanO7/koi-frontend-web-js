@@ -34,16 +34,18 @@ export interface DetailEventProps {
 }
 
 export interface PaymentProps {
-  id: number;
+  id?: number;
   nama_peserta: string;
   mahasiswa_id: number;
   event_id: number;
   no_telepon: string;
   institusi: string;
   bukti_pembayaran: string;
-  status: number;
+  status: string;
   event?: EventProps;
   mahasiswa?: null;
+  email: string;
+  tipe_pembayaran: string;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;

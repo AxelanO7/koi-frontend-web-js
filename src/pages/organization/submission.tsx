@@ -100,24 +100,6 @@ const SubmissionEventOrganization = () => {
   };
 
   const handleSubmitEvent = () => {
-    // const data = {
-    //   nameEvent,
-    //   isOnlineEvent: implementEvent,
-    //   categoryEvent,
-    //   scopeEvent,
-    //   placeEvent,
-    //   dateEvent,
-    //   timeEvent,
-    //   nameApplicant: descEvent,
-    //   selectedFilePoster,
-    //   selectedProposalEvent,
-    //   contactPersons,
-    //   priceTicketEvent,
-    //   typePriceEvent,
-    //   paymentMethods,
-    // };
-    // console.log(data);
-
     const payload: CreateEventProps = {
       // id: 0,
       ormawa_id: profile?.ormawa?.id ?? 0,
@@ -186,7 +168,6 @@ const SubmissionEventOrganization = () => {
   };
 
   const [profile, setProfile] = useState<UserProps>();
-
   const getProfile = () => {
     axios
       .get(`${getBaseUrl()}/user/private/profile`, {

@@ -29,11 +29,11 @@ const RegisteringEventSection = ({
     const payload = {
       nama_peserta: name,
       mahasiswa_id: nim,
-      // email,
+      email,
       event_id: eventProps.event_id,
       no_telepon: phone,
       institusi: institution,
-      // paymentMethod,
+      tipe_pembayaran: paymentMethod,
       bukti_pembayaran: paymentProof,
     };
     console.log(payload);
