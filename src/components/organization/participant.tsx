@@ -85,6 +85,14 @@ const ParticipantSection = () => {
   };
 
   const handleTapAccRegistration = (val: PaymentProps) => {
+    if (val.status === "approved") {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Pendaftaran sudah di acc",
+      });
+      return;
+    }
     axios
       .put(
         `${getBaseUrl()}/pembayaran/private/update-status/${val.id}`,
@@ -104,6 +112,7 @@ const ParticipantSection = () => {
           title: "Berhasil",
           text: "Pendaftaran berhasil di acc",
         });
+        getParticipants();
       })
       .catch((err) => {
         console.error(err);
