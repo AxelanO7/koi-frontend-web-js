@@ -65,6 +65,7 @@ const MyEventSection = () => {
         console.error(error);
       });
   };
+
   const assignTotalEventByCategory = (events: EventProps[]) => {
     // by status
     let submission = 0;
@@ -116,6 +117,11 @@ const MyEventSection = () => {
   const handleAddEvent = () => {
     console.log("Add Event");
     window.location.href = "/organization/submission";
+  };
+
+  const handleTapEditEvent = (id: number) => {
+    console.log("Edit Event", id);
+    window.location.href = `/organization/submission/${id}`;
   };
 
   useEffect(() => {
@@ -307,7 +313,10 @@ const MyEventSection = () => {
                       "py-4 flex-col flex space-y-4 w-40 mx-auto"
                     )}
                   >
-                    <Button className={clsx("bg-poppy-500 w-36")}>
+                    <Button
+                      className={clsx("bg-poppy-500 w-36")}
+                      onClick={() => handleTapEditEvent(event.id)}
+                    >
                       <PencilIcon className={clsx("w-4 h-4 mr-2")} />
                       Edit Event
                     </Button>

@@ -106,6 +106,7 @@ const SubmissionEventOrganization = () => {
       nama_kegiatan: nameEvent ?? "",
       tanggal_kegiatan: dateEvent?.toISOString() ?? "",
       tingkat_kegiatan: scopeEvent ?? "",
+      type_implement: implementEvent ?? "",
       harga_tiket: priceTicketEvent ?? 0,
       detail_kegiatan: {
         // id: 0,
@@ -121,6 +122,7 @@ const SubmissionEventOrganization = () => {
       metode_pembayaran: paymentMethods.map((paymentMethod) => ({
         // id: 0,
         // detail_kegiatan_id: 0,
+        metode_pembayaran: paymentMethod.paymentMethod,
         judul: `Pembayaran Tiket ${nameEvent}`,
         nama_bank: paymentMethod.bankName,
         no_rekening: paymentMethod.accountNumber.toString(),
@@ -322,7 +324,7 @@ const SubmissionEventOrganization = () => {
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setScopeEvent("Internasional")}
+                    onClick={() => setScopeEvent("internasional")}
                   >
                     Internasional
                   </Button>
@@ -334,7 +336,7 @@ const SubmissionEventOrganization = () => {
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setScopeEvent("Nasional")}
+                    onClick={() => setScopeEvent("nasional")}
                   >
                     Nasional
                   </Button>
@@ -346,7 +348,7 @@ const SubmissionEventOrganization = () => {
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setScopeEvent("Regional")}
+                    onClick={() => setScopeEvent("regional")}
                   >
                     Regional
                   </Button>
@@ -358,7 +360,7 @@ const SubmissionEventOrganization = () => {
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
-                    onClick={() => setScopeEvent("Internal")}
+                    onClick={() => setScopeEvent("internal")}
                   >
                     Internal
                   </Button>

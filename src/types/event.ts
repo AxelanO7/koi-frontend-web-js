@@ -9,7 +9,9 @@ export interface EventProps {
   category: string;
   tanggal_kegiatan: string;
   tingkat_kegiatan: string;
+  type_implement: string;
   pembayaran?: PaymentProps;
+  absensi?: AbsentProps;
   ormawa?: OrmawaProps;
   detail_kegiatan?: DetailEventProps;
   created_at?: Date;
@@ -27,8 +29,8 @@ export interface DetailEventProps {
   gambar_kegiatan: string;
   file_pengajuan: string;
   event?: EventProps;
-  metode_pembayaran?: TransactionProps;
-  narahubung?: PICProps;
+  metode_pembayaran?: TransactionProps[];
+  narahubung?: PICProps[];
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
@@ -55,6 +57,7 @@ export interface PaymentProps {
 export interface TransactionProps {
   id: number;
   detail_kegiatan_id: number;
+  metode_pembayaran: string;
   judul: string;
   nama_bank: string;
   no_rekening: string;
