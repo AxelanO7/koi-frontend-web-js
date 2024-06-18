@@ -14,12 +14,7 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { Switch } from "@/shadcn/components/ui/switch";
 import axios from "axios";
 import { getBaseUrl } from "@/helpers/api";
-import {
-  AbsentProps,
-  EventProps,
-  PICProps,
-  TransactionProps,
-} from "@/types/event";
+import { EventProps, PICProps, TransactionProps } from "@/types/event";
 import { getStatusButtonColor, getStatusText } from "@/helpers/status";
 import Swal from "sweetalert2";
 import { CreateEventProps } from "@/types/create";
