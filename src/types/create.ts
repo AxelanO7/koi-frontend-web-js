@@ -20,7 +20,7 @@ export interface CreateDetailEventProps {
 }
 
 export interface CreateEventProps {
-  id: number;
+  id?: number;
   ormawa_id?: number;
   nama_kegiatan: string;
   tanggal_kegiatan: string;
