@@ -60,6 +60,9 @@ const InputEditProfileSection = () => {
       tempat_lahir: placeOfBirth || profile?.mahasiswa?.tempat_lahir,
       alamat_tinggal: address || profile?.mahasiswa?.alamat_tinggal,
     };
+    if (profile?.role === "mahasiswa") {
+      payload["nim"] = profile?.mahasiswa?.nim;
+    }
     axios
       .put(
         `${getBaseUrl()}/user/private/edit-profile/${profile?.role}`,
