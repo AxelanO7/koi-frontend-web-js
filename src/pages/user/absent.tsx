@@ -75,7 +75,7 @@ const AbsentingPage = () => {
     const payload = {
       event_id: event.event_id,
       user_id: profile.id,
-      name: name,
+      name_mahasiswa: name,
       no_telepon: phone,
       institusi: institution,
       status: "pending",
