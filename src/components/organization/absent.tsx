@@ -223,7 +223,7 @@ const AbsentSection = () => {
                         onClick={() => handleTapAccRegistration(absent)}
                       >
                         <CheckIcon className={clsx("w-5 h-5 mr-2")} />
-                        Acc Pendaftaran
+                        Acc Absen
                       </Button>
                       <Button
                         variant={"outline"}
