@@ -16,6 +16,7 @@ import { getBaseUrl } from "@/helpers/api";
 import { CreateEventProps } from "@/types/create";
 import { UserProps } from "@/types/user";
 import Swal from "sweetalert2";
+import { saveAs } from "file-saver";
 
 interface ContactPersonCard {
   name: string;
@@ -100,6 +101,9 @@ const SubmissionEventOrganization = () => {
   };
 
   const handleSubmitEvent = () => {
+    // if (selectedFilePoster) handleSaveImage(selectedFilePoster!);
+    // if (selectedProposalEvent) handleSaveImage(selectedProposalEvent!);
+    // return;
     const payload: CreateEventProps = {
       // id: 0,
       ormawa_id: profile?.ormawa?.id ?? 0,
@@ -118,25 +122,24 @@ const SubmissionEventOrganization = () => {
         deskripsi: descEvent ?? "",
         gambar_kegiatan: selectedFilePoster?.name ?? "",
         file_pengajuan: selectedProposalEvent?.name ?? "",
+        metode_pembayaran: paymentMethods.map((paymentMethod) => ({
+          // id: 0,
+          // detail_kegiatan_id: 0,
+          metode_pembayaran: paymentMethod.paymentMethod,
+          judul: `Pembayaran Tiket ${nameEvent}`,
+          nama_bank: paymentMethod.bankName,
+          no_rekening: paymentMethod.accountNumber.toString(),
+          pemilik: paymentMethod.ownerName,
+        })),
+        narahubung: contactPersons.map((contactPerson) => ({
+          // id: 0,
+          // detail_kegiatan_id: 0,
+          judul: `Narahubung ${nameEvent} ${contactPerson.name}`,
+          nama_narahubung: contactPerson.name,
+          no_telepon: contactPerson.phoneNumber,
+        })),
       },
-      metode_pembayaran: paymentMethods.map((paymentMethod) => ({
-        // id: 0,
-        // detail_kegiatan_id: 0,
-        metode_pembayaran: paymentMethod.paymentMethod,
-        judul: `Pembayaran Tiket ${nameEvent}`,
-        nama_bank: paymentMethod.bankName,
-        no_rekening: paymentMethod.accountNumber.toString(),
-        pemilik: paymentMethod.ownerName,
-      })),
-      narahubung: contactPersons.map((contactPerson) => ({
-        // id: 0,
-        // detail_kegiatan_id: 0,
-        judul: `Narahubung ${nameEvent} ${contactPerson.name}`,
-        nama_narahubung: contactPerson.name,
-        no_telepon: contactPerson.phoneNumber,
-      })),
     };
-    console.log(payload);
     axios
       .post(`${getBaseUrl()}/event/private/create-event`, payload, {
         headers: {
@@ -152,7 +155,7 @@ const SubmissionEventOrganization = () => {
             icon: "success",
             confirmButtonText: "OK",
           }).then(() => {
-            window.location.href = "/organization/dashboard";
+            window.location.href = "/";
           });
         },
         (err) => {
@@ -162,12 +165,24 @@ const SubmissionEventOrganization = () => {
             text: "Pengajuan event gagal disimpan",
             icon: "error",
             confirmButtonText: "OK",
-          }).then(() => {
-            // window.location.href = "/organization/event";
           });
         }
       );
   };
+
+  // const handleSaveImage = async (file: File) => {
+  //   // save file with file saver
+  //   const publicFolder = "/public";
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     const base64 = reader.result?.toString().split(",")[1];
+  //     const blob = base64
+  //       ? b64toBlob(base64, file.type)
+  //       : new Blob([reader.result as ArrayBuffer]);
+  //     saveAs(blob, file.name);
+  //   };
+  // };
 
   const [profile, setProfile] = useState<UserProps>();
   const getProfile = () => {
@@ -320,7 +335,7 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      scopeEvent === "Internasional"
+                      scopeEvent === "internasional"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
@@ -332,7 +347,7 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      scopeEvent === "Nasional"
+                      scopeEvent === "nasional"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
@@ -344,7 +359,7 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      scopeEvent === "Regional"
+                      scopeEvent === "regional"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
@@ -356,7 +371,7 @@ const SubmissionEventOrganization = () => {
                     variant={"outline"}
                     className={
                       (clsx("rounded-2xl"),
-                      scopeEvent === "Internal"
+                      scopeEvent === "internal"
                         ? "bg-poppy-500 text-white"
                         : "text-gray-500")
                     }
