@@ -48,11 +48,11 @@ const RegisteredEventSection = ({
   });
 
   const getStatusButtonPaymentColor = () => {
-    if (paymentProps.status === 0) {
+    if (paymentProps.status === "pending") {
       return "bg-blue-500";
-    } else if (paymentProps.status === 1) {
+    } else if (paymentProps.status === "rejected") {
       return "bg-danger";
-    } else if (paymentProps.status === 2) {
+    } else if (paymentProps.status === "accepted") {
       return "bg-success";
     } else {
       return "bg-danger";
@@ -73,11 +73,11 @@ const RegisteredEventSection = ({
   };
 
   const getTextStatusPayment = () => {
-    if (paymentProps.status === 0) {
+    if (paymentProps.status === "pending") {
       return "Ditinjau";
-    } else if (paymentProps.status === 1) {
+    } else if (paymentProps.status === "rejected") {
       return "Ditolak";
-    } else if (paymentProps.status === 2) {
+    } else if (paymentProps.status === "accepted") {
       return "Diterima";
     } else {
       return "Ditolak";

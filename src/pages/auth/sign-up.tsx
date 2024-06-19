@@ -55,7 +55,7 @@ const Signup = () => {
         // password: password,
         // confirm_password: confirmPassword,
         // mahasiswa
-        nim: 1234567890,
+        nim: 123456789,
         username: username,
         role: "mahasiswa",
         password: password,
