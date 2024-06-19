@@ -34,8 +34,13 @@ import { getBaseUrl } from "@/helpers/api";
 import { EventByOrmawaResponse, EventProps } from "@/types/event";
 import axios from "axios";
 import { PencilIcon } from "@heroicons/react/24/solid";
+import { UserProps } from "@/types/user";
 
-const MyEventSection = () => {
+interface Props {
+  profileProps?: UserProps;
+}
+
+const MyEventSection = ({ profileProps }: Props) => {
   const [events, setEvents] = useState<EventByOrmawaResponse>();
   const [totalEvent, setTotalEvent] = useState({
     submission: 0,
@@ -50,11 +55,14 @@ const MyEventSection = () => {
   const getAllEvents = () => {
     const baseUrl = getBaseUrl();
     axios
-      .get(`${baseUrl}/event/private/get-event-ormawa`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .get(
+        `${baseUrl}/event/public/get-event-by-ormawa/${profileProps?.ormawa?.id}`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //   },
+        // }
+      )
       .then((response) => {
         const resData = response.data.data;
         console.log(response.data);

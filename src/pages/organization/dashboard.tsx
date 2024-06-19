@@ -21,7 +21,7 @@ const DashboardOrganization = ({
   const getPageActive = () => {
     switch (activeCategorySidebar) {
       case "my_event":
-        return <MyEventSection />;
+        return <MyEventSection profileProps={profileProps} />;
       case "participant_event":
         return <ParticipantSection />;
       case "absent_participant":
