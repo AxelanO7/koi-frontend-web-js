@@ -52,7 +52,7 @@ const RegisteringEventSection = ({
             icon: "success",
             confirmButtonText: "OK",
           }).then(() => {
-            // window.location.href = "/";
+            window.location.href = "/";
           });
         },
         (err) => {
