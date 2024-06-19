@@ -52,7 +52,7 @@ const RegisteredEventSection = ({
       return "bg-blue-500";
     } else if (paymentProps.status === "rejected") {
       return "bg-danger";
-    } else if (paymentProps.status === "accepted") {
+    } else if (paymentProps.status === "approved") {
       return "bg-success";
     } else {
       return "bg-danger";
@@ -77,7 +77,7 @@ const RegisteredEventSection = ({
       return "Ditinjau";
     } else if (paymentProps.status === "rejected") {
       return "Ditolak";
-    } else if (paymentProps.status === "accepted") {
+    } else if (paymentProps.status === "approved") {
       return "Diterima";
     } else {
       return "Ditolak";
@@ -89,7 +89,7 @@ const RegisteredEventSection = ({
       return "bg-yellow-500";
     } else if (status === "rejected") {
       return "bg-danger";
-    } else if (status === "accepted") {
+    } else if (status === "approved") {
       return "bg-success";
     } else {
       return "bg-yellow-500";
@@ -102,7 +102,7 @@ const RegisteredEventSection = ({
         return "Ditinjau";
       case "rejected":
         return "Ditolak";
-      case "accepted":
+      case "approved":
         return "Diterima";
       default:
         return "Ditolak";
