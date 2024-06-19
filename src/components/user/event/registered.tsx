@@ -33,7 +33,7 @@ const RegisteredEventSection = ({
   );
 
   const datePayment = new Date(
-    eventProps.metode_pembayaran?.created_at || new Date()
+    eventProps.metode_pembayaran?.[0]?.created_at ?? new Date()
   ).toLocaleDateString("id-ID", {
     day: "numeric",
     month: "long",
