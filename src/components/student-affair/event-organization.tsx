@@ -108,6 +108,10 @@ const EventOrganizationSection = () => {
     });
   };
 
+  const handleTapEditEvent = (id: number) => {
+    window.location.href = `/organization/submission/${id}`;
+  };
+
   useEffect(() => {
     getAllEvents();
   }, []);
@@ -299,7 +303,10 @@ const EventOrganizationSection = () => {
                       "py-4 flex-col flex space-y-4 w-40 mx-auto"
                     )}
                   >
-                    <Button className={clsx("bg-poppy-500 w-36")}>
+                    <Button
+                      className={clsx("bg-poppy-500 w-36")}
+                      onClick={() => handleTapEditEvent(event.id)}
+                    >
                       <PencilIcon className={clsx("w-4 h-4 mr-2")} />
                       Edit Event
                     </Button>

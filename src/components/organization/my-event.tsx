@@ -123,12 +123,10 @@ const MyEventSection = ({ profileProps }: Props) => {
   };
 
   const handleAddEvent = () => {
-    console.log("Add Event");
     window.location.href = "/organization/submission";
   };
 
   const handleTapEditEvent = (id: number) => {
-    console.log("Edit Event", id);
     window.location.href = `/organization/submission/${id}`;
   };
 
