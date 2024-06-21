@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
   Select,
@@ -31,14 +32,6 @@ import Swal from "sweetalert2";
 
 const ParticipantSection = () => {
   const [participants, setParticipants] = useState<PaymentProps[]>();
-  // const [eventCategoryLength, setEventCategoryLength] = useState({
-  //   seminar: 0,
-  //   contest: 0,
-  //   workshop: 0,
-  //   entertainment: 0,
-  //   activity_social: 0,
-  // });
-
   const getParticipants = () => {
     axios
       .get(`${getBaseUrl()}/pembayaran/public/get-event`)
@@ -52,38 +45,6 @@ const ParticipantSection = () => {
         console.error(err);
       });
   };
-
-  // const setEventLength = (listData: PaymentProps[]) => {
-  //   const categoryLength = {
-  //     seminar: 0,
-  //     contest: 0,
-  //     workshop: 0,
-  //     entertainment: 0,
-  //     activity_social: 0,
-  //   };
-  //   listData.forEach((data) => {
-  //     switch (data.event?.category) {
-  //       case "seminar":
-  //         categoryLength.seminar++;
-  //         break;
-  //       case "lomba":
-  //         categoryLength.contest++;
-  //         break;
-  //       case "workshop":
-  //         categoryLength.workshop++;
-  //         break;
-  //       case "hiburan":
-  //         categoryLength.entertainment++;
-  //         break;
-  //       case "kegiatan_sosial":
-  //         categoryLength.activity_social++;
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   });
-  //   setEventCategoryLength(categoryLength);
-  // };
 
   const handleTapAccRegistration = (val: PaymentProps) => {
     if (val.status === "approved") {
@@ -121,6 +82,46 @@ const ParticipantSection = () => {
           icon: "error",
           title: "Gagal",
           text: "Pendaftaran gagal di acc",
+        });
+      });
+  };
+
+  const handleTapRejectRegistration = (val: PaymentProps) => {
+    if (val.status === "rejected") {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Pendaftaran sudah di tolak",
+      });
+      return;
+    }
+    axios
+      .put(
+        `${getBaseUrl()}/pembayaran/private/update-status/${val.id}`,
+        {
+          status: "rejected",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Pendaftaran berhasil di tolak",
+        });
+        getParticipants();
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Pendaftaran gagal di tolak",
         });
       });
   };
@@ -253,6 +254,14 @@ const ParticipantSection = () => {
                       >
                         <CheckIcon className={clsx("w-5 h-5 mr-2")} />
                         Acc Pendaftaran
+                      </Button>
+                      <Button
+                        variant={"outline"}
+                        className={clsx("text-white bg-danger")}
+                        onClick={() => handleTapRejectRegistration(participant)}
+                      >
+                        <XMarkIcon className={clsx("w-5 h-5 mr-2")} />
+                        Tolak Pendaftaran
                       </Button>
                       <Button
                         variant={"outline"}

@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
   Select,
@@ -28,6 +29,7 @@ import { useEffect, useState } from "react";
 import { AbsentProps } from "@/types/event";
 import { getStatusButtonColor, getStatusText } from "@/helpers/status";
 import Swal from "sweetalert2";
+import { getImageUpload } from "@/helpers/image";
 
 const AbsentSection = () => {
   const [absents, setAbsents] = useState<AbsentProps[]>();
@@ -84,7 +86,56 @@ const AbsentSection = () => {
       });
   };
 
+  const handleTapRejectRegistration = (val: AbsentProps) => {
+    if (val.status === "rejected") {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Pendaftaran sudah di tolak",
+      });
+      return;
+    }
+    axios
+      .put(
+        `${getBaseUrl()}/absensi/public/update/status/${val.event_id}`,
+        {
+          status: "rejected",
+          user_id: val.user_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Pendaftaran berhasil di tolak",
+        });
+        getAbsents();
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Pendaftaran gagal di tolak",
+        });
+      });
+  };
+
   const handleTapDetailAbsent = (val: AbsentProps) => {
+    console.log("ini val : ", val);
+    const image = getImageUpload({
+      type: "proof",
+      fileName: val.bukti_pembayaran,
+    });
+
+    console.log(image);
+
     Swal.fire({
       icon: "info",
       title: "Detail Peserta",
@@ -115,6 +166,10 @@ const AbsentSection = () => {
         </div>
         <div class="flex space x-2 items-center">
           <p class="font-medium">Status Peserta : ${val.status}</p>
+        </div>
+        <div class="flex space x-2 items-center">
+          <p class="font-medium">Bukti Presensi : </p>
+          <img src="${image}"  class="w-64 h-64" />
         </div>
       </div>
       `,
@@ -224,6 +279,14 @@ const AbsentSection = () => {
                       >
                         <CheckIcon className={clsx("w-5 h-5 mr-2")} />
                         Acc Presensi
+                      </Button>
+                      <Button
+                        variant={"outline"}
+                        className={clsx("text-white bg-danger")}
+                        onClick={() => handleTapRejectRegistration(absent)}
+                      >
+                        <XMarkIcon className={clsx("w-5 h-5 mr-2")} />
+                        Tolak Presensi
                       </Button>
                       <Button
                         variant={"outline"}
