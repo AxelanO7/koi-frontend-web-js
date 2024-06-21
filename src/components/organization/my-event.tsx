@@ -13,6 +13,7 @@ import {
   ChevronRightIcon,
   CreditCardIcon,
   MagnifyingGlassIcon,
+  XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
   Select,
@@ -35,6 +36,7 @@ import { EventByOrmawaResponse, EventProps } from "@/types/event";
 import axios from "axios";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { UserProps } from "@/types/user";
+import Swal from "sweetalert2";
 
 interface Props {
   profileProps?: UserProps;
@@ -71,6 +73,32 @@ const MyEventSection = ({ profileProps }: Props) => {
       })
       .catch((error) => {
         console.error(error);
+      });
+  };
+
+  const handleTapDeleteEvent = (id: number) => {
+    axios
+      .delete(`${getBaseUrl()}/event/private/delete-event/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Event berhasil dihapus",
+        });
+        getAllEvents();
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Event gagal dihapus",
+        });
       });
   };
 
@@ -320,11 +348,19 @@ const MyEventSection = ({ profileProps }: Props) => {
                     )}
                   >
                     <Button
-                      className={clsx("bg-poppy-500 w-36")}
+                      className={clsx("bg-success w-36")}
                       onClick={() => handleTapEditEvent(event.id)}
                     >
                       <PencilIcon className={clsx("w-4 h-4 mr-2")} />
                       Edit Event
+                    </Button>
+                    <Button
+                      className={clsx("bg-poppy-500 text-white w-36")}
+                      variant="outline"
+                      onClick={() => handleTapDeleteEvent(event.id)}
+                    >
+                      <XMarkIcon className={clsx("w-4 h-4 mr-2")} />
+                      Hapus Event
                     </Button>
                     <Button
                       className={clsx("bg-white text-black w-36")}
