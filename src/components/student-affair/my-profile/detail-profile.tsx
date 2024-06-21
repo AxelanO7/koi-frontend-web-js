@@ -1,3 +1,4 @@
+import { getImageUpload } from "@/helpers/image";
 import { Button } from "@/shadcn/components/ui/button";
 import { UserProps } from "@/types/user";
 import { EnvelopeIcon, PencilSquareIcon } from "@heroicons/react/16/solid";
@@ -14,15 +15,23 @@ const DetailProfileSection = ({ setActive, profileProps }: Props) => {
       <div className={clsx("bg-white rounded-lg p-4 h-min border")}>
         <p className={clsx("font-semibold text-xl")}>Profil Saya</p>
         <img
-          src="https://via.placeholder.com/1400x500"
-          alt="profile"
-          className={clsx("rounded-lg mt-2")}
+          src={
+            getImageUpload({
+              type: "cover",
+              fileName: profileProps?.ormawa?.cover,
+            }) || "https://via.placeholder.com/150"
+          }
+          className={clsx("w-full h-48 rounded-lg mt-4 object-cover")}
         />
         <div className="flex mt-4 space-x-8">
           <img
-            src="https://via.placeholder.com/150"
-            alt="profile"
-            className={clsx("w-24 h-24 rounded-full")}
+            src={
+              getImageUpload({
+                type: "profile",
+                fileName: profileProps?.ormawa?.logo,
+              }) || "https://via.placeholder.com/150"
+            }
+            className={clsx("w-20 h-20 rounded-lg")}
           />
           <div>
             <p className={clsx("font-semibold text-lg")}>

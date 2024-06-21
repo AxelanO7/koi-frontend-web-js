@@ -55,11 +55,11 @@ const Signup = () => {
         // password: password,
         // confirm_password: confirmPassword,
         // mahasiswa
-        nim: 123456789,
-        username: username,
-        role: "mahasiswa",
-        password: password,
-        confirm_password: confirmPassword,
+        // nim: 123456789,
+        // username: username,
+        // role: "mahasiswa",
+        // password: password,
+        // confirm_password: confirmPassword,
         // ormawa
         // role: "ormawa",
         // nama_ormawa: username,
@@ -67,11 +67,12 @@ const Signup = () => {
         // password: password,
         // confirm_password: confirmPassword,
         // kemahasiswaan
-        // username: username,
-        // role: "kemahasiswaan",
-        // password: password,
-        // confirm_password: confirmPassword,
-        // status: 1,
+        username: username,
+        nama_ormawa: username,
+        role: "kemahasiswaan",
+        password: password,
+        confirm_password: confirmPassword,
+        status: 1,
       })
       .then(async () => {
         await swal.fire("Berhasil!", "Akun berhasil dibuat", "success");
