@@ -1,7 +1,7 @@
 import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
+import { getImageUpload } from "@/helpers/image";
 import { Button } from "@/shadcn/components/ui/button";
 import { UserProps } from "@/types/user";
-import { ArrowUpOnSquareIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import clsx from "clsx";
 import { useState } from "react";
@@ -141,7 +141,13 @@ const EditProfileSection = ({ profileProps }: Props) => {
           </div>
           <div className={clsx("w-full")}>
             <div className="flex space-x-4">
-              <img src="https://via.placeholder.com/150" />
+              <img
+                src={getImageUpload({
+                  type: "profile",
+                  fileName: profileProps?.ormawa?.logo,
+                })}
+                className={clsx("w-20 h-20 rounded-lg")}
+              />
               <div>
                 <input
                   type="file"
@@ -164,6 +170,15 @@ const EditProfileSection = ({ profileProps }: Props) => {
             <p className={clsx("text-base text-gray-500 mt-4 font-semibold")}>
               Sampul Profil
             </p>
+            <img
+              src={
+                getImageUpload({
+                  type: "cover",
+                  fileName: profileProps?.ormawa?.cover,
+                }) || "https://via.placeholder.com/500x200"
+              }
+            />
+
             <input
               type="file"
               onChange={(e) => {
