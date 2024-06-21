@@ -12,6 +12,7 @@ import { AbsentProps, DetailEventProps, PaymentProps } from "@/types/event";
 import ShortDescriptionEvent from "./short-description-event";
 import Swal from "sweetalert2";
 import { getImageUpload } from "@/helpers/image";
+import sertificationImage from "@/assets/images/sertif.png";
 
 const RegisteredEventSection = ({
   eventProps,
@@ -124,6 +125,69 @@ const RegisteredEventSection = ({
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const htmlImage = () => {
+    const nameParticipant = absentProps.name_mahasiswa;
+    return `
+    <div  id="sertification">
+        <img
+          src=${sertificationImage}
+          className="w-full h-full object-cover object-center"
+        >
+        </img>
+        <div
+          class="absolute top-[156px] left-0 right-0"
+        >
+          <p class="text-sm font-semibold text-black">
+          ${nameParticipant}
+          </p>
+        </div>
+    </div>
+    `;
+  };
+
+  const handleSeeCertificate = () => {
+    Swal.fire({
+      html: htmlImage(),
+      confirmButtonText: "Download",
+      cancelButtonText: "Close",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const sertification = document.getElementById("sertification");
+        if (sertification) {
+          const canvas = document.createElement("canvas");
+          canvas.width = sertification.clientWidth;
+          canvas.height = sertification.clientHeight;
+          const ctx = canvas.getContext("2d");
+          // ctx with p tag
+          if (ctx) {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(
+              sertification.querySelector("img") as HTMLImageElement,
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            );
+            ctx.font = "semibold 14px Arial";
+            ctx.fillStyle = "#000000";
+            const x = canvas.width / 2 - 100;
+            ctx.fillText(
+              sertification.querySelector("p")?.textContent || "",
+              x,
+              154
+            );
+            const link = document.createElement("a");
+            link.download = "sertifikat.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+          }
+        }
+      }
+    });
+  };
 
   return (
     <>
@@ -334,6 +398,12 @@ const RegisteredEventSection = ({
                         {absentProps.bukti_pembayaran}
                       </p> */}
                     </div>
+                    <Button
+                      className={clsx("bg-poppy-500 mt-8")}
+                      onClick={handleSeeCertificate}
+                    >
+                      Lihat Sertifikat
+                    </Button>
                   </div>
                 )}
               </TabsContent>
