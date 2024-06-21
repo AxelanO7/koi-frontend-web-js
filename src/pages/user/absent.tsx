@@ -116,7 +116,7 @@ const AbsentingPage = () => {
         uploadFileProof();
         Swal.fire({
           icon: "success",
-          title: "Absensi berhasil",
+          title: "Presensi berhasil",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -126,7 +126,7 @@ const AbsentingPage = () => {
         console.log(err);
         Swal.fire({
           icon: "error",
-          title: "Absensi gagal",
+          title: "Presensi gagal",
           text: "Silahkan coba lagi",
         });
       });

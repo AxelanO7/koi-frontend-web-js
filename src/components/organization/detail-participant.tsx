@@ -55,7 +55,7 @@ const DetailParticipant = () => {
                       : ""
                   )}
                 >
-                  <p className={clsx("py-2 px-4")}>Absensi</p>
+                  <p className={clsx("py-2 px-4")}>Presensi</p>
                 </TabsTrigger>
                 <div className={clsx("h-0.5 bg-gray-300")} />
               </TabsList>
@@ -137,7 +137,7 @@ const DetailParticipant = () => {
               </TabsContent>
               <TabsContent value={listActiveTab.absent}>
                 <Button className={clsx("bg-poppy-500")}>
-                  Absen Kehadiran
+                  Presensi Kehadiran
                   <PencilSquareIcon className={clsx("h-5 w-5 ml-2")} />
                 </Button>
                 <div className="h-4" />

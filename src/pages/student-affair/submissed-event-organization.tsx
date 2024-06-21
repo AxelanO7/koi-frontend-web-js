@@ -142,10 +142,10 @@ const SubmissedEventOrganizationStudentAffair = () => {
             <div className="flex justify-between items-center">
               <div>
                 <p className={clsx("font-semibold text-base")}>
-                  Status Absensi
+                  Status Presensi
                 </p>
                 <p className={clsx("font-normal text-sm text-gray-400")}>
-                  Manajemen untuk buka atau tutup absensi kehadiran
+                  Manajemen untuk buka atau tutup presensi kehadiran
                 </p>
               </div>
               <Switch className={clsx("w-12 h-6")} />

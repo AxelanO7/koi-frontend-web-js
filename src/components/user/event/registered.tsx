@@ -65,8 +65,8 @@ const RegisteredEventSection = ({
     if (isAbsentProps) {
       Swal.fire({
         icon: "error",
-        title: "Anda sudah absen",
-        text: "Anda tidak bisa absen lebih dari satu kali",
+        title: "Anda sudah presensi",
+        text: "Anda tidak bisa presensi lebih dari satu kali",
       });
       return;
     }
@@ -225,7 +225,7 @@ const RegisteredEventSection = ({
                       : ""
                   )}
                 >
-                  <p className={clsx("py-2 px-4")}>Absensi</p>
+                  <p className={clsx("py-2 px-4")}>Presensi</p>
                 </TabsTrigger>
                 <div className={clsx("h-0.5 bg-gray-300")} />
               </TabsList>
@@ -318,7 +318,7 @@ const RegisteredEventSection = ({
                   className={clsx("bg-poppy-500")}
                   onClick={handleTapAbsent}
                 >
-                  Absen Kehadiran
+                  Presensi Kehadiran
                   <PencilSquareIcon className={clsx("h-5 w-5 ml-2")} />
                 </Button>
                 {isAbsentProps && (
@@ -398,12 +398,14 @@ const RegisteredEventSection = ({
                         {absentProps.bukti_pembayaran}
                       </p> */}
                     </div>
-                    <Button
-                      className={clsx("bg-poppy-500 mt-8")}
-                      onClick={handleSeeCertificate}
-                    >
-                      Lihat Sertifikat
-                    </Button>
+                    {absentProps.status === "approved" && (
+                      <Button
+                        className={clsx("bg-poppy-500 mt-8")}
+                        onClick={handleSeeCertificate}
+                      >
+                        Lihat Sertifikat
+                      </Button>
+                    )}
                   </div>
                 )}
               </TabsContent>

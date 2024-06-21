@@ -57,7 +57,7 @@ const MyEventSection = () => {
               <p className="font-medium text-lg">Nasional</p>
             </div>
             <button className="bg-poppy-500 justify-center flex items-center w-full py-2 mt-4 rounded-lg space-x-2 text-white font-semibold">
-              <p>Absen Kehadiran</p>
+              <p>Presensi Kehadiran</p>
               <PencilSquareIcon className="w-6 h-6" />
             </button>
           </>

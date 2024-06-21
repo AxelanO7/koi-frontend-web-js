@@ -137,7 +137,7 @@ const DetailParticipant = () => {
               </TabsContent>
               <TabsContent value={listActiveTab.absent}>
                 <Button className={clsx("bg-poppy-500")}>
-                  Absen Kehadiran
+                  Presensi Kehadiran
                   <PencilSquareIcon className={clsx("h-5 w-5 ml-2")} />
                 </Button>
                 <div className="h-4" />

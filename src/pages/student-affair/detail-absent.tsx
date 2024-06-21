@@ -17,7 +17,7 @@ const DetailAbsent = () => {
         <div className={clsx("max-w-4xl mx-auto")}>
           <p className={clsx("text-2xl font-semibold")}>Detail Peserta</p>
           <p className={clsx("text-base text-gray-500 mt-2 font-medium")}>
-            Tinjau dan validasi absensi peserta event kamu
+            Tinjau dan validasi presensi peserta event kamu
           </p>
           <div
             className={clsx("bg-white p-8 rounded-xl shadow-md border mt-8")}
@@ -104,7 +104,7 @@ const DetailAbsent = () => {
                       variant={"outline"}
                       className={clsx("rounded-lg px-4 py-2 font-medium")}
                     >
-                      Tolak Absensi
+                      Tolak Presensi
                     </Button>
                   )}
                   {statusParticipant !== listStatusParticipant.registered && (
@@ -114,7 +114,7 @@ const DetailAbsent = () => {
                         "bg-danger text-white rounded-lg px-4 py-2 font-medium"
                       )}
                     >
-                      Setujui Absensi
+                      Setujui Presensi
                     </Button>
                   )}
                 </div>

@@ -28,7 +28,7 @@ const SidebarDashboardSection = () => {
     },
     {
       id: "absent_participant",
-      text: "Absensi Peserta",
+      text: "Presensi Peserta",
       icon: PencilSquareIcon,
     },
     {
