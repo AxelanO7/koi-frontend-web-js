@@ -1,5 +1,5 @@
 import CustomSpinner from "@/components/global/spinner";
-import { getBaseUrl } from "@/helpers/api";
+import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
 import BaseLayout from "@/layouts/base";
 import { DetailEventProps } from "@/types/event";
 import { UserProps } from "@/types/user";
@@ -69,6 +69,26 @@ const AbsentingPage = () => {
     setPaymentProof(file);
   };
 
+  const uploadFileProof = () => {
+    console.log(paymentProof);
+    if (paymentProof) {
+      const formData = new FormData();
+      formData.append("file", paymentProof);
+      axios
+        .post(`${getBaseUrlLocalUpload()}/local/upload/proof`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   const submit = () => {
     if (!event) return;
     const paymentProofName = paymentProof?.name;
@@ -93,6 +113,7 @@ const AbsentingPage = () => {
       })
       .then((res) => {
         console.log(res.data);
+        uploadFileProof();
         Swal.fire({
           icon: "success",
           title: "Absensi berhasil",

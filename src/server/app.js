@@ -23,7 +23,6 @@ app.get("/", (req, res) => {
 
 // poster
 app.post("/local/upload/poster", (req, res) => {
-  console.log(req.files);
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).json({
       message: "No files were uploaded.",

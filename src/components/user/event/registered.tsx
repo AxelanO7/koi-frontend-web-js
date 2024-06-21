@@ -11,6 +11,7 @@ import { useState } from "react";
 import { AbsentProps, DetailEventProps, PaymentProps } from "@/types/event";
 import ShortDescriptionEvent from "./short-description-event";
 import Swal from "sweetalert2";
+import { getImageUpload } from "@/helpers/image";
 
 const RegisteredEventSection = ({
   eventProps,
@@ -236,10 +237,16 @@ const RegisteredEventSection = ({
                     "w-full flex flex-col justify-center items-center space-y-2 border border-gray-300 p-8 rounded-xl mt-4"
                   )}
                 >
-                  <img src="https://via.placeholder.com/150" />
-                  <p className={clsx("text-lg font-medium")}>
+                  {/* <img src="https://via.placeholder.com/150" /> */}
+                  <img
+                    src={getImageUpload({
+                      type: "proof",
+                      fileName: paymentProps.bukti_pembayaran,
+                    })}
+                  />
+                  {/* <p className={clsx("text-lg font-medium")}>
                     {paymentProps.bukti_pembayaran}
-                  </p>
+                  </p> */}
                 </div>
               </TabsContent>
               <TabsContent value={listActiveTab.absent}>
@@ -317,10 +324,15 @@ const RegisteredEventSection = ({
                         "w-full flex flex-col justify-center items-center space-y-2 border border-gray-300 p-8 rounded-xl mt-4"
                       )}
                     >
-                      <img src="https://via.placeholder.com/150" />
-                      <p className={clsx("text-lg font-medium")}>
+                      <img
+                        src={getImageUpload({
+                          type: "proof",
+                          fileName: absentProps.bukti_pembayaran,
+                        })}
+                      />
+                      {/* <p className={clsx("text-lg font-medium")}>
                         {absentProps.bukti_pembayaran}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 )}

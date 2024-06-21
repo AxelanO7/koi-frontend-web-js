@@ -1,3 +1,4 @@
+import { getImageUpload } from "@/helpers/image";
 import { DetailEventProps, PaymentProps } from "@/types/event";
 import {
   CalendarIcon,
@@ -32,7 +33,10 @@ const ShortDescriptionEvent = ({
     <>
       <div className={clsx("max-w-72")}>
         <img
-          src="https://via.placeholder.com/200"
+          src={getImageUpload({
+            type: "poster",
+            fileName: eventProps.gambar_kegiatan,
+          })}
           alt="event"
           className={clsx("rounded-md w-full object-cover")}
         />

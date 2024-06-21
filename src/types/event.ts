@@ -83,8 +83,12 @@ export interface OrmawaProps {
   id: number;
   nama_ormawa: string;
   status: number;
-  password: string;
   user_id: number;
+  email: string;
+  deskripsi: string;
+  jenis_ormawa: string;
+  logo: string;
+  cover: string;
   user?: null;
   event?: null;
   created_at?: Date;
@@ -119,5 +123,5 @@ export interface EventByOrmawaResponse {
 
 export interface getImageUploadProps {
   type: string;
-  fileName: string;
+  fileName?: string;
 }

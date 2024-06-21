@@ -1,4 +1,4 @@
-import { getBaseUrl } from "@/helpers/api";
+import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
 import axios from "axios";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const RegisteringEventSection = ({
 
   // form
   const selectedFile = (e) => {
-    setPaymentProof(e.target.files[0].name);
+    setPaymentProof(e.target.files[0]);
   };
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +23,7 @@ const RegisteringEventSection = ({
   const [phone, setPhone] = useState("");
   const [institution, setInstitution] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [paymentProof, setPaymentProof] = useState("");
+  const [paymentProof, setPaymentProof] = useState<File>();
 
   const submit = () => {
     const payload = {
@@ -34,9 +34,8 @@ const RegisteringEventSection = ({
       no_telepon: phone,
       institusi: institution,
       tipe_pembayaran: paymentMethod,
-      bukti_pembayaran: paymentProof,
+      bukti_pembayaran: paymentProof?.name,
     };
-    console.log(payload);
     axios
       .post(`${getBaseUrl()}/pembayaran/private/create`, payload, {
         headers: {
@@ -46,6 +45,7 @@ const RegisteringEventSection = ({
       .then(
         (res) => {
           console.log(res);
+          uploadFileProof();
           Swal.fire({
             title: "Berhasil",
             text: "Pendaftaran event berhasil disimpan",
@@ -84,6 +84,26 @@ const RegisteringEventSection = ({
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const uploadFileProof = () => {
+    console.log(paymentProof);
+    if (paymentProof) {
+      const formData = new FormData();
+      formData.append("file", paymentProof);
+      axios
+        .post(`${getBaseUrlLocalUpload()}/local/upload/proof`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
