@@ -29,6 +29,7 @@ export interface MahasiswaProps {
   jenis_kelamin: number;
   tempat_lahir: string;
   alamat_tinggal: string;
+  photo: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;

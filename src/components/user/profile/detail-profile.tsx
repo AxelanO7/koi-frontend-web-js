@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { UserProps } from "@/types/user";
 import { getBaseUrl } from "@/helpers/api";
 import axios from "axios";
+import { getImageUpload } from "@/helpers/image";
 
 const DetailProfileSection = () => {
   const [profile, setProfile] = useState<UserProps>();
@@ -87,7 +88,11 @@ const DetailProfileSection = () => {
           <div>
             <div className="flex">
               <img
-                src="https://via.placeholder.com/150"
+                // src="https://via.placeholder.com/150"
+                src={getImageUpload({
+                  type: "profile",
+                  fileName: profile?.mahasiswa?.photo,
+                })}
                 alt="profile"
                 className="w-24 h-24 rounded-full"
               />

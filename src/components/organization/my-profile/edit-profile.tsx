@@ -1,4 +1,4 @@
-import { getBaseUrl } from "@/helpers/api";
+import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
 import { Button } from "@/shadcn/components/ui/button";
 import { UserProps } from "@/types/user";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/16/solid";
@@ -12,14 +12,49 @@ interface Props {
 }
 
 const EditProfileSection = ({ profileProps }: Props) => {
+  const [cover, setCover] = useState<File>();
+  const [logo, setLogo] = useState<File>();
   const [form, setForm] = useState({
     nama_ormawa: profileProps?.ormawa?.nama_ormawa,
     email: profileProps?.ormawa?.email,
     deskripsi: profileProps?.ormawa?.deskripsi,
+    // cover: profileProps?.ormawa?.cover,
+    // logo: profileProps?.ormawa?.logo,
   });
 
+  const uploadFile = () => {
+    const formDataLogo = new FormData();
+    formDataLogo.append("file", logo!);
+    axios
+      .post(`${getBaseUrlLocalUpload()}/local/upload/profile`, formDataLogo, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const formDataCover = new FormData();
+    formDataCover.append("file", cover!);
+    axios
+      .post(`${getBaseUrlLocalUpload()}/local/upload/cover`, formDataCover, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleSubmit = () => {
-    // todo: logo and cover
     const payload = {
       id: profileProps?.id,
       nama_ormawa: form.nama_ormawa || profileProps?.ormawa?.nama_ormawa,
@@ -27,8 +62,8 @@ const EditProfileSection = ({ profileProps }: Props) => {
       deskripsi: form.deskripsi || profileProps?.ormawa?.deskripsi,
       jenis_ormawa: profileProps?.ormawa?.jenis_ormawa,
       status: profileProps?.ormawa?.status,
-      // logo: "",
-      // cover: "",
+      logo: logo?.name,
+      cover: cover?.name,
     };
 
     axios
@@ -43,12 +78,13 @@ const EditProfileSection = ({ profileProps }: Props) => {
       )
       .then((res) => {
         console.log(res.data);
+        uploadFile();
         Swal.fire({
           icon: "success",
           title: "Berhasil",
           text: "Profile berhasil diubah",
         }).then(async () => {
-          window.location.reload();
+          // window.location.reload();
         });
       })
       .catch((err) => {
@@ -107,10 +143,18 @@ const EditProfileSection = ({ profileProps }: Props) => {
             <div className="flex space-x-4">
               <img src="https://via.placeholder.com/150" />
               <div>
-                <Button className={clsx("bg-poppy-500 text-white")}>
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      setLogo(e.target.files[0]);
+                    }
+                  }}
+                />
+                {/* <Button className={clsx("bg-poppy-500 text-white")}>
                   Upload Foto
                   <ArrowUpOnSquareIcon className={clsx("h-5 w-5 ml-2")} />
-                </Button>
+                </Button> */}
                 <p className={clsx("text-sm text-gray-500 mt-2")}>
                   Ukuran file: maksimum 10 Megabytes (MB). Ekstensi file yang
                   diperbolehkan: .JPG .JPEG .PNG
@@ -120,10 +164,19 @@ const EditProfileSection = ({ profileProps }: Props) => {
             <p className={clsx("text-base text-gray-500 mt-4 font-semibold")}>
               Sampul Profil
             </p>
-            <img
+            <input
+              type="file"
+              onChange={(e) => {
+                if (e.target.files) {
+                  setCover(e.target.files[0]);
+                }
+              }}
+            />
+            {/* <img
               src="https://via.placeholder.com/500x200"
               className={clsx("mt-2")}
             />
+            */}
             <p className={clsx("text-xs text-gray-500 mt-2 font-normal")}>
               Rekomendasi ukuran sampul 17 x 3 pixel. Ukuran file: maksimum 10
               Megabytes (MB). Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG

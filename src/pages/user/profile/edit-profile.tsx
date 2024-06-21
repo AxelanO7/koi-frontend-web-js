@@ -84,6 +84,7 @@ const EditProfile = () => {
           title: "Berhasil",
           text: "Profile berhasil diubah",
         }).then(() => {
+          uploadFile(selectedPhoto!);
           getProfile();
           // window.location.href = "/profile";
         });
