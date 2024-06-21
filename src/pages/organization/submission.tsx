@@ -12,11 +12,10 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
-import { getBaseUrl } from "@/helpers/api";
+import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
 import { CreateEventProps } from "@/types/create";
 import { UserProps } from "@/types/user";
 import Swal from "sweetalert2";
-import { saveAs } from "file-saver";
 
 interface ContactPersonCard {
   name: string;
@@ -155,6 +154,7 @@ const SubmissionEventOrganization = () => {
             icon: "success",
             confirmButtonText: "OK",
           }).then(() => {
+            uploadFile();
             window.location.href = "/";
           });
         },
@@ -170,20 +170,6 @@ const SubmissionEventOrganization = () => {
       );
   };
 
-  // const handleSaveImage = async (file: File) => {
-  //   // save file with file saver
-  //   const publicFolder = "/public";
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = () => {
-  //     const base64 = reader.result?.toString().split(",")[1];
-  //     const blob = base64
-  //       ? b64toBlob(base64, file.type)
-  //       : new Blob([reader.result as ArrayBuffer]);
-  //     saveAs(blob, file.name);
-  //   };
-  // };
-
   const [profile, setProfile] = useState<UserProps>();
   const getProfile = () => {
     axios
@@ -196,6 +182,60 @@ const SubmissionEventOrganization = () => {
         console.log(res);
         const dataRes: UserProps = res.data.data;
         setProfile(dataRes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const uploadFile = async () => {
+    if (!selectedFilePoster) {
+      Swal.fire({
+        title: "Gagal",
+        text: "File poster event belum diupload",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    const formDataPoster = new FormData();
+    formDataPoster.append("file", selectedFilePoster);
+    axios
+      .post(`${getBaseUrlLocalUpload()}/local/upload/poster`, formDataPoster, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (!selectedProposalEvent) {
+      Swal.fire({
+        title: "Gagal",
+        text: "File proposal event belum diupload",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    const formDataProposal = new FormData();
+    formDataProposal.append("file", selectedProposalEvent);
+    axios
+      .post(
+        `${getBaseUrlLocalUpload()}/local/upload/proposal`,
+        formDataProposal,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
