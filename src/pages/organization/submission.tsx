@@ -109,6 +109,7 @@ const SubmissionEventOrganization = () => {
       nama_kegiatan: nameEvent ?? "",
       tanggal_kegiatan: dateEvent?.toISOString() ?? "",
       tingkat_kegiatan: scopeEvent ?? "",
+      category: categoryEvent ?? "",
       type_implement: implementEvent ?? "",
       harga_tiket: priceTicketEvent ?? 0,
       detail_kegiatan: {
@@ -155,7 +156,7 @@ const SubmissionEventOrganization = () => {
             confirmButtonText: "OK",
           }).then(() => {
             uploadFile();
-            window.location.href = "/";
+            // window.location.href = "/";
           });
         },
         (err) => {
