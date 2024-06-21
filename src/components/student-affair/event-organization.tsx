@@ -9,9 +9,11 @@ import ImgEntertainment from "@/assets/images/organization/my-event/entertainmen
 import ImgWorkshop from "@/assets/images/organization/my-event/workshop.png";
 import ImgSocial from "@/assets/images/organization/my-event/social.png";
 import {
+  CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -85,6 +87,70 @@ const EventOrganizationSection = () => {
           icon: "error",
           title: "Gagal",
           text: "Event gagal dihapus",
+        });
+      });
+  };
+
+  const handleTapAcceptEvent = (id: number) => {
+    axios
+      .put(
+        `${getBaseUrl()}/event/private/update-status-event/${id}`,
+        {
+          its_open: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Event berhasil disetujui",
+        });
+        getAllEvents();
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Event gagal disetujui",
+        });
+      });
+  };
+
+  const handleTapRejectEvent = (id: number) => {
+    axios
+      .put(
+        `${getBaseUrl()}/event/private/update-status-event/${id}`,
+        {
+          its_open: 0,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Event berhasil ditolak",
+        });
+        getAllEvents();
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Event gagal ditolak",
         });
       });
   };
@@ -313,18 +379,10 @@ const EventOrganizationSection = () => {
                     <p
                       className={clsx(
                         "py-2 px-4 rounded-full w-min mx-auto text-sm font-medium",
-                        event.detail_kegiatan?.status === "pending"
-                          ? "bg-blue-500"
-                          : event.detail_kegiatan?.status === "selesai"
-                          ? "bg-green-500"
-                          : "bg-red-500"
+                        event.its_open === 1 ? "bg-green-500" : "bg-red-500"
                       )}
                     >
-                      {event.detail_kegiatan?.status === "pending"
-                        ? "Ditinjau"
-                        : event.detail_kegiatan?.status === "selesai"
-                        ? "Disetujui"
-                        : "Ditolak"}
+                      {event.its_open === 1 ? "Dibuka" : "Tutup"}
                     </p>
                   </td>
                   <td
@@ -344,15 +402,31 @@ const EventOrganizationSection = () => {
                       variant="outline"
                       onClick={() => handleTapDeleteEvent(event.id)}
                     >
-                      <XMarkIcon className={clsx("w-4 h-4 mr-2")} />
+                      <TrashIcon className={clsx("w-4 h-4 mr-2")} />
                       Hapus Event
                     </Button>
-                    <Button
+                    {/* <Button
                       className={clsx("bg-white text-black w-36")}
                       variant="outline"
                     >
                       <CreditCardIcon className={clsx("w-4 h-4 mr-2")} />
                       Detail Event
+                    </Button> */}
+                    <Button
+                      className={clsx("bg-blue-500 text-white w-36")}
+                      variant="outline"
+                      onClick={() => handleTapAcceptEvent(event.id)}
+                    >
+                      <CheckIcon className={clsx("w-4 h-4 mr-2")} />
+                      Setujui
+                    </Button>
+                    <Button
+                      className={clsx("bg-red-500 text-white w-36")}
+                      variant="outline"
+                      onClick={() => handleTapRejectEvent(event.id)}
+                    >
+                      <XMarkIcon className={clsx("w-4 h-4 mr-2")} />
+                      Tolak
                     </Button>
                   </td>
                 </tr>
