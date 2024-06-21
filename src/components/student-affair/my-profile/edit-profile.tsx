@@ -179,7 +179,6 @@ const EditProfileSection = ({ profileProps }: Props) => {
                 }) || "https://via.placeholder.com/500x200"
               }
             />
-
             <input
               type="file"
               onChange={(e) => {
@@ -187,6 +186,7 @@ const EditProfileSection = ({ profileProps }: Props) => {
                   setCover(e.target.files[0]);
                 }
               }}
+              className="mt-4"
             />
             {/* <img
               src="https://via.placeholder.com/500x200"
