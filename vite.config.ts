@@ -9,6 +9,7 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@sc": path.resolve(__dirname, "./src/shadcn"),
+      "@u": path.resolve(__dirname, "./src/upload"),
     },
   },
 });

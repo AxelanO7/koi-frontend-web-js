@@ -24,7 +24,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@sc/*": ["./src/shadcn/*"]
+      "@sc/*": ["./src/shadcn/*"],
+      "@u/*": ["./src/upload/*"]
     }
   },
   "include": ["src", "src/components/organization/my-profile/edit-profile.tsx"],

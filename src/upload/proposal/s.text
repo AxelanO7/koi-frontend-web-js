@@ -1,0 +1,12 @@
+progress left
+
+global
+- file handle ####
+- report ####
+
+supplier
+- opname #####
+
+outlet
+- stock #####
+- decrease stock from return ####

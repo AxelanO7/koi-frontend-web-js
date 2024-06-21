@@ -116,3 +116,8 @@ export interface EventByOrmawaResponse {
   event: EventProps[];
   ormawa: OrmawaProps;
 }
+
+export interface getImageUploadProps {
+  type: string;
+  fileName: string;
+}

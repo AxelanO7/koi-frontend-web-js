@@ -1,5 +1,6 @@
 import { CalendarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { EventProps } from "../../../types/event";
+import { getImageUpload } from "@/helpers/image";
 
 const EventItem = ({
   item,
@@ -28,11 +29,10 @@ const EventItem = ({
       <div className="card" onClick={onClick} style={{ cursor: "pointer" }}>
         <div className="flex space-x-4">
           <img
-            src={
-              item?.detail_kegiatan?.gambar_kegiatan ||
-              "https://via.placeholder.com/600"
-            }
-            alt="gambar kegiatan"
+            src={getImageUpload({
+              type: "poster",
+              fileName: item.detail_kegiatan?.gambar_kegiatan || "",
+            })}
             className="w-48 h-48 object-cover"
           />
           <div className="py-2 flex flex-col justify-between">
