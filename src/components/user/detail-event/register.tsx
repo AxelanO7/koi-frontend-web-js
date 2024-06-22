@@ -1,5 +1,15 @@
-const RegisterSection = () => {
+import Swal from "sweetalert2";
+
+const RegisterSection = ({ its_open }: { its_open: boolean }) => {
   const handleRegister = () => {
+    if (!its_open) {
+      Swal.fire({
+        icon: "error",
+        title: "Pendaftaran Ditutup",
+        text: "Pendaftaran event ini sudah ditutup",
+      });
+      return;
+    }
     const id = window.location.pathname.split("/")[2];
     window.location.href = `/event/register/${id}`;
   };

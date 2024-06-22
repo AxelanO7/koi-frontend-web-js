@@ -75,7 +75,14 @@ const DetailEvent = () => {
             <div className="mt-4 flex space-x-12">
               {eventById && <OwnershipSection event={eventById} />}
               {eventById && <DescriptionSection event={eventById} />}
-              <RegisterSection />
+              {eventById && (
+                <RegisterSection
+                  its_open={
+                    events.find((event) => event.id === eventById.event_id)
+                      ?.its_open || false
+                  }
+                />
+              )}
             </div>
             {<RecommendationSection events={events} />}
           </div>
