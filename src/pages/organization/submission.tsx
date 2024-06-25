@@ -116,6 +116,7 @@ const SubmissionEventOrganization = () => {
       detail_kegiatan: {
         // id: 0,
         // event_id: 0,
+        sertifikat: selectedFileSertificate?.name ?? "",
         waktu_pelaksanaan: timeEvent ?? "",
         category: categoryEvent ?? "",
         lokasi: placeEvent ?? "",
