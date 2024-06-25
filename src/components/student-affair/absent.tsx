@@ -173,10 +173,44 @@ const AbsentSection = () => {
       getAbsents();
       return;
     }
-    const search = absents.filter((absent) =>
+    const filterdName = absents.filter((absent) =>
       absent.name_mahasiswa.toLowerCase().includes(val.toLowerCase())
     );
-    setAbsents(search);
+    const filteredEvent = absents.filter((absent) =>
+      absent.event?.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredDate = absents.filter((absent) =>
+      new Date(absent.created_at || Date.now())
+        .toLocaleDateString("id-ID", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+        .includes(val)
+    );
+    const filteredPhone = absents.filter((absent) =>
+      absent.no_telepon.includes(val)
+    );
+    const filteredPayment = absents.filter((absent) =>
+      absent.event?.pembayaran?.tipe_pembayaran.toLowerCase().includes(val)
+    );
+    const filteredStatus = absents.filter((absent) =>
+      absent.status.toLowerCase().includes(val.toLowerCase())
+    );
+    const filtered = [
+      ...filterdName,
+      ...filteredEvent,
+      ...filteredDate,
+      ...filteredPhone,
+      ...filteredPayment,
+      ...filteredStatus,
+    ];
+    const unique = Array.from(new Set(filtered.map((a) => a.id)))
+      .map((id) => {
+        return filtered.find((a) => a.id === id);
+      })
+      .filter((a) => a !== undefined);
+    setAbsents(unique);
   };
 
   useEffect(() => {

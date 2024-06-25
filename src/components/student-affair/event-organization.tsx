@@ -204,10 +204,49 @@ const EventOrganizationSection = () => {
       getAllEvents();
       return;
     }
-    const filteredEvents = events.filter((event) =>
+    // filterd all on event
+    const filteredName = events.filter((event) =>
       event.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
     );
-    setEvents(filteredEvents);
+    const filteredCategory = events.filter((event) =>
+      event.category.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredTingkat = events.filter((event) =>
+      event.tingkat_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredStatus = events.filter((event) =>
+      event.detail_kegiatan?.status.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredDate = events.filter((event) =>
+      Intl.DateTimeFormat("id-ID", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      })
+        .format(new Date(event.tanggal_kegiatan))
+        .toLowerCase()
+        .includes(val.toLowerCase())
+    );
+    if (filteredName.length > 0) {
+      setEvents(filteredName);
+      return;
+    }
+    if (filteredCategory.length > 0) {
+      setEvents(filteredCategory);
+      return;
+    }
+    if (filteredTingkat.length > 0) {
+      setEvents(filteredTingkat);
+      return;
+    }
+    if (filteredStatus.length > 0) {
+      setEvents(filteredStatus);
+      return;
+    }
+    if (filteredDate.length > 0) {
+      setEvents(filteredDate);
+      return;
+    }
   };
 
   useEffect(() => {

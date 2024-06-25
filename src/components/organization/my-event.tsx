@@ -149,13 +149,42 @@ const MyEventSection = ({ profileProps }: Props) => {
       getAllEvents();
       return;
     }
-    const filteredEvents = events?.event.filter((event) =>
+    // filterd all on event
+    const filterdName = events.event.filter((event) =>
       event.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
     );
-    setEvents({
-      ...events,
-      event: filteredEvents,
-    });
+    const filteredCategory = events.event.filter((event) =>
+      event.category.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredTingkat = events.event.filter((event) =>
+      event.tingkat_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredStatus = events.event.filter((event) =>
+      event.detail_kegiatan?.status.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredDate = events.event.filter((event) =>
+      Intl.DateTimeFormat("id-ID", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      })
+        .format(new Date(event.tanggal_kegiatan))
+        .toLowerCase()
+        .includes(val.toLowerCase())
+    );
+    const filtered = [
+      ...filterdName,
+      ...filteredCategory,
+      ...filteredTingkat,
+      ...filteredStatus,
+      ...filteredDate,
+    ];
+    const uniqueFiltered = Array.from(new Set(filtered.map((a) => a.id))).map(
+      (id) => {
+        return filtered.find((a) => a.id === id);
+      }
+    );
+    setEvents({ ...events, event: uniqueFiltered });
   };
 
   useEffect(() => {

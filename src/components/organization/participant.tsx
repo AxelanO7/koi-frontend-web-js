@@ -150,10 +150,46 @@ const ParticipantSection = () => {
       getParticipants();
       return;
     }
-    const filtered = participants.filter((participant) =>
+    // filter all
+    const filteredName = participants.filter((participant) =>
       participant.nama_peserta.toLowerCase().includes(val.toLowerCase())
     );
-    setParticipants(filtered);
+    const filteredEvent = participants.filter((participant) =>
+      participant.event?.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredPhone = participants.filter((participant) =>
+      participant.no_telepon.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredPayment = participants.filter((participant) =>
+      participant.tipe_pembayaran.toLowerCase().includes(val.toLowerCase())
+    );
+    const filteredDate = participants.filter((participant) =>
+      new Date(participant.created_at || Date.now())
+        .toLocaleDateString("id-ID", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+        .toLowerCase()
+        .includes(val.toLowerCase())
+    );
+    const filteredStatus = participants.filter((participant) =>
+      getStatusText(participant.status)
+        .toLowerCase()
+        .includes(val.toLowerCase())
+    );
+    const filtered = [
+      ...filteredName,
+      ...filteredEvent,
+      ...filteredPhone,
+      ...filteredPayment,
+      ...filteredStatus,
+      ...filteredDate,
+    ];
+    const unique = filtered.filter(
+      (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+    );
+    setParticipants(unique);
   };
 
   useEffect(() => {
