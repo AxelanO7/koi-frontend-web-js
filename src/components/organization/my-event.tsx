@@ -11,19 +11,9 @@ import ImgSocial from "@/assets/images/organization/my-event/social.png";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  CreditCardIcon,
   MagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/components/ui/select";
 import {
   Pagination,
   PaginationContent,
@@ -59,11 +49,6 @@ const MyEventSection = ({ profileProps }: Props) => {
     axios
       .get(
         `${baseUrl}/event/public/get-event-by-ormawa/${profileProps?.ormawa?.id}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-        //   },
-        // }
       )
       .then((response) => {
         const resData = response.data.data;
@@ -156,6 +141,20 @@ const MyEventSection = ({ profileProps }: Props) => {
 
   const handleTapEditEvent = (id: number) => {
     window.location.href = `/organization/submission/${id}`;
+  };
+
+  const handleSearch = (val: string) => {
+    if (events === undefined) return;
+    if (val === "") {
+      getAllEvents();
+      return;
+    }
+    setEvents({
+      ...events,
+      event: events?.event.filter((event) =>
+        event.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
+      ),
+    });
   };
 
   useEffect(() => {
@@ -264,6 +263,7 @@ const MyEventSection = ({ profileProps }: Props) => {
                   "focus:outline-none font-medium text-base text-gray-900"
                 )}
                 placeholder="Cari nama event disini"
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
             {/* <div className="flex space-x-2 items-center">

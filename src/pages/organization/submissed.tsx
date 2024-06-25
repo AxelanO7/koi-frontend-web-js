@@ -20,11 +20,13 @@ import Swal from "sweetalert2";
 import { CreateEventProps } from "@/types/create";
 
 interface ContactPerson {
+  id?: number;
   name: string;
   phoneNumber: string;
 }
 
 interface PaymentMethod {
+  id?: number;
   payment_method: string;
   bank_name: string;
   account_number: string;
@@ -50,6 +52,7 @@ const SubmissedEventOrganization = () => {
   // contact person
   const [contactPersons, setContactPersons] = useState<ContactPerson[]>([
     {
+      id: 0,
       name: "",
       phoneNumber: "",
     },
@@ -61,6 +64,7 @@ const SubmissedEventOrganization = () => {
     setContactPersons([
       ...contactPersons,
       {
+        id: 0,
         name: "",
         phoneNumber: "",
       },
@@ -70,16 +74,13 @@ const SubmissedEventOrganization = () => {
   // metode pembayaran
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([
     {
+      id: 0,
       payment_method: paymentMethodEnum.BANK_TRANSFER,
       bank_name: "",
       account_number: "",
       owner_name: "",
     },
   ]);
-
-  const [selectedFileSertificate, setSelectedFileSertificate] =
-    useState<File>();
-
   const handleRemovePaymentMethod = (index: number) => {
     setPaymentMethods(paymentMethods.filter((_, i) => i !== index));
   };
@@ -87,6 +88,7 @@ const SubmissedEventOrganization = () => {
     setPaymentMethods([
       ...paymentMethods,
       {
+        id: 0,
         payment_method: paymentMethodEnum.BANK_TRANSFER,
         bank_name: "",
         account_number: "",
@@ -101,6 +103,7 @@ const SubmissedEventOrganization = () => {
     const contactPersons: ContactPerson[] = [];
     pic.forEach((item) => {
       contactPersons.push({
+        id: item.id,
         name: item.nama_narahubung,
         phoneNumber: item.no_telepon,
       });
@@ -113,6 +116,7 @@ const SubmissedEventOrganization = () => {
     const paymentMethods: PaymentMethod[] = [];
     methodPay.forEach((item) => {
       paymentMethods.push({
+        id: item.id,
         payment_method: item.metode_pembayaran,
         bank_name: item.nama_bank,
         account_number: item.no_rekening,
@@ -142,6 +146,9 @@ const SubmissedEventOrganization = () => {
       sertifikat: val.detail_kegiatan?.sertifikat,
     });
   };
+
+  const [selectedFileSertificate, setSelectedFileSertificate] =
+  useState<File>();
 
   const getEvent = () => {
     axios
@@ -210,12 +217,14 @@ const SubmissedEventOrganization = () => {
         sertifikat: formState.sertifikat || event!.detail_kegiatan!.sertifikat,
       },
       narahubung: contactPersons.map((contactPerson) => ({
+        id: contactPerson.id,
         detail_kegiatan_id: event!.detail_kegiatan!.id,
         judul: `Narahubung ${event?.nama_kegiatan}`,
         nama_narahubung: contactPerson.name,
         no_telepon: contactPerson.phoneNumber,
       })),
       metode_pembayaran: paymentMethods.map((paymentMethod) => ({
+        id: paymentMethod.id,
         detail_kegiatan_id: event!.detail_kegiatan!.id,
         metode_pembayaran: paymentMethod.payment_method,
         judul: `Pembayaran Tiket ${event?.nama_kegiatan}`,
