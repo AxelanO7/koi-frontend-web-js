@@ -149,11 +149,12 @@ const MyEventSection = ({ profileProps }: Props) => {
       getAllEvents();
       return;
     }
+    const filteredEvents = events?.event.filter((event) =>
+      event.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
     setEvents({
       ...events,
-      event: events?.event.filter((event) =>
-        event.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
-      ),
+      event: filteredEvents,
     });
   };
 

@@ -9,15 +9,6 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/components/ui/select";
-import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -151,6 +142,20 @@ const ParticipantSection = () => {
     });
   };
 
+  const handleSearch = (val: string) => {
+    if (participants === undefined) {
+      return;
+    }
+    if (val === "") {
+      getParticipants();
+      return;
+    }
+    const filtered = participants.filter((participant) =>
+      participant.nama_peserta.toLowerCase().includes(val.toLowerCase())
+    );
+    setParticipants(filtered);
+  };
+
   useEffect(() => {
     getParticipants();
   }, []);
@@ -167,10 +172,11 @@ const ParticipantSection = () => {
                 className={clsx(
                   "focus:outline-none font-medium text-base text-gray-900"
                 )}
-                placeholder="Cari nama event disini"
+                placeholder="Cari nama peserta disini"
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
-            <div className="flex space-x-2 items-center">
+            {/* <div className="flex space-x-2 items-center">
               <Select>
                 <SelectTrigger className="space-x-2">
                   <SelectValue placeholder="Filter" />
@@ -197,7 +203,7 @@ const ParticipantSection = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           <table className={clsx("w-full mt-4")}>
             <thead className={clsx("border-y border-gray-200 text-center")}>

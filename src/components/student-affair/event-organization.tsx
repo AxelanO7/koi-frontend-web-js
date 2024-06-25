@@ -1,5 +1,5 @@
 import { Button } from "@/shadcn/components/ui/button";
-import { CreditCardIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import ImgProposedEvent from "@/assets/images/organization/my-event/proposed_event.png";
 import ImgAccomplishedEvent from "@/assets/images/organization/my-event/accomplished_event.png";
@@ -16,15 +16,6 @@ import {
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/components/ui/select";
 import {
   Pagination,
   PaginationContent,
@@ -207,6 +198,18 @@ const EventOrganizationSection = () => {
     window.location.href = `/organization/submission/${id}`;
   };
 
+  const handleSearch = (val: string) => {
+    if (events === undefined) return;
+    if (val === "") {
+      getAllEvents();
+      return;
+    }
+    const filteredEvents = events.filter((event) =>
+      event.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
+    setEvents(filteredEvents);
+  };
+
   useEffect(() => {
     getAllEvents();
   }, []);
@@ -315,9 +318,10 @@ const EventOrganizationSection = () => {
                   "focus:outline-none font-medium text-base text-gray-900"
                 )}
                 placeholder="Cari nama event disini"
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
-            <div className="flex space-x-2 items-center">
+            {/* <div className="flex space-x-2 items-center">
               <Select>
                 <SelectTrigger className="space-x-2">
                   <SelectValue placeholder="Filter" />
@@ -344,7 +348,7 @@ const EventOrganizationSection = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           <table className={clsx("w-full mt-4")}>
             <thead className={clsx("border-y border-gray-200 text-center")}>

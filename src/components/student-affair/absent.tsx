@@ -9,15 +9,6 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/components/ui/select";
-import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -176,6 +167,18 @@ const AbsentSection = () => {
     });
   };
 
+  const handleSearch = (val: string) => {
+    if (absents === undefined) return;
+    if (val === "") {
+      getAbsents();
+      return;
+    }
+    const search = absents.filter((absent) =>
+      absent.name_mahasiswa.toLowerCase().includes(val.toLowerCase())
+    );
+    setAbsents(search);
+  };
+
   useEffect(() => {
     getAbsents();
   }, []);
@@ -192,10 +195,11 @@ const AbsentSection = () => {
                 className={clsx(
                   "focus:outline-none font-medium text-base text-gray-900"
                 )}
-                placeholder="Cari nama event disini"
+                placeholder="Cari nama peserta disini"
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
-            <div className="flex space-x-2 items-center">
+            {/* <div className="flex space-x-2 items-center">
               <Select>
                 <SelectTrigger className="space-x-2">
                   <SelectValue placeholder="Filter" />
@@ -222,7 +226,7 @@ const AbsentSection = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           <table className={clsx("w-full mt-4")}>
             <thead className={clsx("border-y border-gray-200 text-center")}>
