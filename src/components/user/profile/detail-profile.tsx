@@ -9,15 +9,6 @@ import clsx from "clsx";
 import EventItem from "../home-page/event-item";
 import { EventProps } from "@/types/event";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/components/ui/select";
-import {
   EnvelopeIcon,
   MagnifyingGlassIcon,
   MapPinIcon,
@@ -68,6 +59,17 @@ const DetailProfileSection = () => {
       });
   };
 
+  const handleSearchEvent = (val: string) => {
+    if (val === "") {
+      getAllEvents();
+      return;
+    }
+    const filteredName = listData.filter((item) =>
+      item.nama_kegiatan.toLowerCase().includes(val.toLowerCase())
+    );
+    setListData(filteredName);
+  };
+
   const handleTapEvent = (id: string) => {
     window.location.href = `/event/${id}`;
   };
@@ -102,19 +104,23 @@ const DetailProfileSection = () => {
                 <div className="flex items-center">
                   <PhoneIcon className={clsx("w-5 h-5")} />
                   <div className={clsx("w-2")} />
-                  {/* todo: phone number */}
-                  <p className={clsx("font-normal text-sm")}>087123456789</p>
+                  <p className={clsx("font-normal text-sm")}>
+                    {profile?.mahasiswa?.no_telepon}
+                  </p>
                   <div className="w-8" />
                   <EnvelopeIcon className={clsx("w-5 h-5")} />
                   <div className={clsx("w-2")} />
-                  {/* todo: email */}
-                  <p className={clsx("font-normal text-sm")}>a@gmail.com</p>
+                  <p className={clsx("font-normal text-sm")}>
+                    {profile?.mahasiswa?.email}
+                  </p>
                 </div>
                 <div className="h-2" />
                 <div className="flex items-center">
                   <MapPinIcon className={clsx("w-5 h-5")} />
                   <div className={clsx("w-2")} />
-                  <p className={clsx("font-normal text-sm")}>Kota Denpasar</p>
+                  <p className={clsx("font-normal text-sm")}>
+                    {profile?.mahasiswa?.alamat_tinggal}
+                  </p>
                 </div>
               </div>
             </div>
@@ -150,9 +156,10 @@ const DetailProfileSection = () => {
                 "focus:outline-none font-medium text-base text-gray-900"
               )}
               placeholder="Cari nama event disini"
+              onChange={(e) => handleSearchEvent(e.target.value)}
             />
           </div>
-          <div className="flex space-x-2 items-center">
+          {/* <div className="flex space-x-2 items-center">
             <Select>
               <SelectTrigger className="space-x-2">
                 <SelectValue placeholder="Filter" />
@@ -179,8 +186,15 @@ const DetailProfileSection = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
         </div>
+        {
+          listData.length === 0 && (
+            <div className="flex justify-center items-center mt-8">
+              <p className="text-lg font-bold text-gray-700">Tidak ada data</p>
+            </div>
+          )
+        }
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {listData.map((item) => (
             <div
