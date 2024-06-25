@@ -5,7 +5,7 @@ import { getBaseUrl } from "@/helpers/api";
 import axios from "axios";
 // user
 import SidebarUserSection from "@/components/user/home-page/sidebar";
-import MyEventUserSection from "@/components/user/home-page/my-event";
+// import MyEventUserSection from "@/components/user/home-page/my-event";
 import ListEventUserSection from "@/components/user/home-page/list-event";
 
 //organization
@@ -35,6 +35,12 @@ const HomePage = () => {
       });
   };
 
+  const setCategorySidebar = (category: string) => {
+    setActiveCategorySidebar(category);
+  };
+
+  const [activeCategorySidebar, setActiveCategorySidebar] = useState("all");
+
   const getHomepage = (role: string) => {
     switch (role) {
       case "mahasiswa":
@@ -54,7 +60,10 @@ const HomePage = () => {
       <>
         <BaseLayout>
           <div className="flex mx-4 space-x-8 ps-2 pe-4">
-            <SidebarUserSection />
+            <SidebarUserSection
+              categorySidebar={activeCategorySidebar}
+              setCategorySidebar={setCategorySidebar}
+            />
             <ListEventUserSection />
             {/* <MyEventUserSection /> */}
           </div>

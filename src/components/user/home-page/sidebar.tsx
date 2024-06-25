@@ -7,9 +7,13 @@ import {
   TrophyIcon,
 } from "@heroicons/react/24/outline";
 
-import { useState } from "react";
-
-const SidebarSection = () => {
+const SidebarSection = ({
+  categorySidebar,
+  setCategorySidebar,
+}: {
+  categorySidebar: string;
+  setCategorySidebar: (value: string) => void;
+}) => {
   const SidebarItems = [
     {
       id: "all",
@@ -43,8 +47,6 @@ const SidebarSection = () => {
     },
   ];
 
-  const [activeCategorySidebar, setActiveCategorySidebar] = useState("all");
-
   return (
     <>
       <div className="space-y-4">
@@ -52,22 +54,22 @@ const SidebarSection = () => {
           <div
             key={index}
             className={`${
-              activeCategorySidebar === item.id.toLowerCase()
+              categorySidebar === item.id.toLowerCase()
                 ? "bg-poppy-50"
-                : null
+                : "bg-white"
             } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full`}
-            onClick={() => setActiveCategorySidebar(item.id.toLowerCase())}
+            onClick={() => setCategorySidebar(item.id.toLowerCase())}
           >
             <item.icon
               className={`${
-                activeCategorySidebar === item.id.toLowerCase()
+                categorySidebar === item.id.toLowerCase()
                   ? "text-poppy-500"
                   : "text-cgrey"
               } w-6 h-6`}
             />
             <p
               className={`${
-                activeCategorySidebar === item.id.toLowerCase()
+                categorySidebar === item.id.toLowerCase()
                   ? "text-poppy-500"
                   : "text-cgrey"
               }

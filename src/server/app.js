@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, "../upload/proof")));
 app.use(express.static(path.join(__dirname, "../upload/proposal")));
 app.use(express.static(path.join(__dirname, "../upload/profile")));
 app.use(express.static(path.join(__dirname, "../upload/cover")));
+app.use(express.static(path.join(__dirname, "../upload/sertificate")));
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the server!" });
@@ -180,6 +181,42 @@ app.post("/local/upload/cover", (req, res) => {
       status: true,
       data: {
         path: `/upload/cover/${uploadedFile.name}`,
+      },
+    });
+  });
+});
+
+// sertificate
+app.post("/local/upload/sertificate", (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).json({
+      message: "No files were uploaded.",
+      status: false,
+      data: null,
+    });
+  }
+
+  let uploadedFile = req.files?.file;
+  let uploadPath = path.join(
+    __dirname,
+    "../upload/sertificate",
+    uploadedFile.name
+  );
+
+  uploadedFile.mv(uploadPath, (err) => {
+    if (err) {
+      return res.status(500).json({
+        message: "No files were uploaded.",
+        status: false,
+        data: null,
+      });
+    }
+
+    return res.status(201).json({
+      message: "File uploaded successfully",
+      status: true,
+      data: {
+        path: `/upload/sertificate/${uploadedFile.name}`,
       },
     });
   });

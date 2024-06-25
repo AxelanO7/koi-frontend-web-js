@@ -99,10 +99,11 @@ const SubmissionEventOrganization = () => {
     ]);
   };
 
+  // form sertificate
+  const [selectedFileSertificate, setSelectedFileSertificate] =
+    useState<File>();
+
   const handleSubmitEvent = () => {
-    // if (selectedFilePoster) handleSaveImage(selectedFilePoster!);
-    // if (selectedProposalEvent) handleSaveImage(selectedProposalEvent!);
-    // return;
     const payload: CreateEventProps = {
       // id: 0,
       ormawa_id: profile?.ormawa?.id ?? 0,
@@ -229,6 +230,34 @@ const SubmissionEventOrganization = () => {
       .post(
         `${getBaseUrlLocalUpload()}/local/upload/proposal`,
         formDataProposal,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (!selectedFileSertificate) {
+      Swal.fire({
+        title: "Gagal",
+        text: "File sertifikat belum diupload",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    const formDataSertificate = new FormData();
+    formDataSertificate.append("file", selectedFileSertificate);
+    axios
+      .post(
+        `${getBaseUrlLocalUpload()}/local/upload/sertificate`,
+        formDataSertificate,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -805,6 +834,32 @@ const SubmissionEventOrganization = () => {
               ))}
             </div>
           </div>
+          {/* sertificate */}
+          <div className={clsx("bg-white rounded-lg px-8 py-8 shadow-lg mt-8")}>
+            <p className={clsx("font-medium text-lg")}>Sertifikat</p>
+            <p className={clsx("font-medium text-sm mt-8")}>
+              Sertifikat peserta
+            </p>
+            <div
+              className={clsx(
+                "flex items-center justify-center w-full border border-gray-300 rounded-md relative bg-gray-100 cursor-pointer h-40"
+              )}
+            >
+              <input
+                type="file"
+                onChange={(e) => {
+                  if (e.target.files) {
+                    setSelectedFileSertificate(e.target.files[0]);
+                  }
+                }}
+              />
+            </div>
+            <p className={clsx("text-xs text-gray-400 font-medium")}>
+              Ukuran file: maksimum 10 Megabytes (MB). Ekstensi file yang
+              diperbolehkan: .JPG .JPEG .PNG
+            </p>
+          </div>
+
           <div className="flex space-x-4 mt-8 w-full justify-end">
             <Button variant={"outline"}>Batalkan</Button>
             <Button variant={"outline"}>Simpan & Tambah Baru</Button>
