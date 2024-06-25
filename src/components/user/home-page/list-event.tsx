@@ -49,6 +49,11 @@ const ListEventSection = ({ listData }: { listData: EventProps[] }) => {
             </div>
           </div> */}
         </div>
+        {listData.length === 0 && (
+          <div className="flex justify-center items-center mt-8">
+            <p className="text-lg font-bold text-gray-700">Tidak ada data</p>
+          </div>
+        )}
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {listData.map((item) => (
             <div

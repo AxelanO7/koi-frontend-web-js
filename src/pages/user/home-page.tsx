@@ -36,8 +36,9 @@ const HomePage = () => {
       });
   };
 
+  const [events, setEvents] = useState<EventProps[]>([]);
   const [listData, setListData] = useState<EventProps[]>([]);
-  const getAllEvents = () => {
+  const getAllEvents = async () => {
     const baseUrl = getBaseUrl();
     axios
       .get(`${baseUrl}/event/public/get-all-events`)
@@ -45,6 +46,7 @@ const HomePage = () => {
         const resData = response.data.data;
         console.log(response.data);
         setListData(resData);
+        setEvents(resData);
       })
       .catch((error) => {
         console.error(error);
@@ -69,8 +71,14 @@ const HomePage = () => {
   };
 
   const setCategorySidebar = (category: string) => {
+    const listDataEvent = events;
+    if (category === "all") {
+      setListData(listDataEvent);
+      setActiveCategorySidebar("all");
+      return;
+    }
     setActiveCategorySidebar(category);
-    const filteredList = listData.filter((item) => {
+    const filteredList = listDataEvent.filter((item) => {
       return translateCategory(item.category) === category;
     });
     setListData(filteredList);

@@ -57,7 +57,7 @@ const SidebarSection = ({
               categorySidebar === item.id.toLowerCase()
                 ? "bg-poppy-50"
                 : "bg-white"
-            } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full`}
+            } flex space-x-4 items-center py-2 rounded-lg cursor-pointer hover:bg-poppy-50 transition duration-300 ease-in-out w-full px-4`}
             onClick={() => setCategorySidebar(item.id.toLowerCase())}
           >
             <item.icon
