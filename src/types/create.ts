@@ -2,7 +2,7 @@ import { AbsentProps } from "./event";
 import { UserProps } from "./user";
 
 export interface CreateDetailEventProps {
-  // id: number;
+  id?: number;
   // event_id: number;
   waktu_pelaksanaan: string;
   lokasi: string;
@@ -11,6 +11,7 @@ export interface CreateDetailEventProps {
   category: string;
   gambar_kegiatan: string;
   file_pengajuan: string;
+  sertifikat: string;
   event?: CreateEventProps;
   metode_pembayaran?: CreateTransactionProps[];
   narahubung?: CreatePICProps[];
@@ -30,11 +31,13 @@ export interface CreateEventProps {
   category?: string;
   type_implement: string;
   detail_kegiatan: CreateDetailEventProps;
+  metode_pembayaran?: CreateTransactionProps[];
+  narahubung?: CreatePICProps[];
   absensi?: AbsentProps;
 }
 
 export interface CreateTransactionProps {
-  //   id: number;
+  id?: number;
   // detail_kegiatan_id: number;
   metode_pembayaran: string;
   judul: string;
@@ -48,7 +51,7 @@ export interface CreateTransactionProps {
 }
 
 export interface CreatePICProps {
-  //   id: number;
+  id?: number;
   // detail_kegiatan_id: number;
   judul: string;
   nama_narahubung: string;

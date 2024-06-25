@@ -266,7 +266,7 @@ const MyEventSection = ({ profileProps }: Props) => {
                 placeholder="Cari nama event disini"
               />
             </div>
-            <div className="flex space-x-2 items-center">
+            {/* <div className="flex space-x-2 items-center">
               <Select>
                 <SelectTrigger className="space-x-2">
                   <SelectValue placeholder="Filter" />
@@ -293,7 +293,7 @@ const MyEventSection = ({ profileProps }: Props) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           <table className={clsx("w-full mt-4")}>
             <thead className={clsx("border-y border-gray-200 text-center")}>
@@ -362,13 +362,13 @@ const MyEventSection = ({ profileProps }: Props) => {
                       <XMarkIcon className={clsx("w-4 h-4 mr-2")} />
                       Hapus Event
                     </Button>
-                    <Button
+                    {/* <Button
                       className={clsx("bg-white text-black w-36")}
                       variant="outline"
                     >
                       <CreditCardIcon className={clsx("w-4 h-4 mr-2")} />
                       Detail Event
-                    </Button>
+                    </Button> */}
                   </td>
                 </tr>
               ))}

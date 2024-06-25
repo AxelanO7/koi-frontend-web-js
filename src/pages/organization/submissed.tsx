@@ -13,7 +13,7 @@ import { format } from "date-fns";
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { Switch } from "@/shadcn/components/ui/switch";
 import axios from "axios";
-import { getBaseUrl } from "@/helpers/api";
+import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
 import { EventProps, PICProps, TransactionProps } from "@/types/event";
 import { getStatusButtonColor, getStatusText } from "@/helpers/status";
 import Swal from "sweetalert2";
@@ -76,6 +76,10 @@ const SubmissedEventOrganization = () => {
       owner_name: "",
     },
   ]);
+
+  const [selectedFileSertificate, setSelectedFileSertificate] =
+    useState<File>();
+
   const handleRemovePaymentMethod = (index: number) => {
     setPaymentMethods(paymentMethods.filter((_, i) => i !== index));
   };
@@ -119,6 +123,7 @@ const SubmissedEventOrganization = () => {
 
     // form
     setFormState({
+      id: val.id,
       status_submission: val.its_open,
       status_absensi: val.absensi?.its_close,
       name_event: val.nama_kegiatan,
@@ -134,6 +139,7 @@ const SubmissedEventOrganization = () => {
       narahubung: val.detail_kegiatan?.narahubung,
       metode_pembayaran: val.detail_kegiatan?.metode_pembayaran,
       harga_tiket: val.harga_tiket,
+      sertifikat: val.detail_kegiatan?.sertifikat,
     });
   };
 
@@ -159,6 +165,7 @@ const SubmissedEventOrganization = () => {
   };
 
   const [formState, setFormState] = useState({
+    id: event?.id || parseInt(idParam),
     status_submission: event?.its_open,
     status_absensi: event?.absensi?.its_close,
     name_event: event?.nama_kegiatan,
@@ -174,6 +181,7 @@ const SubmissedEventOrganization = () => {
     narahubung: event?.detail_kegiatan?.narahubung,
     metode_pembayaran: event?.detail_kegiatan?.metode_pembayaran,
     harga_tiket: event?.harga_tiket,
+    sertifikat: event?.detail_kegiatan?.sertifikat,
   });
 
   const hadletSaveSubmission = () => {
@@ -187,6 +195,7 @@ const SubmissedEventOrganization = () => {
       tingkat_kegiatan: formState.tingkat_kegiatan || event!.tingkat_kegiatan,
       type_implement: formState.type_implement || event!.type_implement,
       detail_kegiatan: {
+        id: event!.detail_kegiatan!.id,
         waktu_pelaksanaan:
           formState.waktu_pelaksanaan ||
           event!.detail_kegiatan!.waktu_pelaksanaan,
@@ -198,19 +207,22 @@ const SubmissedEventOrganization = () => {
         file_pengajuan:
           formState.file_pengajuan || event!.detail_kegiatan!.file_pengajuan,
         status: event!.detail_kegiatan!.status,
-        narahubung: contactPersons.map((contactPerson) => ({
-          judul: `Narahubung ${event?.nama_kegiatan}`,
-          nama_narahubung: contactPerson.name,
-          no_telepon: contactPerson.phoneNumber,
-        })),
-        metode_pembayaran: paymentMethods.map((paymentMethod) => ({
-          metode_pembayaran: paymentMethod.payment_method,
-          judul: `Pembayaran Tiket ${event?.nama_kegiatan}`,
-          nama_bank: paymentMethod.bank_name,
-          no_rekening: paymentMethod.account_number.toString(),
-          pemilik: paymentMethod.owner_name,
-        })),
+        sertifikat: formState.sertifikat || event!.detail_kegiatan!.sertifikat,
       },
+      narahubung: contactPersons.map((contactPerson) => ({
+        detail_kegiatan_id: event!.detail_kegiatan!.id,
+        judul: `Narahubung ${event?.nama_kegiatan}`,
+        nama_narahubung: contactPerson.name,
+        no_telepon: contactPerson.phoneNumber,
+      })),
+      metode_pembayaran: paymentMethods.map((paymentMethod) => ({
+        detail_kegiatan_id: event!.detail_kegiatan!.id,
+        metode_pembayaran: paymentMethod.payment_method,
+        judul: `Pembayaran Tiket ${event?.nama_kegiatan}`,
+        nama_bank: paymentMethod.bank_name,
+        no_rekening: paymentMethod.account_number.toString(),
+        pemilik: paymentMethod.owner_name,
+      })),
       absensi: event?.absensi,
     };
 
@@ -232,6 +244,7 @@ const SubmissedEventOrganization = () => {
       )
       .then((res) => {
         console.log(res.data);
+        uploadFile();
         Swal.fire({
           icon: "success",
           title: "Berhasil",
@@ -246,6 +259,71 @@ const SubmissedEventOrganization = () => {
           text: "Data gagal disimpan",
         });
       });
+  };
+
+  const uploadFile = async () => {
+    if (poster) {
+      const formDataPoster = new FormData();
+      formDataPoster.append("file", poster);
+      axios
+        .post(
+          `${getBaseUrlLocalUpload()}/local/upload/poster`,
+          formDataPoster,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (proposal) {
+      const formDataProposal = new FormData();
+      formDataProposal.append("file", proposal);
+      axios
+        .post(
+          `${getBaseUrlLocalUpload()}/local/upload/proposal`,
+          formDataProposal,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (selectedFileSertificate) {
+      const formDataSertificate = new FormData();
+      formDataSertificate.append("file", selectedFileSertificate);
+      axios
+        .post(
+          `${getBaseUrlLocalUpload()}/local/upload/sertificate`,
+          formDataSertificate,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -950,6 +1028,32 @@ const SubmissedEventOrganization = () => {
               ))}
             </div>
           </div>
+          {/* sertificate */}
+          <div className={clsx("bg-white rounded-lg px-8 py-8 shadow-lg mt-8")}>
+            <p className={clsx("font-medium text-lg")}>Sertifikat</p>
+            <p className={clsx("font-medium text-sm mt-8")}>
+              Sertifikat peserta
+            </p>
+            <div
+              className={clsx(
+                "flex items-center justify-center w-full border border-gray-300 rounded-md relative bg-gray-100 cursor-pointer h-40"
+              )}
+            >
+              <input
+                type="file"
+                onChange={(e) => {
+                  if (e.target.files) {
+                    setSelectedFileSertificate(e.target.files[0]);
+                  }
+                }}
+              />
+            </div>
+            <p className={clsx("text-xs text-gray-400 font-medium")}>
+              Ukuran file: maksimum 10 Megabytes (MB). Ekstensi file yang
+              diperbolehkan: .JPG .JPEG .PNG
+            </p>
+          </div>
+
           <div className="flex space-x-4 mt-8 w-full justify-end">
             <Button variant={"outline"}>Batalkan</Button>
             {/* <Button variant={"outline"}>Simpan & Tambah Baru</Button> */}

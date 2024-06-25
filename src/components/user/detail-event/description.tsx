@@ -33,6 +33,7 @@ const DescriptionSection = ({ event }: { event: DetailEventProps }) => {
 
   const [infull, setInfull] = useState(false);
   const [activeTab, setActiveTab] = useState("desc");
+
   return (
     <>
       <div className="w-full">

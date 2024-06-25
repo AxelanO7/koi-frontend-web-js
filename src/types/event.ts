@@ -28,6 +28,7 @@ export interface DetailEventProps {
   deskripsi: string;
   gambar_kegiatan: string;
   file_pengajuan: string;
+  sertifikat: string;
   event?: EventProps;
   metode_pembayaran?: TransactionProps[];
   narahubung?: PICProps[];
