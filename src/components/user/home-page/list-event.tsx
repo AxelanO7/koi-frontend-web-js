@@ -1,7 +1,4 @@
-import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import EventSearchImage from "../../../assets/images/event_search.png";
 import { EventProps } from "../../../types/event";
@@ -13,40 +10,16 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/shadcn/components/ui/pagination";
-import axios from "axios";
-import { getBaseUrl } from "@/helpers/api";
-import { useEffect, useState } from "react";
 
-const ListEventSection = () => {
-  const [listData, setListData] = useState<EventProps[]>([]);
-
-  const getAllEvents = () => {
-    const baseUrl = getBaseUrl();
-    axios
-      .get(`${baseUrl}/event/public/get-all-events`)
-      .then((response) => {
-        const resData = response.data.data;
-        console.log(response.data);
-        setListData(resData);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
+const ListEventSection = ({ listData }: { listData: EventProps[] }) => {
   const handleTapEvent = (id: string) => {
     window.location.href = `/event/${id}`;
   };
-
-  useEffect(() => {
-    getAllEvents();
-  }, []);
-
   return (
     <>
       <div className="w-full">
         <div
-          className="rounded-lg bg-cover bg-center bg-no-repeat p-4"
+          className="rounded-lg bg-cover bg-center bg-no-repeat px-4 py-8"
           style={{
             backgroundImage: `url(${EventSearchImage})`,
           }}
@@ -61,7 +34,7 @@ const ListEventSection = () => {
               className="focus:outline-none placeholder-gray-400 m-0 p-0 w-full text-sm font-normal"
             />
           </div>
-          <div className="flex w-full justify-end mt-4 space-x-2">
+          {/* <div className="flex w-full justify-end mt-4 space-x-2">
             <div className="flex rounded-xl bg-white focus:outline-none p-2 items-center space-x-1">
               <select className="bg-white focus:outline-none text-sm font-normal md:text-base md:font-normal">
                 <option value="Filter">Filter</option>
@@ -74,7 +47,7 @@ const ListEventSection = () => {
               </select>
               <ChevronDownIcon className="text-black w-4 h-4 md:w-6 md:h-6" />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {listData.map((item) => (

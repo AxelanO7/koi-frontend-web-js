@@ -13,6 +13,7 @@ import ListEventUserSection from "@/components/user/home-page/list-event";
 // student affair
 import DashboardOrganization from "../organization/dashboard";
 import DashboardStudentAffair from "../student-affair/dashboard";
+import { EventProps } from "@/types/event";
 
 const HomePage = () => {
   // global
@@ -35,8 +36,44 @@ const HomePage = () => {
       });
   };
 
+  const [listData, setListData] = useState<EventProps[]>([]);
+  const getAllEvents = () => {
+    const baseUrl = getBaseUrl();
+    axios
+      .get(`${baseUrl}/event/public/get-all-events`)
+      .then((response) => {
+        const resData = response.data.data;
+        console.log(response.data);
+        setListData(resData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const translateCategory = (category: string) => {
+    switch (category) {
+      case "seminar":
+        return "seminar";
+      case "workshop":
+        return "workshop";
+      case "lomba":
+        return "Lomba";
+      case "hiburan":
+        return "hiburan";
+      case "kegiatan_sosial":
+        return "kegiatan_sosial";
+      default:
+        return "seminar";
+    }
+  };
+
   const setCategorySidebar = (category: string) => {
     setActiveCategorySidebar(category);
+    const filteredList = listData.filter((item) => {
+      return translateCategory(item.category) === category;
+    });
+    setListData(filteredList);
   };
 
   const [activeCategorySidebar, setActiveCategorySidebar] = useState("all");
@@ -54,6 +91,10 @@ const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+    getAllEvents();
+  }, []);
+
   // user
   const userPage = () => {
     return (
@@ -64,7 +105,7 @@ const HomePage = () => {
               categorySidebar={activeCategorySidebar}
               setCategorySidebar={setCategorySidebar}
             />
-            <ListEventUserSection />
+            <ListEventUserSection listData={listData} />
             {/* <MyEventUserSection /> */}
           </div>
         </BaseLayout>
