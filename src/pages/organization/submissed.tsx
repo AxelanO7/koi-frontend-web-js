@@ -148,18 +148,15 @@ const SubmissedEventOrganization = () => {
   };
 
   const [selectedFileSertificate, setSelectedFileSertificate] =
-  useState<File>();
+    useState<File>();
 
   const getEvent = () => {
     axios
-      .get(
-        `${getBaseUrl()}/event/private/get-event-by-id-and-ormawa/${idParam}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+      .get(`${getBaseUrl()}/event/public/get-event-by-id/${idParam}`, {
+        // headers: {
+        //   Authorization: `Bearer ${localStorage.getItem("token")}`,
+        // },
+      })
       .then((res) => {
         console.log(res.data);
         const dataRes: EventProps = res.data.data;
