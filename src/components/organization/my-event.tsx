@@ -27,6 +27,7 @@ import axios from "axios";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { UserProps } from "@/types/user";
 import Swal from "sweetalert2";
+import { getStatusButtonColor } from "@/helpers/status";
 
 interface Props {
   profileProps?: UserProps;
@@ -358,18 +359,10 @@ const MyEventSection = ({ profileProps }: Props) => {
                     <p
                       className={clsx(
                         "py-2 px-4 rounded-full w-min mx-auto text-sm font-medium",
-                        event.detail_kegiatan?.status === "pending"
-                          ? "bg-blue-500"
-                          : event.detail_kegiatan?.status === "selesai"
-                          ? "bg-green-500"
-                          : "bg-red-500"
+                        event.its_open === 1 ? "bg-green-500" : "bg-red-500"
                       )}
                     >
-                      {event.detail_kegiatan?.status === "pending"
-                        ? "Ditinjau"
-                        : event.detail_kegiatan?.status === "selesai"
-                        ? "Disetujui"
-                        : "Ditolak"}
+                      {event.its_open === 1 ? "Dibuka" : "Tutup"}
                     </p>
                   </td>
                   <td
