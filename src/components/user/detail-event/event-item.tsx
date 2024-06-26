@@ -1,6 +1,7 @@
 import { CalendarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { EventProps } from "../../../types/event";
 import { getImageUpload } from "@/helpers/image";
+import clsx from "clsx";
 
 const EventItem = ({ item }: { item: EventProps }) => {
   const price = item.harga_tiket.toLocaleString("id-ID", {
@@ -53,8 +54,16 @@ const EventItem = ({ item }: { item: EventProps }) => {
             >
               {item.its_open ? "Buka" : "Tutup"}
             </button>
-            <button className="bg-blue-500 py-1 px-2 rounded-xl font-medium text-xs">
-              Offline
+            <button
+              className={clsx(
+                "bg-blue-500 py-1 px-2 rounded-xl font-medium text-xs",
+                item.type_implement === "offline" ? "bg-blue-500" : "bg-success"
+              )}
+            >
+              {item.type_implement
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
             </button>
           </div>
           <div className="flex items-center space-x-2">
