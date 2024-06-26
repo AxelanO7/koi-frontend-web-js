@@ -124,15 +124,20 @@ const DescriptionSection = ({ event }: { event: DetailEventProps }) => {
           </TabsContent>
           <TabsContent value="payment">
             <p className={clsx("text-gray-500", infull ? "" : "line-clamp-3")}>
-              {event.metode_pembayaran?.nama_bank} -{" "}
-              {event.metode_pembayaran?.no_rekening} a/n{" "}
-              {event.metode_pembayaran?.pemilik}
+              {event.metode_pembayaran?.map((metode, index) => (
+                <p key={index}>
+                  a/n {metode.pemilik} - {metode.no_rekening}
+                </p>
+              ))}
             </p>
           </TabsContent>
           <TabsContent value="contact">
             <p className={clsx("text-gray-500", infull ? "" : "line-clamp-3")}>
-              {event.narahubung?.nama_narahubung} -{" "}
-              {event.narahubung?.no_telepon}
+              {event.narahubung?.map((kontak, index) => (
+                <p key={index}>
+                  {kontak.nama_narahubung} - {kontak.no_telepon}
+                </p>
+              ))}
             </p>
           </TabsContent>
         </Tabs>
