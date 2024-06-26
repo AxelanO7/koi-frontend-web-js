@@ -11,10 +11,17 @@ import {
   PaginationLink,
 } from "@/shadcn/components/ui/pagination";
 
-const ListEventSection = ({ listData }: { listData: EventProps[] }) => {
+const ListEventSection = ({
+  listData,
+  searchEvents,
+}: {
+  listData: EventProps[];
+  searchEvents: (search: string) => void;
+}) => {
   const handleTapEvent = (id: string) => {
     window.location.href = `/event/${id}`;
   };
+
   return (
     <>
       <div className="w-full">
@@ -32,6 +39,7 @@ const ListEventSection = ({ listData }: { listData: EventProps[] }) => {
             <input
               placeholder="Cari nama event disini"
               className="focus:outline-none placeholder-gray-400 m-0 p-0 w-full text-sm font-normal"
+              onChange={(e) => searchEvents(e.target.value)}
             />
           </div>
           {/* <div className="flex w-full justify-end mt-4 space-x-2">

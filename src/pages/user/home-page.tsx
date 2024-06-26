@@ -38,6 +38,7 @@ const HomePage = () => {
 
   const [events, setEvents] = useState<EventProps[]>([]);
   const [listData, setListData] = useState<EventProps[]>([]);
+  const [eventsOriginal, setEventsOriginal] = useState<EventProps[]>([]);
   const getAllEvents = async () => {
     const baseUrl = getBaseUrl();
     axios
@@ -46,6 +47,7 @@ const HomePage = () => {
         const resData = response.data.data;
         console.log(response.data);
         setListData(resData);
+        setEventsOriginal(resData);
         setEvents(resData);
       })
       .catch((error) => {
@@ -99,6 +101,39 @@ const HomePage = () => {
     }
   };
 
+  const handleSearchEvent = (search: string) => {
+    const listDataEvent = eventsOriginal;
+    if (search === "") {
+      setListData(listDataEvent);
+      return;
+    }
+    const filteredName = listDataEvent.filter((item) => {
+      return item.nama_kegiatan.toLowerCase().includes(search.toLowerCase());
+    });
+    const filteredPrice = listDataEvent.filter((item) => {
+      return item.harga_tiket.toString().includes(search);
+    });
+    const filteredDate = listDataEvent.filter((item) => {
+      return item.tanggal_kegiatan.includes(search);
+    });
+    const filteredScope = listDataEvent.filter((item) => {
+      return item.tingkat_kegiatan.toLowerCase().includes(search.toLowerCase());
+    });
+
+    const filteredList = [
+      ...filteredName,
+      ...filteredPrice,
+      ...filteredDate,
+      ...filteredScope,
+    ];
+    const uniqueList = Array.from(new Set(filteredList.map((a) => a.id))).map(
+      (id) => {
+        return filteredList.find((a) => a.id === id);
+      }
+    );
+    setListData(uniqueList);
+  };
+
   useEffect(() => {
     getAllEvents();
   }, []);
@@ -113,7 +148,10 @@ const HomePage = () => {
               categorySidebar={activeCategorySidebar}
               setCategorySidebar={setCategorySidebar}
             />
-            <ListEventUserSection listData={listData} />
+            <ListEventUserSection
+              listData={listData}
+              searchEvents={handleSearchEvent}
+            />
             {/* <MyEventUserSection /> */}
           </div>
         </BaseLayout>
