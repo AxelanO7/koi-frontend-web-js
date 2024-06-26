@@ -1049,6 +1049,7 @@ const SubmissedEventOrganization = () => {
                 type="file"
                 onChange={(e) => {
                   if (e.target.files) {
+                    formState.sertifikat = e.target.files[0].name;
                     setSelectedFileSertificate(e.target.files[0]);
                   }
                 }}
