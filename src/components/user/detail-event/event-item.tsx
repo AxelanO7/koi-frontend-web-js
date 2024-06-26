@@ -1,5 +1,6 @@
 import { CalendarIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { EventProps } from "../../../types/event";
+import { getImageUpload } from "@/helpers/image";
 
 const EventItem = ({ item }: { item: EventProps }) => {
   const price = item.harga_tiket.toLocaleString("id-ID", {
@@ -32,10 +33,10 @@ const EventItem = ({ item }: { item: EventProps }) => {
         }
       >
         <img
-          src={
-            item?.detail_kegiatan?.gambar_kegiatan ||
-            "https://via.placeholder.com/600"
-          }
+          src={getImageUpload({
+            type: "poster",
+            fileName: item.detail_kegiatan?.gambar_kegiatan || "",
+          })}
           alt="gambar kegiatan"
           className="w-44 h-44 object-cover rounded-lg"
         />

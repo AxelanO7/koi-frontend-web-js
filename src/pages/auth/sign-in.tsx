@@ -129,7 +129,7 @@ const Signin = () => {
           >
             Masuk
           </button>
-          <div className="flex justify-center items-center mt-4">
+          {/* <div className="flex justify-center items-center mt-4">
             <p className="text-sm text-[#717D96]">Belum punya akun?</p>
             <p
               className="text-sm text-poppy-500 font-semibold ml-2 cursor-pointer transition-all duration-300 ease-in-out hover:text-poppy-600"
@@ -137,7 +137,7 @@ const Signin = () => {
             >
               Daftar Gratis
             </p>
-          </div>
+          </div> */}
         </div>
       </BaseLayout>
     </>
