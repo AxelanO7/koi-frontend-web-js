@@ -12,7 +12,6 @@ import { AbsentProps, DetailEventProps, PaymentProps } from "@/types/event";
 import ShortDescriptionEvent from "./short-description-event";
 import Swal from "sweetalert2";
 import { getImageUpload } from "@/helpers/image";
-import sertificationImage from "@/assets/images/sertif.png";
 
 const RegisteredEventSection = ({
   eventProps,
@@ -128,6 +127,10 @@ const RegisteredEventSection = ({
 
   const htmlImage = () => {
     const nameParticipant = absentProps.name_mahasiswa;
+    const sertificationImage = getImageUpload({
+      type: "sertificate",
+      fileName: eventProps.sertifikat,
+    });
     return `
     <div  id="sertification">
         <img
