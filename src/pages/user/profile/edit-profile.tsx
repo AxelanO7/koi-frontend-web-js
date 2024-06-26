@@ -214,6 +214,7 @@ const EditProfile = () => {
                     selected={date}
                     onSelect={setDate}
                     initialFocus
+                    className="bg-white border border-gray-300 rounded-md shadow-md p-2"
                   />
                 </PopoverContent>
               </Popover>
