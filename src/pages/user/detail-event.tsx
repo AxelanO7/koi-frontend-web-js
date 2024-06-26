@@ -79,7 +79,9 @@ const DetailEvent = () => {
                 <RegisterSection
                   its_open={
                     events.find((event) => event.id === eventById.event_id)
-                      ?.its_open || false
+                      ?.its_open === 1
+                      ? true
+                      : false
                   }
                 />
               )}
