@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -213,6 +214,37 @@ const AbsentSection = () => {
     setAbsents(unique);
   };
 
+  const handleTapRemove = (id: number) => {
+    Swal.fire({
+      title: "Apakah anda yakin?",
+      text: "Data yang dihapus tidak dapat dikembalikan",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Ya, hapus",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${getBaseUrl()}/absensi/public/delete/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire("Berhasil", "Data berhasil dihapus", "success");
+            getAbsents();
+          })
+          .catch((err) => {
+            console.error(err);
+            Swal.fire("Gagal", "Data gagal dihapus", "error");
+          });
+      }
+    });
+  }
+
   useEffect(() => {
     getAbsents();
   }, []);
@@ -333,6 +365,15 @@ const AbsentSection = () => {
                       >
                         <CreditCardIcon className={clsx("w-5 h-5 mr-2")} />
                         Detail Peserta
+                      </Button>
+                      {/* button delete */}
+                      <Button
+                        variant={"outline"}
+                        className={clsx("text-white bg-danger")}
+                        onClick={() => handleTapRemove(absent.id)}
+                      >
+                        <TrashIcon className={clsx("w-5 h-5 mr-2")} />
+                        Hapus
                       </Button>
                     </div>
                   </td>

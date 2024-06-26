@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -192,6 +193,43 @@ const ParticipantSection = () => {
     setParticipants(unique);
   };
 
+  const handleTapDeleteEvent = (id: number) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Hapus Event",
+      text: "Apakah anda yakin ingin menghapus event ini?",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${getBaseUrl()}/pembayaran/private/delete/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil",
+              text: "Event berhasil dihapus",
+            });
+            getParticipants();
+          })
+          .catch((err) => {
+            console.error(err);
+            Swal.fire({
+              icon: "error",
+              title: "Gagal",
+              text: "Event gagal dihapus",
+            });
+          });
+      }
+    });
+  };
+
   useEffect(() => {
     getParticipants();
   }, []);
@@ -312,6 +350,15 @@ const ParticipantSection = () => {
                       >
                         <CreditCardIcon className={clsx("w-5 h-5 mr-2")} />
                         Detail Peserta
+                      </Button>
+                      {/* delete button */}
+                      <Button
+                        variant={"outline"}
+                        className={clsx("text-white bg-danger")}
+                        onClick={() => handleTapDeleteEvent(participant.id!)}
+                      >
+                        <TrashIcon className={clsx("w-5 h-5 mr-2")} />
+                        Hapus Event
                       </Button>
                     </div>
                   </td>
