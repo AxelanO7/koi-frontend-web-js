@@ -55,35 +55,36 @@ const HomePage = () => {
       });
   };
 
-  const translateCategory = (category: string) => {
-    switch (category) {
+  const translateCategory = (val: string) => {
+    switch (val) {
       case "seminar":
         return "seminar";
       case "workshop":
         return "workshop";
-      case "lomba":
-        return "Lomba";
-      case "hiburan":
+      case "contest":
+        return "lomba";
+      case "entertainment":
         return "hiburan";
-      case "kegiatan_sosial":
+      case "social_activities":
         return "kegiatan_sosial";
-      default:
-        return "seminar";
     }
   };
 
-  const setCategorySidebar = (category: string) => {
+  const setCategorySidebar = (val: string) => {
     const listDataEvent = events;
-    if (category === "all") {
+    if (val === "all") {
       setListData(listDataEvent);
       setActiveCategorySidebar("all");
       return;
     }
-    setActiveCategorySidebar(category);
-    const filteredList = listDataEvent.filter((item) => {
-      return translateCategory(item.category) === category;
+    setActiveCategorySidebar(val);
+    const listFiltered: EventProps[] = [];
+    listDataEvent.forEach((item) => {
+      if (item.category === translateCategory(val)) {
+        listFiltered.push(item);
+      }
     });
-    setListData(filteredList);
+    setListData(listFiltered);
   };
 
   const [activeCategorySidebar, setActiveCategorySidebar] = useState("all");
