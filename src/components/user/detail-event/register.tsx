@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Swal from "sweetalert2";
 
 const RegisterSection = ({ its_open }: { its_open: boolean }) => {
@@ -32,8 +33,13 @@ const RegisterSection = ({ its_open }: { its_open: boolean }) => {
           <p className="font-medium text-base text-gray-600">
             Status Pendaftaran
           </p>
-          <button className="bg-success rounded-2xl text-white font-semibold px-4 py-1">
-            Buka
+          <button
+            className={clsx(
+              "rounded-2xl text-white font-semibold px-4 py-1",
+              its_open ? "bg-success" : "bg-danger"
+            )}
+          >
+            {its_open ? "Buka" : "Tutup"}
           </button>
         </div>
         <button
