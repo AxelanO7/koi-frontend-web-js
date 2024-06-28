@@ -2,7 +2,6 @@ import { getBaseUrl, getBaseUrlLocalUpload } from "@/helpers/api";
 import { getImageUpload } from "@/helpers/image";
 import { Button } from "@/shadcn/components/ui/button";
 import { UserProps } from "@/types/user";
-import { ArrowUpOnSquareIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import clsx from "clsx";
 import { useState } from "react";
@@ -66,6 +65,20 @@ const EditProfileSection = ({ profileProps }: Props) => {
       logo: logo?.name,
       cover: cover?.name,
     };
+
+    // validate payload empty
+    if (
+      payload.nama_ormawa === "" ||
+      payload.email === "" ||
+      payload.deskripsi === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Form tidak boleh kosong",
+      });
+      return;
+    }
 
     axios
       .put(

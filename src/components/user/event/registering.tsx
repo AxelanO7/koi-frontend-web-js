@@ -36,6 +36,25 @@ const RegisteringEventSection = ({
       tipe_pembayaran: paymentMethod,
       bukti_pembayaran: paymentProof?.name,
     };
+
+    // validate payload empty
+    if (
+      payload.nama_peserta === "" ||
+      payload.mahasiswa_id === 0 ||
+      payload.email === "" ||
+      payload.no_telepon === "" ||
+      payload.institusi === "" ||
+      payload.tipe_pembayaran === "" ||
+      !paymentProof
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Form tidak boleh kosong",
+      });
+      return;
+    }
+
     axios
       .post(`${getBaseUrl()}/pembayaran/private/create`, payload, {
         headers: {

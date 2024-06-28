@@ -26,6 +26,16 @@ const ChangePasswordUser = () => {
       password_confirmation: confirmPassword,
     };
 
+    // validate payload empty
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Mohon isi semua field",
+      });
+      return;
+    }
+
     axios
       .post(`${getBaseUrl()}/user/private/reset-password`, payload, {
         headers: {

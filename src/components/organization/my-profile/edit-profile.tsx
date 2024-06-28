@@ -66,6 +66,20 @@ const EditProfileSection = ({ profileProps }: Props) => {
       cover: cover?.name,
     };
 
+    // validate payload empty
+    if (
+      payload.nama_ormawa === "" ||
+      payload.email === "" ||
+      payload.deskripsi === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Form tidak boleh kosong",
+      });
+      return;
+    }
+
     axios
       .put(
         `${getBaseUrl()}/user/private/edit-profile/${profileProps?.role}`,

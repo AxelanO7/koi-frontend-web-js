@@ -142,6 +142,51 @@ const SubmissionEventOrganization = () => {
         })),
       },
     };
+
+    // validate payload empty
+    if (
+      payload.nama_kegiatan === "" ||
+      !dateEvent ||
+      payload.tingkat_kegiatan === "" ||
+      payload.category === "" ||
+      payload.type_implement === "" ||
+      payload.harga_tiket === 0 ||
+      payload.detail_kegiatan.lokasi === "" ||
+      payload.detail_kegiatan.waktu_pelaksanaan === "" ||
+      payload.detail_kegiatan.deskripsi === "" ||
+      !selectedFilePoster ||
+      !selectedProposalEvent ||
+      !selectedFileSertificate
+    ) {
+      Swal.fire({
+        title: "Gagal",
+        text: "Form tidak boleh kosong",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    if(paymentMethods.length === 0) {
+      Swal.fire({
+        title: "Gagal",
+        text: "Metode pembayaran tidak boleh kosong",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    if(contactPersons.length === 0) {
+      Swal.fire({
+        title: "Gagal",
+        text: "Narahubung tidak boleh kosong",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
     axios
       .post(`${getBaseUrl()}/event/private/create-event`, payload, {
         headers: {

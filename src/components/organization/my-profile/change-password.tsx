@@ -29,6 +29,20 @@ const ChangePasswordSection = ({ profileProps }: Props) => {
       password_confirmation: formState.confirmPassword,
     };
 
+    // validate payload empty
+    if (
+      payload.password === "" ||
+      payload.password_confirmation === "" ||
+      formState.oldPassword === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Form tidak boleh kosong",
+      });
+      return;
+    }
+
     axios
       .post(`${getBaseUrl()}/user/private/reset-password`, payload, {
         headers: {

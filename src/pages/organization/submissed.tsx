@@ -236,6 +236,46 @@ const SubmissedEventOrganization = () => {
       payloadEvent!.absensi!.its_close = formState.status_absensi || 1;
     }
 
+    // validate payload empty
+    if (
+      payloadEvent.nama_kegiatan === "" ||
+      payloadEvent.harga_tiket === 0 ||
+      payloadEvent.category === "" ||
+      payloadEvent.tanggal_kegiatan === "" ||
+      payloadEvent.tingkat_kegiatan === "" ||
+      payloadEvent.type_implement === "" ||
+      payloadEvent.detail_kegiatan?.waktu_pelaksanaan === "" ||
+      payloadEvent.detail_kegiatan?.lokasi === "" ||
+      payloadEvent.detail_kegiatan?.deskripsi === "" ||
+      payloadEvent.detail_kegiatan?.gambar_kegiatan === "" ||
+      payloadEvent.detail_kegiatan?.file_pengajuan === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Form tidak boleh kosong",
+      });
+      return;
+    }
+
+    if (contactPersons.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Minimal 1 narahubung",
+      });
+      return;
+    }
+
+    if (paymentMethods.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Minimal 1 metode pembayaran",
+      });
+      return;
+    }
+
     axios
       .put(
         `${getBaseUrl()}/event/private/update-event`,

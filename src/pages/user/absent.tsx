@@ -105,6 +105,21 @@ const AbsentingPage = () => {
       tingkat_kegiatan: event?.event?.tingkat_kegiatan,
     };
 
+    // validate payload empty
+    if (
+      !payload.name_mahasiswa ||
+      !payload.no_telepon ||
+      !payload.institusi ||
+      !payload.bukti_pembayaran
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Data tidak boleh kosong",
+        text: "Silahkan isi semua data",
+      });
+      return;
+    }
+
     axios
       .post(`${getBaseUrl()}/absensi/public/create`, payload, {
         headers: {

@@ -210,12 +210,32 @@ const SubmissedEventOrganizationStudentAffair = () => {
           no_rekening: paymentMethod.account_number.toString(),
           pemilik: paymentMethod.owner_name,
         })),
+        sertifikat: event?.detail_kegiatan?.sertifikat || "",
       },
       absensi: event?.absensi,
     };
 
     if (payloadEvent?.absensi?.its_close) {
       payloadEvent!.absensi!.its_close = formState.status_absensi || 1;
+    }
+    
+    // validate payload empty
+    if (
+      !formState.name_event ||
+      !formState.category ||
+      !formState.tanggal_kegiatan ||
+      !formState.tingkat_kegiatan ||
+      !formState.lokasi ||
+      !formState.waktu_pelaksanaan ||
+      !formState.deskripsi ||
+      !formState.harga_tiket
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Mohon isi semua field",
+      });
+      return;
     }
 
     axios
@@ -328,7 +348,7 @@ const SubmissedEventOrganizationStudentAffair = () => {
             <p className={clsx("font-semibold text-lg")}>Informasi Event</p>
             <p className={clsx("font-medium text-sm mt-8")}>Nama Event</p>
             <input
-                            className={clsx(
+              className={clsx(
                 "border border-gray-300 rounded-lg w-full p-2 mt-2"
               )}
               placeholder="Nama Event"

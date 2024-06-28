@@ -63,6 +63,24 @@ const InputEditProfileSection = () => {
     if (profile?.role === "mahasiswa") {
       payload["nim"] = profile?.mahasiswa?.nim;
     }
+
+    // validate payload empty
+    if (
+      !name ||
+      !phoneNumber ||
+      !email ||
+      !parsedDate ||
+      !placeOfBirth ||
+      !address
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Mohon isi semua field",
+      });
+      return;
+    }
+
     axios
       .put(
         `${getBaseUrl()}/user/private/edit-profile/${profile?.role}`,
