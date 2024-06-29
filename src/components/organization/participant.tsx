@@ -206,7 +206,7 @@ const ParticipantSection = () => {
   const handleTapDeleteEvent = (id: number) => {
     Swal.fire({
       icon: "warning",
-      title: "Hapus Event",
+      title: "Hapus Peserta",
       text: "Apakah anda yakin ingin menghapus peserta ini?",
       showCancelButton: true,
       confirmButtonText: "Ya",
