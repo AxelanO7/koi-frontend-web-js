@@ -191,7 +191,7 @@ const AbsentingPage = () => {
             </div>
             <div className="h-4" />
             <div className="space-y-2">
-              <p className={clsx("font-medium text-sm")}>Bukti Pembayaran</p>
+              <p className={clsx("font-medium text-sm")}>Dokumentasi Kegiatan</p>
               <div
                 className={clsx(
                   "flex items-center justify-center w-96 h-40 border border-gray-300 rounded-md relative bg-gray-100 cursor-pointer"
