@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { PaymentProps } from "@/types/event";
 import { getStatusButtonColor, getStatusText } from "@/helpers/status";
 import Swal from "sweetalert2";
+import { getImageUpload } from "@/helpers/image";
 
 const ParticipantSection = () => {
   const [participants, setParticipants] = useState<PaymentProps[]>();
@@ -119,6 +120,11 @@ const ParticipantSection = () => {
   };
 
   const handleTapDetailParticipant = (val: PaymentProps) => {
+    const image = getImageUpload({
+      type: "proof",
+      fileName: val.bukti_pembayaran,
+    });
+
     Swal.fire({
       icon: "info",
       title: "Detail Peserta",
@@ -138,6 +144,10 @@ const ParticipantSection = () => {
           <p class="font-medium">Status Peserta : ${getStatusText(
             val.status
           )}</p>
+          <div class="flex space x-2 items-center">
+            <p class="font-medium">Bukti Presensi : </p>
+            <img src="${image}"  class="w-64 h-64" />
+          </div>
         </div>
       `,
     });
@@ -197,7 +207,7 @@ const ParticipantSection = () => {
     Swal.fire({
       icon: "warning",
       title: "Hapus Event",
-      text: "Apakah anda yakin ingin menghapus event ini?",
+      text: "Apakah anda yakin ingin menghapus peserta ini?",
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
@@ -214,7 +224,7 @@ const ParticipantSection = () => {
             Swal.fire({
               icon: "success",
               title: "Berhasil",
-              text: "Event berhasil dihapus",
+              text: "Peserta berhasil dihapus",
             });
             getParticipants();
           })
@@ -223,7 +233,7 @@ const ParticipantSection = () => {
             Swal.fire({
               icon: "error",
               title: "Gagal",
-              text: "Event gagal dihapus",
+              text: "Pvent gagal dihapus",
             });
           });
       }
@@ -358,7 +368,7 @@ const ParticipantSection = () => {
                         onClick={() => handleTapDeleteEvent(participant.id!)}
                       >
                         <TrashIcon className={clsx("w-5 h-5 mr-2")} />
-                        Hapus Event
+                        Hapus
                       </Button>
                     </div>
                   </td>

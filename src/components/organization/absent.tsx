@@ -120,7 +120,6 @@ const AbsentSection = () => {
   };
 
   const handleTapDetailAbsent = (val: AbsentProps) => {
-    console.log("ini val : ", val);
     const image = getImageUpload({
       type: "proof",
       fileName: val.bukti_pembayaran,

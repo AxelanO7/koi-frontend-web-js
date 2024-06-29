@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { PaymentProps } from "@/types/event";
 import { getStatusButtonColor, getStatusText } from "@/helpers/status";
 import Swal from "sweetalert2";
+import { getImageUpload } from "@/helpers/image";
 
 const ParticipantSection = () => {
   const [participants, setParticipants] = useState<PaymentProps[]>();
@@ -52,7 +53,7 @@ const ParticipantSection = () => {
         {
           status: "approved",
         },
-      {
+        {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -118,6 +119,11 @@ const ParticipantSection = () => {
   };
 
   const handleTapDetailParticipant = (val: PaymentProps) => {
+    const image = getImageUpload({
+      type: "proof",
+      fileName: val.bukti_pembayaran,
+    });
+
     Swal.fire({
       icon: "info",
       title: "Detail Peserta",
@@ -137,6 +143,10 @@ const ParticipantSection = () => {
           <p class="font-medium">Status Peserta : ${getStatusText(
             val.status
           )}</p>
+          <div class="flex space x-2 items-center">
+            <p class="font-medium">Bukti Presensi : </p>
+            <img src="${image}"  class="w-64 h-64" />
+          </div>
         </div>
       `,
     });
