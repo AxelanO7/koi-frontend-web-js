@@ -262,6 +262,10 @@ const MyEventSection = ({ profileProps }: { profileProps?: UserProps }) => {
     }
   };
 
+  const handleAddEvent = () => {
+    window.location.href = "/organization/submission";
+  };
+
   useEffect(() => {
     getAllEvents();
   }, []);
@@ -271,7 +275,7 @@ const MyEventSection = ({ profileProps }: { profileProps?: UserProps }) => {
       <div className={clsx("w-full p-4 bg-gray-50")}>
         <div className="flex justify-between items-center">
           <p className={clsx("font-semibold text-xl")}>Event Saya</p>
-          <Button className={clsx("bg-poppy-500")}>
+          <Button className={clsx("bg-poppy-500")} onClick={handleAddEvent}>
             <PlusIcon className="w-6 h-6 mr-2" />
             Ajukan Event
           </Button>
