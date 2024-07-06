@@ -83,6 +83,10 @@ const DetailEvent = () => {
                       ? true
                       : false
                   }
+                  price={
+                    events.find((event) => event.id === eventById.event_id)
+                      ?.harga_tiket || 0
+                  }
                 />
               )}
             </div>

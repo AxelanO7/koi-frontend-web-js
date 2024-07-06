@@ -1,7 +1,13 @@
 import clsx from "clsx";
 import Swal from "sweetalert2";
 
-const RegisterSection = ({ its_open }: { its_open: boolean }) => {
+const RegisterSection = ({
+  its_open,
+  price,
+}: {
+  its_open: boolean;
+  price: number;
+}) => {
   const handleRegister = () => {
     if (!its_open) {
       Swal.fire({
@@ -27,7 +33,7 @@ const RegisterSection = ({ its_open }: { its_open: boolean }) => {
         <div className="bg-gray-200 h-0.5 w-full my-2" />
         <div className="flex justify-between items-center">
           <p className="font-medium text-base text-gray-600">Harga</p>
-          <p className="font-bold text-xl text-poppy-500">Rp 240.000</p>
+          <p className="font-bold text-xl text-poppy-500">Rp {price}</p>
         </div>
         <div className="flex justify-between items-center mt-2">
           <p className="font-medium text-base text-gray-600">
