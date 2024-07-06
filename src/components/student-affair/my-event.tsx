@@ -14,6 +14,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
   TrashIcon,
+  XCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -262,6 +263,38 @@ const MyEventSection = ({ profileProps }: { profileProps?: UserProps }) => {
     }
   };
 
+  const handleTapCloseEvent = (id: number) => {
+    axios
+      .put(
+        `${getBaseUrl()}/event/private/update-status-event/${id}`,
+        {
+          its_open: 0,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Event berhasil ditutup",
+        });
+        getAllEvents();
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Event gagal ditutup",
+        });
+      });
+  };
+
   const handleAddEvent = () => {
     window.location.href = "/organization/submission";
   };
@@ -495,6 +528,14 @@ const MyEventSection = ({ profileProps }: { profileProps?: UserProps }) => {
                     >
                       <XMarkIcon className={clsx("w-4 h-4 mr-2")} />
                       Tolak
+                    </Button>
+                    <Button
+                      className={clsx("bg-yellow-500 text-white w-36")}
+                      variant="outline"
+                      onClick={() => handleTapCloseEvent(event.id)}
+                    >
+                      <XCircleIcon className={clsx("w-4 h-4 mr-2")} />
+                      Tutup Event
                     </Button>
                   </td>
                 </tr>

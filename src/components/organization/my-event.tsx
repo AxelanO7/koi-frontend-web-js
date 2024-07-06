@@ -12,6 +12,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MagnifyingGlassIcon,
+  XCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import {
@@ -27,7 +28,6 @@ import axios from "axios";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { UserProps } from "@/types/user";
 import Swal from "sweetalert2";
-import { getStatusButtonColor } from "@/helpers/status";
 
 interface Props {
   profileProps?: UserProps;
@@ -84,6 +84,38 @@ const MyEventSection = ({ profileProps }: Props) => {
           icon: "error",
           title: "Gagal",
           text: "Event gagal dihapus",
+        });
+      });
+  };
+
+  const handleTapCloseEvent = (id: number) => {
+    axios
+      .put(
+        `${getBaseUrl()}/event/private/update-status-event/${id}`,
+        {
+          its_open: 0,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Event berhasil ditutup",
+        });
+        getAllEvents();
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Event gagal ditutup",
         });
       });
   };
@@ -384,6 +416,14 @@ const MyEventSection = ({ profileProps }: Props) => {
                     >
                       <XMarkIcon className={clsx("w-4 h-4 mr-2")} />
                       Hapus Event
+                    </Button>
+                    <Button
+                      className={clsx("bg-yellow-500 text-white w-36")}
+                      variant="outline"
+                      onClick={() => handleTapCloseEvent(event.id)}
+                    >
+                      <XCircleIcon className={clsx("w-4 h-4 mr-2")} />
+                      Tutup Event
                     </Button>
                     {/* <Button
                       className={clsx("bg-white text-black w-36")}
