@@ -423,7 +423,7 @@ const MyEventSection = ({ profileProps }: Props) => {
                       onClick={() => handleTapCloseEvent(event.id)}
                     >
                       <XCircleIcon className={clsx("w-4 h-4 mr-2")} />
-                      Tutup Event
+                    Tutup
                     </Button>
                     {/* <Button
                       className={clsx("bg-white text-black w-36")}
